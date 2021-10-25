@@ -1,0 +1,11 @@
+.sidebar-title {
+  width: 100%;
+  background-color: yellow;
+  text-align: center;
+  padding: 0.8rem 0.4rem;
+}
+
+.login.container {
+  width: 100%;
+  height: 100%;
+}

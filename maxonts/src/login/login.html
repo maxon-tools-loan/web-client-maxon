@@ -1,0 +1,20 @@
+<template>
+  <div class="login container d-flex justify-content-center align-items-center">
+    <div class="container border border-dark d-flex flex-column">
+      <h4>Iniciar Sesion</h4>
+      <form>
+        <div class="mb-3">
+          <label for="email" class="form-label">Username</label>
+          <input type="email" class="form-control" value.bind="username">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" value.bind="password">
+        </div>
+
+        <button class="btn btn-primary" click.trigger="submit()">Submit</button>
+      </form>
+    </div>
+
+  </div>
+</template>
