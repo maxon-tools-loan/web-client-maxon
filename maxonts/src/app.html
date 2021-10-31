@@ -1,0 +1,19 @@
+<template>
+  <require from="./style.css"></require>
+  <require from="./sidebar"></require>
+
+  <main class="container-fluid">
+    <h1>${message}</h1>
+
+    <section class="container-fluid d-flex flex-row">
+
+      <sidebar class="col-4"></sidebar>
+
+      <router-view class="col-8">
+      </router-view>
+
+    </section>
+
+  </main>
+
+</template>
