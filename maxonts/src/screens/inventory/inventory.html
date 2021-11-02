@@ -1,0 +1,46 @@
+<template>
+  <h2> Inventory </h2>
+
+  <form submit.delegate="search()">
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"># Item
+      </label>
+      <input type="text" class="form-control" id="exampleFormControlInput1"
+        value.bind="param">
+    </div>
+    <button class="btn btn-primary" type="submit">Buscar</button>
+  </form>
+
+  <h2> Resultados </h2>
+
+  <!-- TODO: tabla -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"># Parte</th>
+        <th scope="col">Familia</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Minimo</th>
+        <th scope="col">Maximo</th>
+        <th scope="col">Prestado</th>
+        <th scope="col">Disponible</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr repeat.for="record of items">
+        <td>${record.partNo}</td>
+        <td>${record.family}</td>
+        <td>${record.name}</td>
+        <td>${record.minimum}</td>
+        <td>${record.maximum}</td>
+        <td>${record.loaned || '-'}</td>
+        <td>${record.available}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+</template>
