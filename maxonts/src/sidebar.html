@@ -1,10 +1,10 @@
 <template>
   <h1 class="sidebar-title"> MAXON </h1>
 
-  <div>
-    <div repeat.for="route of routelist">
-      ${route.displayname}
-    </div>
+  <div class="d-flex flex-column">
+    <a route-href="loans"> Prestamos </a>
+    <a route-href="returns"> Devoluciones </a>
+    <a route-href="inventory"> Inventario </a>
   </div>
 
 </template>

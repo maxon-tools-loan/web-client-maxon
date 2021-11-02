@@ -1,0 +1,42 @@
+<template>
+  <h2> Devoluciones </h2>
+
+  <form submit.delegate="search()">
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label"># De Empleado
+      </label>
+      <input type="text" class="form-control" id="exampleFormControlInput1"
+        value.bind="param">
+    </div>
+    <button class="btn btn-primary" type="submit">Buscar</button>
+  </form>
+
+  <h2> Resultados </h2>
+
+  <!-- TODO: tabla -->
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col"># Prestamo</th>
+        <th scope="col"># Empleado</th>
+        <th scope="col">Status</th>
+        <th scope="col">Presto</th>
+        <th scope="col">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr repeat.for="record of returns">
+        <td>${record.loanNo}</td>
+        <td>${record.employeeNo}</td>
+        <td>${record.status}</td>
+        <td>${record.lentBy}</td>
+        <td>${record.date - 100}</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+
+
+</template>
