@@ -1,11 +1,70 @@
+.sidebar{
+  background-color: #424347;
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+}
 .sidebar-title {
   width: 100%;
-  background-color: yellow;
+  background-color: #F0E122;
   text-align: center;
   padding: 0.8rem 0.4rem;
+  min-width: fit-content;
+}
+.sidebar_loans{
+  width: 60%;
+  background-color:#5BEE65;
+  text-align: center;
+  padding: 0.4rem 0.4rem;
+  margin: inherit;
+  min-width: fit-content;
+}
+.sidebar_returns{
+  width: 60%;
+  background-color:#D10000;
+  text-align: center;
+  padding: 0.4rem 0.4rem;
+  margin: inherit;
+  min-width: fit-content;
+}
+.sidebar_consults{
+  width: 60%;
+  background-color: #F0E122;
+  text-align: center;
+  padding: 0.4rem 0.4rem;
+  margin:inherit;
+  min-width: fit-content;
+}
+.sidebar_modifications  {
+  width: 60%;
+  background-color: #E69C20;
+  text-align: center;
+  padding: 0.4rem 0.4rem;
+  margin: inherit;
+  min-width: fit-content;
+}
+a{
+  color: black;
+  text-decoration: none;
+}
+.sidebar_container{
+  align-items: center;
+  background-color:#3D3F44;
+  margin: 0.3rem;
+  min-width: fit-content;
 }
 
 .login.container {
   width: 100%;
   height: 100%;
+  
+}
+.filters{
+  display: flex;
+  flex-flow: row;
+  align-items: justify;
+}
+label{
+  display: flex;
+  flex-flow: column;
 }

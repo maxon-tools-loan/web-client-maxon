@@ -1,0 +1,70 @@
+<template>
+  <h2>Mantenimiento</h2>
+  <div>
+    <form submit.trigger="addElement()">
+      <select name="type" value.bind="opt" id="type">
+        <option model.bind="1">Consumible</option>
+        <option model.bind="0">Herramienta</option>
+      </select>
+      <button type="submit" class="btn btn-primary"> Añadir + </button>
+      <form>
+        <div>
+
+          <div>
+            <h3> Consumible</h3>
+            <li repeat.for="item of consumibles.length">
+              <div class="filters">
+                <label for="exampleFormControlInput1" class="form-label"># de Consumible
+
+                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.consumibles[item]['idConsumible']">
+                </label>
+                <label for="exampleFormControlInput2" class="form-label"># Parte
+
+                  <input type="text" class="form-control" id="exampleFormControlInput2" value.bind="$parent.consumibles[item]['idParte']">
+                </label>
+                <label for="exampleFormControlInput3" class="form-label">Cantidad
+
+                  <input type="text" class="form-control" id="exampleFormControlInput3" value.bind="$parent.consumibles[item]['cantidad']">
+                </label>
+              </div>
+              <div class="filters">
+                <label for="exampleFormControlInput4" class="form-label">Comentatario
+
+                  <input type="text" class="form-control" id="exampleFormControlInput4" value.bind="$parent.consumibles[item]['comentario']">
+                </label>
+                <label for="exampleFormControlInput5" class="form-label">Area
+
+                  <input type="text" class="form-control" id="exampleFormControlInput5" value.bind="$parent.consumibles[item]['area']">
+                </label>
+                <label for="control">Eliminar<input type="checkbox" name="ordered" change.delegate="removeConsu(item)"/>&nbsp; </label>
+              </div>
+            </li>
+          </div>
+          <div>
+            <h3> Herramienta</h3>
+            <li repeat.for="item of tools.length">
+              <div class="filters">
+                <label for="exampleFormControlInput1" class="form-label"># de Consumible
+
+                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
+                </label>
+                <label for="exampleFormControlInput2" class="form-label"># Parte 
+
+                  <input type="text" class="form-control" id="exampleFormControlInput2" value.bind="$parent.tools[item]['idParte']">
+                </label>
+                <label for="exampleFormControlInput3" class="form-label">Comentario
+
+                  <input type="text" class="form-control" id="exampleFormControlInput3" value.bind="$parent.tools[item]['comentario']">
+                </label>
+              </div>
+              <div class="filters">
+                <label for="exampleFormControlInput4" class="form-label">Area
+
+                  <input type="text" class="form-control" id="exampleFormControlInput4" value.bind="$parent.tools[item]['Area']">
+                </label>
+                <label for="control">Eliminar<input type="checkbox" name="ordered" change.delegate="removeTool(item)"/>&nbsp; </label>
+              </div>
+            </li>
+          </div>
+
+</template>

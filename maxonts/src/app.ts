@@ -21,7 +21,11 @@ export class App {
       { route: '/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
       { route: '/loans', name: "loans", moduleId: PLATFORM.moduleName('screens/loans/loans')},
       { route: '/returns', name: "returns", moduleId: PLATFORM.moduleName('screens/returns/returns')},
-      { route: '/inventory', name: "inventory", moduleId: PLATFORM.moduleName('screens/inventory/inventory')}
+      { route: '/inventory', name: "inventory", moduleId: PLATFORM.moduleName('screens/inventory/inventory')},
+      { route: '/history', name: "history", moduleId: PLATFORM.moduleName('screens/loan_history/history')},
+      { route: '/orders', name: "orders", moduleId: PLATFORM.moduleName('screens/orders/orders')},
+      { route: '/maintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance/maintenance')},
+      { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs')}
       //...obj
     ]);
   }
