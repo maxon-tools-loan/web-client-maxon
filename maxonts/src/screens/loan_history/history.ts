@@ -4,7 +4,7 @@ import {inject} from "aurelia-framework"
 @inject(LoansService)
 export class History {
 
-
+  read = 0;
   param: string;
   returns: IReturns[] = [];
 

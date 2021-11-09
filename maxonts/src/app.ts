@@ -18,7 +18,7 @@ export class App {
     config.options.root = '/';
     config.options.pushState = true;
     config.map([
-      { route: '', moduleId: PLATFORM.moduleName("screens/loans/loans"), title: 'Main' },
+      { route: '',name:'test', moduleId: PLATFORM.moduleName("screens/test/test"), title: 'Main' },
       { route: '/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
       { route: '/loans', name: "loans", moduleId: PLATFORM.moduleName('screens/loans/loans')},
       { route: '/returns', name: "returns", moduleId: PLATFORM.moduleName('screens/returns/returns')},
@@ -26,7 +26,8 @@ export class App {
       { route: '/history', name: "history", moduleId: PLATFORM.moduleName('screens/loan_history/history')},
       { route: '/orders', name: "orders", moduleId: PLATFORM.moduleName('screens/orders/orders')},
       { route: '/maintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance/maintenance')},
-      { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs')}
+      { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs')},
+      { route: '/loaninfo/:id/:readOnly', name: "loanInfo", moduleId: PLATFORM.moduleName('screens/loans_info/loans_info')}
       //...obj
     ]);
   }

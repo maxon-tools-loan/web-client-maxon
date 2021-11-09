@@ -29,10 +29,11 @@ const cssRules = [
 
 
 module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, host } = {}) => ({
+ 
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [srcDir, 'node_modules'],
-
+    
     alias: {
       // https://github.com/aurelia/dialog/issues/387
       // Uncomment next line if you had trouble to run aurelia-dialog on IE11

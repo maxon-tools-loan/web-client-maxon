@@ -40,7 +40,7 @@
     </thead>
     <tbody>
       <tr repeat.for="record of returns">
-        <td>${record.loanNo}</td>
+        <td ><a route-href="route: loanInfo; params.bind: {id:record.loanNo, readOnly:'0'}">${record.loanNo}</a></td>
         <td>${record.employeeNo}</td>
         <td>${record.status}</td>
         <td>${record.lentBy}</td>

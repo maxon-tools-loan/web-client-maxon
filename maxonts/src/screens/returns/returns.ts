@@ -4,7 +4,7 @@ import {inject} from "aurelia-framework"
 @inject(LoansService)
 export class Returns {
 
-
+  
   param: string;
   returns: IReturns[] = [];
 
@@ -12,7 +12,7 @@ export class Returns {
 
   constructor(loans: LoansService) {
     this.loanService = loans
-
+    this.search()
   }
 
   async search(): Promise<void> {

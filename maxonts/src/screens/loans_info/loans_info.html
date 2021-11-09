@@ -1,0 +1,73 @@
+<template>
+  <h2>Info de Préstamo</h2>
+  <div class="mb-3 filters">
+    <label for="exampleFormControlInput1" class="form-label"># De Empleado
+      <input type="text" class="form-control" id="exampleFormControlInput1" >
+    </label>
+    <label for="exampleFormControlInput2" class="form-label">Nombre
+      <input type="text" class="form-control" id="exampleFormControlInput2" >
+    </label>
+    <label for="exampleFormControlInput3" class="form-label">Fecha
+      <input type="text" class="form-control" id="exampleFormControlInput3" >
+    </label>
+    <label for="exampleFormControlInput4" class="form-label"> # Prestamo
+      <input type="text" value.bind= "prestamoid"class="form-control" id="exampleFormControlInput4" >
+    </label>
+  </div>
+
+  <!-- TODO: Consumibles? -->
+  <div repeat.for="item of consumible">
+    <div class="mb-3 filters">
+      <label for="exampleFormControlInput1" class="form-label"># consumible
+        <input type="text" class="form-control" id="exampleFormControlInput1" >
+      </label>
+      <label for="exampleFormControlInput2" class="form-label">Nombre
+        <input type="text" class="form-control" id="exampleFormControlInput2" >
+      </label>
+      <label for="exampleFormControlInput3" class="form-label">Cantidad
+        <input type="text" class="form-control" id="exampleFormControlInput3" >
+      </label>
+      <label for="Status">Estado
+        <select name="status" id="stats">
+          <option value="Entregado">Devuelto</option>
+          <option value="Entregado">No Devuelto</option>
+        </select>
+      </label>
+      <label if.bind="readonly" class="form-label">Fecha
+        <input type="text" class="form-control" id="exampleFormControlInput3" >
+      </label> 
+    </div>
+  </div>
+
+  <!-- TODO: No consumible -->
+  <div repeat.for="item of Herramienta">
+    <div class="mb-3 filters">
+      <label for="exampleFormControlInput1" class="form-label"># Parte
+        <input type="text" class="form-control" id="exampleFormControlInput1">
+      </label>
+      <label for="exampleFormControlInput2" class="form-label"># Pieza
+        <input type="text" class="form-control" id="exampleFormControlInput2">
+      </label>
+      <label for="exampleFormControlInput3" class="form-label">Nombre
+        <input type="text" class="form-control" id="exampleFormControlInput3">
+      </label>
+      <label for="Status">Estado
+        <select name="status" id="stats">
+          <option value="Entregado">Devuelto</option>
+          <option value="Entregado">No Devuelto</option>
+        </select>
+      </label> 
+      <label if.bind="readonly" class="form-label">Fecha
+        <input type="text" class="form-control" id="exampleFormControlInput3" >
+      </label> 
+    </div>
+    
+  </div>
+  
+  <form if.bind="!readonly">
+    
+      <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+    
+  </form>
+
+</template>
