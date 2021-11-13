@@ -24,6 +24,9 @@ export class Up_Downs {
     commit(){
         console.log("TBD")
     }
+    commitDown(){
+        console.log("TBD")
+    }
     
 }
 

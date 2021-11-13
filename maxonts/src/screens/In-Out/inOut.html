@@ -1,0 +1,64 @@
+<template>
+  <h2>Entradas - Salidas</h2>
+
+  <form >
+    Tipo de Movimiento
+    <select click.trigger="getName()"name="movement" value.bind="type">
+      <option repeat.for="option of options " model.bind="option.valor">${option.name}</option>
+
+    </select>
+  </form>
+  <div>
+    <form submit.trigger="addElement()">
+      <select name="type" value.bind="opt" id="type">
+        <option model.bind="1">Consumible</option>
+        <option model.bind="0">Herramienta</option>
+      </select>
+      <button type="submit" class="btn btn-primary"> Añadir + </button>
+      <form>
+        <div>
+          <div>
+            <h3> Consumible</h3>
+            <li repeat.for="item of consumibles.length">
+              <div class="filters">
+                <label for="exampleFormControlInput1" class="form-label"># de Consumible
+
+                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.consumibles[item]['idConsumible']">
+                </label>
+                <label for="exampleFormControlInput2" class="form-label"># Parte
+
+                  <input type="text" class="form-control" id="exampleFormControlInput2" value.bind="$parent.consumibles[item]['idParte']">
+                </label>
+                <label for="exampleFormControlInput3" class="form-label">Cantidad
+
+                  <input type="text" class="form-control" id="exampleFormControlInput3" value.bind="$parent.consumibles[item]['cantidad']">
+                </label>
+                <label for="control">Eliminar<input type="checkbox" name="ordered" change.delegate="removeConsu(item)"/>&nbsp; </label>
+              </div>
+            </li>
+          </div>
+          <div>
+            <h3> Herramientas</h3>
+            <li repeat.for="item of tools.length">
+              <div class="filters">
+                <label for="exampleFormControlInput1" class="form-label"># de Herramienta
+
+                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
+                </label>
+                <label for="exampleFormControlInput2" class="form-label"># Parte 
+
+                  <input type="text" class="form-control" id="exampleFormControlInput2" value.bind="$parent.tools[item]['idParte']">
+                </label>
+                <label for="control">Eliminar<input type="checkbox" name="ordered" change.delegate="removeTool(item)"/>&nbsp; </label>
+              </div>
+            </li>
+          </div>
+          </div>
+      </form>
+    </form>
+  </div>
+  <button click.trigger="commit()"type="submit" class="btn btn-primary"> Registrar ${name} </button>
+
+
+</template>
+

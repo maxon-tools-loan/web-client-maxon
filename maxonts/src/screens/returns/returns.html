@@ -37,7 +37,7 @@
     <tbody>
       <tr repeat.for="record of returns">
         <td><a route-href="route: loanInfo; params.bind: {id:record.loanNo, readOnly:'1'}">${record.loanNo}</a></td>
-        <td>${record.employeeNo}</td>
+        <td><a route-href="route: employeeInfo; params.bind: {employee:record.employeeNo}">${record.employeeNo}</a></td>
         <td>${record.status}</td>
         <td>${record.lentBy}</td>
         <td>${record.date - 100}</td>

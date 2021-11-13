@@ -27,7 +27,10 @@ export class App {
       { route: '/orders', name: "orders", moduleId: PLATFORM.moduleName('screens/orders/orders')},
       { route: '/maintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance/maintenance')},
       { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs')},
-      { route: '/loaninfo/:id/:readOnly', name: "loanInfo", moduleId: PLATFORM.moduleName('screens/loans_info/loans_info')}
+      { route: '/loaninfo/:id/:readOnly', name: "loanInfo", moduleId: PLATFORM.moduleName('screens/loans_info/loans_info')},
+      { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/in-Out/inOut')},
+      { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info')},
+      { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info')}
       //...obj
     ]);
   }

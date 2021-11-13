@@ -29,7 +29,7 @@
     </thead>
     <tbody>
       <tr repeat.for="record of items">
-        <td>${record.partNo}</td>
+        <td><a route-href="route: partInfo; params.bind :{partNo:record.partNo}">${record.partNo}</a></td>
         <td>${record.family}</td>
         <td>${record.name}</td>
         <td>${record.minimum}</td>
