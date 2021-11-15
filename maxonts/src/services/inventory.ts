@@ -1,5 +1,5 @@
 import { sleep } from "../utils";
-
+const fetch = require('node-fetch');
 export interface IInventoryItem {
   partNo: number;
   family: string;
@@ -40,9 +40,34 @@ const dummyInventory: IInventoryItem[] = [
 ];
 
 export class InventoryService {
-  async getInventoryItems(param): Promise<IInventoryItem[]> {
-    await sleep(1000);
 
-    return dummyInventory;
+
+  async getOrderInfo():Promise<[]>{
+    const response = await fetch('http://localhost:3000/api/items/orders').then(response => {
+      return response.json()
+   });
+   console.log(response)
+   if (response['code']=="api.success") return response['data']['value'];
+  }
+
+
+
+  async getInventoryItems(param): Promise<[]> {
+    const response = await fetch('http://localhost:3000/api/items/all').then(response => {
+      return response.json()
+   });
+   console.log(response)
+   if (response['code']=="api.success") return response['data']['value'];
+  }
+
+  async getItemInfo(idParte):Promise<[]>{
+    const params =new URLSearchParams({"idParte":idParte})
+    const response = await fetch('http://localhost:3000/api/items/itemInfo?' + params).then(response => {
+      return response.json()
+   });
+  
+   console.log(response)
+   if (response['code']=="api.success") return response['data']['value'];
+    return
   }
 }

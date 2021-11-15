@@ -18,7 +18,7 @@ export class App {
     config.options.root = '/';
     config.options.pushState = true;
     config.map([
-      { route: '',name:'test', moduleId: PLATFORM.moduleName("screens/test/test"), title: 'Main' },
+      { route: '',name:'test', moduleId: PLATFORM.moduleName("login/login"), title: 'Main' },
       { route: '/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
       { route: '/loans', name: "loans", moduleId: PLATFORM.moduleName('screens/loans/loans')},
       { route: '/returns', name: "returns", moduleId: PLATFORM.moduleName('screens/returns/returns')},

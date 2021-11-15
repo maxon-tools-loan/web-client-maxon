@@ -36,11 +36,11 @@
     </thead>
     <tbody>
       <tr repeat.for="record of returns">
-        <td><a route-href="route: loanInfo; params.bind: {id:record.loanNo, readOnly:'1'}">${record.loanNo}</a></td>
-        <td><a route-href="route: employeeInfo; params.bind: {employee:record.employeeNo}">${record.employeeNo}</a></td>
+        <td><a route-href="route: loanInfo; params.bind: {id:record.idPrestamo, readOnly:'1'}">${record.idPrestamo}</a></td>
+        <td><a route-href="route: employeeInfo; params.bind: {employee:record.idEmpleado}">${record.idEmpleado}</a></td>
         <td>${record.status}</td>
-        <td>${record.lentBy}</td>
-        <td>${record.date - 100}</td>
+        <td>${record.idUsuario}</td>
+        <td>${record.fecha}</td>
       </tr>
     </tbody>
   </table>

@@ -30,14 +30,14 @@
     </thead>
     <tbody>
       <tr repeat.for="record of items">
-        <td>${record.partNo}</td>
-        <td>${record.family}</td>
-        <td>${record.name}</td>
-        <td>${record.minimum}</td>
-        <td>${record.maximum}</td>
-        <td>${record.loaned || '-'}</td>
-        <td>${record.available}</td>
-        <td><input type="checkbox" name="ordered" />&nbsp;</td>
+        <td>${record.idParte}</td>
+        <td>${record.Familia}</td>
+        <td>${record.Descripcion}</td>
+        <td>${record.Minimo}</td>
+        <td>${record.Maximo}</td>
+        <td>${record.Prestados}</td>
+        <td>${record.Disponibles!=null ? record.disponibles:0}</td>
+        <td><input type="checkbox" checked.bind="record.estado==1" name="ordered" />&nbsp;</td>
       </tr>
     </tbody>
   </table>

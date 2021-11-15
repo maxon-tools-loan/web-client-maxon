@@ -16,7 +16,7 @@ export class History {
   }
 
   async search(): Promise<void> {
-    this.returns = await this.loanService.getLoans(this.param);
+    this.returns = await this.loanService.getAllLoans(this.param);
   }
 
 

@@ -12,7 +12,7 @@ export class Inventory {
   }
 
   async search(): Promise<void> {
-    this.items = await this.inventoryService.getInventoryItems("");
+    this.items = await this.inventoryService.getOrderInfo();
   }
 
 

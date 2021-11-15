@@ -1,5 +1,6 @@
 import { sleep } from "utils";
 
+
 export interface Returns {
   loanNo: number;
   employeeNo: number;
@@ -33,11 +34,24 @@ const returns: Returns[] = [
 ];
 
 export class LoansService {
-  async getLoans(search: string): Promise<Returns[]> {
+  async getLoans(search: string): Promise<[]> {
     console.log(search);
+    const fetch = require('node-fetch');
+//the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
+    const response = await fetch('http://localhost:3000/api/loans/allactive').then(response => {
+      return response.json()
+   });
+   if (response['code']=="api.success") return response['data']['value'] ;
+  }
 
-    await sleep(1000)
-
-    return returns;
+  async getAllLoans(search: string): Promise<[]> {
+    console.log(search);
+    const fetch = require('node-fetch');
+//the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
+    const response = await fetch('http://localhost:3000/api/loans/all').then(response => {
+      return response.json()
+   });
+   console.log(response)
+   if (response['code']=="api.success") return response['data']['value'] ;
   }
 }

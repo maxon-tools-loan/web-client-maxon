@@ -1,17 +1,17 @@
 <template>
   <h2>Info de Préstamo</h2>
   <div class="mb-3 filters">
-    <label for="exampleFormControlInput1" class="form-label"># De Empleado
-      <input type="text" class="form-control" id="exampleFormControlInput1" >
+    <label for="exampleFormControlInput1"  class="form-label"># De Empleado
+      <input type="text" value.bind="meta['idEmpleado']" class="form-control" id="exampleFormControlInput1" >
     </label>
     <label for="exampleFormControlInput2" class="form-label">Nombre
-      <input type="text" class="form-control" id="exampleFormControlInput2" >
+      <input type="text" value.bind="meta['nombre']" class="form-control" id="exampleFormControlInput2" >
     </label>
     <label for="exampleFormControlInput3" class="form-label">Fecha
-      <input type="text" class="form-control" id="exampleFormControlInput3" >
+      <input type="text" value.bind="meta['fecha']" class="form-control" id="exampleFormControlInput3" >
     </label>
     <label for="exampleFormControlInput4" class="form-label"> # Prestamo
-      <input type="text" value.bind= "prestamoid"class="form-control" id="exampleFormControlInput4" >
+      <input type="text" value.bind="meta['idPrestamo']" class="form-control" id="exampleFormControlInput4" >
     </label>
   </div>
 
@@ -19,22 +19,21 @@
   <div repeat.for="item of consumible">
     <div class="mb-3 filters">
       <label for="exampleFormControlInput1" class="form-label"># consumible
-        <input type="text" class="form-control" id="exampleFormControlInput1" >
+        <input type="text" value.bind="item['idConsumible']" class="form-control" id="exampleFormControlInput1" >
       </label>
       <label for="exampleFormControlInput2" class="form-label">Nombre
-        <input type="text" class="form-control" id="exampleFormControlInput2" >
+        <input type="text" value.bind="item['Descripcion']" class="form-control" id="exampleFormControlInput2" >
       </label>
       <label for="exampleFormControlInput3" class="form-label">Cantidad
-        <input type="text" class="form-control" id="exampleFormControlInput3" >
+        <input type="text" value.bind="item['cantidad']"class="form-control" id="exampleFormControlInput3" >
       </label>
       <label for="Status">Estado
-        <select name="status" id="stats">
-          <option value="Entregado">Devuelto</option>
-          <option value="Entregado">No Devuelto</option>
+        <select name="status" value.bind="item['devuelto']" id="stats">
+          <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
       </label>
       <label if.bind="readonly" class="form-label">Fecha
-        <input type="text" class="form-control" id="exampleFormControlInput3" >
+        <input type="text" value.bind ="item['fechaDevolucion']" class="form-control" id="exampleFormControlInput3" >
       </label> 
     </div>
   </div>
@@ -43,22 +42,21 @@
   <div repeat.for="item of Herramienta">
     <div class="mb-3 filters">
       <label for="exampleFormControlInput1" class="form-label"># Parte
-        <input type="text" class="form-control" id="exampleFormControlInput1">
+        <input type="text" value.bind="item['idParte']" class="form-control" id="exampleFormControlInput1">
       </label>
       <label for="exampleFormControlInput2" class="form-label"># Pieza
-        <input type="text" class="form-control" id="exampleFormControlInput2">
+        <input type="text" value.bind="item['idHerramienta']" class="form-control" id="exampleFormControlInput2">
       </label>
       <label for="exampleFormControlInput3" class="form-label">Nombre
-        <input type="text" class="form-control" id="exampleFormControlInput3">
+        <input type="text" value.bind="item['Descripcion']" class="form-control" id="exampleFormControlInput3">
       </label>
       <label for="Status">Estado
-        <select name="status" id="stats">
-          <option value="Entregado">Devuelto</option>
-          <option value="Entregado">No Devuelto</option>
+        <select name="status" value.bind="item['Devuelto']" id="stats">
+          <option repeat.for="option of options" model.bind="$option.value">${option.name}</option>
         </select>
       </label> 
       <label if.bind="readonly" class="form-label">Fecha
-        <input type="text" class="form-control" id="exampleFormControlInput3" >
+        <input type="text" value.bind="item['fechaDevolucion']" class="form-control" id="exampleFormControlInput3" >
       </label> 
     </div>
     

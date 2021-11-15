@@ -6,7 +6,7 @@ export class Returns {
 
   
   param: string;
-  returns: IReturns[] = [];
+  returns = [];
 
   loanService: LoansService;
 
@@ -16,7 +16,8 @@ export class Returns {
   }
 
   async search(): Promise<void> {
-    this.returns = await this.loanService.getLoans(this.param);
+    this.returns = await this.loanService.getLoans(this.param)
+    console.log(this.returns);
   }
 
 
