@@ -7,7 +7,9 @@ export class Loans {
     validUsers = []
     validConsumibles = []
     validHerramientas = []
-    empleado = ""
+    dictHerramientas ={}
+    dictConsumibles ={}
+    empleado :string
     job = null
     maquina = null
     consumibles = []
@@ -31,33 +33,46 @@ export class Loans {
         });
         data['tools'].forEach(element => {
             this.validHerramientas.push(element['idHerramienta'])
+            this.dictHerramientas[element['idHerramienta']]=element['idParte']
         });
         data['consumibles'].forEach(element => {
             this.validConsumibles.push(element['idConsumible'])
+            this.dictConsumibles[element['idConsumible']]=element['idParte']
         });
-        console.log(data)
+        console.log(this.dictConsumibles)
+    }
+    updateData(i,type){
+        console.log(i,type)
+        if(type==0){
+            this.herramientas[i]['idParte'] = this.dictHerramientas[this.herramientas[i]['idHerramienta']]
+        }
+        else{
+            this.consumibles[i]['idParte'] = this.dictConsumibles[this.consumibles[i]['idConsumible']]
+        }
+
     }
     verifyData() {
 
-        if (!this.validUsers.includes(this.empleado)) {
-            
-            console.log(this.validUsers)
+        if (!this.validUsers.includes(parseInt(this.empleado))) {
             return false;
         }
+
         this.herramientas.forEach(element => {
+            
             if (!this.validHerramientas.includes(element['idHerramienta'])) {
-                return false
+                return false;
             }
             if (!this.validParts.includes(element['idParte'])) {
-                return false
+                return false;
             }
         });
         this.consumibles.forEach(element => {
+            console.log(this.validConsumibles.includes(element['idConsumible']))
             if (!this.validConsumibles.includes(element['idConsumible'])) {
-                return false
+                return false;
             }
             if (!this.validParts.includes(element['idParte'])) {
-                return false
+                return false;
             }
 
         });
@@ -107,6 +122,7 @@ export class Loans {
     dummyConsumible() {
         return {
             "idParte": "",
+            "idConsumible":"",
             "cantidad": 1,
             "condicion": 0,
         }
@@ -114,7 +130,7 @@ export class Loans {
 
     dummyHerramienta() {
         return {
-            "idPieza": "",
+            "idHerramienta": "",
             "idParte": ""
         }
     }

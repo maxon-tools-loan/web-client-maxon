@@ -25,6 +25,8 @@
       <div repeat.for="i of consumibles.length">
         <div>
           <div class="mb-3 filters">
+            <label for="partno" class="form-label"># Consumible
+              <input type="text" input.delegate="updateData(i,1)" value.bind="consumibles[i]['idConsumible']" class="form-control"></label>
             <label for="partno" class="form-label"># Parte
               <input type="text" value.bind="consumibles[i]['idParte']" class="form-control"></label>
 
@@ -75,8 +77,8 @@
 
         <div>
           <div class="mb-3 filters">
-            <label for="partno" class="form-label"># Pieza
-            <input type="text" class="form-control"></label>
+            <label for="partno" class="form-label"># Herramienta
+            <input type="text" input.delegate="updateData(i,0)" class="form-control"></label>
           
             <label for="quantity" class="form-label"># Parte
             <input type="text" class="form-control"></label>
