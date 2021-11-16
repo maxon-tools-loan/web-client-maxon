@@ -46,6 +46,8 @@ export class InOut {
     }
 
     commit(){
+        const type = (this.type) ? "Entrada" : "Salida"
+        
         if(this.type){
             console.log("Salida")
         }

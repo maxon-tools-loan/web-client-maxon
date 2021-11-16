@@ -3,91 +3,93 @@
   <form>
 
     <div>
-      <div class="mb-3">
-        <label for="employeeid" class="form-label">Empleado Id</label>
-        <input type="text" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="job" class="form-label">Job</label>
-        <input type="text" class="form-control">
-      </div>
-
-      <div class="mb-3">
-        <label for="machine" class="form-label">Maquina</label>
-        <input type="text" class="form-control">
-      </div>
-    </div>
-
-
-    <!-- TODO: Consumibles? -->
-    <div class="mb-3">
-      <label for="employeeid" class="form-label">Empleado Id</label>
-      <input type="text" class="form-control">
-    </div>
+      <div class="mb-3 filters">
+        <label for="employeeid" class="form-label">Empleado Id
+          <input type="text" value.bind="empleado"class="form-control"></label>
 
 
 
-    <div>
-      <div class="mb-3">
-        <label for="partno" class="form-label"># Parte</label>
-        <input type="text" class="form-control">
-      </div>
+        <label for="job" class="form-label">Job
+          <input type="text" value.bind="job" class="form-control"></label>
 
-      <div class="mb-3">
-        <label for="quantity" class="form-label">Cantidad</label>
-        <input type="text" class="form-control">
+
+
+        <label for="machine" class="form-label">Maquina
+          <input type="text" value.bind="maquina" class="form-control"></label>
       </div>
     </div>
+    <button click.delegate="add(1)"> Añadir Consumible</button>
 
-    <div>
-      Condición de Cambio
+    <div if.bind="consumibles.length>=1">
+      <h2>Consumibles</h2>
+      <div repeat.for="i of consumibles.length">
+        <div>
+          <div class="mb-3 filters">
+            <label for="partno" class="form-label"># Parte
+              <input type="text" value.bind="consumibles[i]['idParte']" class="form-control"></label>
 
-      <div class="mb-3">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox1"
-            value="option1">
-          <label class="form-check-label" for="inlineCheckbox1">No
-            aplica</label>
+            <label for="quantity" class="form-label">Cantidad
+              <input type="text" value.bind="consumibles[i]['cantidad']" class="form-control"></label>
+
+              <label>Eliminar
+                <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox" >
+              </label>
+          </div>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-            value="option2">
-          <label class="form-check-label" for="inlineCheckbox2">No
-            Regreso</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-            value="option2">
-          <label class="form-check-label" for="inlineCheckbox2">Cambio</label>
-        </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="checkbox" id="inlineCheckbox2"
-            value="option2">
-          <label class="form-check-label" for="inlineCheckbox2">Dañado</label>
+
+        <div>
+          Condición de Cambio
+
+          <div class="mb-3">
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,0)"  checked.bind="consumibles[i]['condicion']==0"
+                value=0>
+              <label class="form-check-label" >No
+                aplica</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,1)"  checked.bind="consumibles[i]['condicion']==1"
+                 value=1>
+              <label class="form-check-label" >No
+                Regreso</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,2)"  checked.bind="consumibles[i]['condicion']==2"
+                 value=2>
+              <label class="form-check-label" >Cambio</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,3)"  checked.bind="consumibles[i]['condicion']==3"
+                 value=3>
+              <label class="form-check-label" >Dañado</label>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- TODO: No consumible -->
-    <div class="mb-3">
-      <label for="employeeid" class="form-label">No Consumible</label>
-      <input type="text" class="form-control">
+    <button click.delegate="add(0)">Añadir Herramienta </button>
+    <div if.bind="herramientas.length>=1">
+      <h4>herramientas</h4>
+      <div repeat.for="i of herramientas.length">
+
+        <div>
+          <div class="mb-3 filters">
+            <label for="partno" class="form-label"># Pieza
+            <input type="text" class="form-control"></label>
+          
+            <label for="quantity" class="form-label"># Parte
+            <input type="text" class="form-control"></label>
+            <label>Eliminar
+              <input class="form-check-input" change.delegate="remove(i,0)" type="checkbox" >
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div>
-      <div class="mb-3">
-        <label for="partno" class="form-label"># Pieza</label>
-        <input type="text" class="form-control">
-      </div>
 
-      <div class="mb-3">
-        <label for="quantity" class="form-label"># Parte</label>
-        <input type="text" class="form-control">
-      </div>
-    </div>
-
-    <button type="submit" class="btn btn-primary"> Prestar </button>
+    <button type="submit" click.delegate="commit()"class="btn btn-primary"> Prestar </button>
 
   </form>
 
