@@ -1,66 +1,47 @@
 <template>
   <h2>Préstamos</h2>
   <form>
-
     <div>
       <div class="mb-3 filters">
-        <label for="employeeid" class="form-label">Empleado Id
-          <input type="text" value.bind="empleado" class="form-control"></label>
-
-        <label for="job" class="form-label">Job
-          <input type="text" value.bind="job" class="form-control"></label>
-
-        <label for="machine" class="form-label">Maquina
-          <input type="text" value.bind="maquina" class="form-control"></label>
+        <label for="employeeid" class="form-label">Empleado Id <input type="text" value.bind="empleado" class="form-control"></label>
+        <label for="job" class="form-label">Job <input type="text" value.bind="job" class="form-control"></label>
+        <label for="machine" class="form-label">Maquina <input type="text" value.bind="maquina" class="form-control"></label>
       </div>
     </div>
-    <button click.delegate="add(1)"> Añadir Consumible</button>
-
+    <div>
+      <button click.delegate="add(1)" class="btn btn-outline-dark">+ Añadir Consumible</button>
+      <button click.delegate="add(0)" class="btn btn-outline-dark">+ Añadir Herramienta </button>
+      <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
+    </div>
     <div if.bind="consumibles.length>=1" class="container">
-      <h3>Consumibles</h3>
+      <h3><button click.delegate="add(1)" class="btn btn-dark">+</button> Consumibles</h3>
       <div repeat.for="i of consumibles.length" class="container">
         <div>
           <div class="filters">
-            <label for="partno" class="form-label">
-              # Consumible
-              <input type="text" input.delegate="updateData(i,1)" value.bind="consumibles[i]['idConsumible']" class="form-control">
+            <label for="partno" class="form-label"> # Consumible <input type="text" input.delegate="updateData(i,1)" value.bind="consumibles[i]['idConsumible']" class="form-control">
             </label>
-            <label for="partno" class="form-label">
-              # Parte
-              <input type="text" value.bind="consumibles[i]['idParte']" class="form-control">
+            <label for="partno" class="form-label"> # Parte <input type="text" value.bind="consumibles[i]['idParte']" class="form-control">
             </label>
-            <label for="quantity" class="form-label">
-              Cantidad
-              <input type="text" value.bind="consumibles[i]['cantidad']" class="form-control">
+            <label for="quantity" class="form-label"> Cantidad <input type="text" value.bind="consumibles[i]['cantidad']" class="form-control">
             </label>
-            <label>
-              Eliminar
-              <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">
+            <label> Eliminar <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">
             </label>
           </div>
-          <div>
-            Condición de Cambio
-            <div>
+          <div> Condición de Cambio <div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,0)"
-                  checked.bind="consumibles[i]['condicion']==0" value=0>
-                <label class="form-check-label">No
-                  aplica</label>
+                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,0)" checked.bind="consumibles[i]['condicion']==0" value=0>
+                <label class="form-check-label">No aplica</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,1)"
-                  checked.bind="consumibles[i]['condicion']==1" value=1>
-                <label class="form-check-label">No
-                  Regreso</label>
+                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,1)" checked.bind="consumibles[i]['condicion']==1" value=1>
+                <label class="form-check-label">No Regreso</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,2)"
-                  checked.bind="consumibles[i]['condicion']==2" value=2>
+                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,2)" checked.bind="consumibles[i]['condicion']==2" value=2>
                 <label class="form-check-label">Cambio</label>
               </div>
               <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,3)"
-                  checked.bind="consumibles[i]['condicion']==3" value=3>
+                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,3)" checked.bind="consumibles[i]['condicion']==3" value=3>
                 <label class="form-check-label">Dañado</label>
               </div>
             </div>
@@ -68,31 +49,21 @@
         </div>
       </div>
     </div>
-
-    <button click.delegate="add(0)">Añadir Herramienta </button>
     <div if.bind="herramientas.length>=1" class="container">
-      <h3>Herramientas</h3>
-
+      <h3><button click.delegate="add(0)" class="btn btn-dark">+</button> Herramientas</h3>
       <div repeat.for="i of herramientas.length" class="container">
         <div>
           <div class="mb-3 filters">
-            <label for="partno" class="form-label"># Herramienta
-              <input type="text" input.delegate="updateData(i,0)" class="form-control"></label>
-
-            <label for="quantity" class="form-label"># Parte
-              <input type="text" class="form-control"></label>
-            <label>Eliminar
-              <input class="form-check-input" change.delegate="remove(i,0)" type="checkbox">
+            <label for="partno" class="form-label"># Herramienta <input type="text" input.delegate="updateData(i,0)" class="form-control"></label>
+            <label for="quantity" class="form-label"># Parte <input type="text" class="form-control"></label>
+            <label>Eliminar <input class="form-check-input" change.delegate="remove(i,0)" type="checkbox">
             </label>
           </div>
         </div>
       </div>
-
     </div>
-
-
-    <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
-
+    <div if.bind="herramientas.length > 0 || consumibles.length > 0">
+      <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
+    </div>
   </form>
-
 </template>
