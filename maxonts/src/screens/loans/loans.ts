@@ -87,12 +87,16 @@ export class Loans {
         }
     }
     commit() {
-        if(this.verifyData()){
+        if(this.herramientas.length<1 && this.consumibles.length <1){
+            alert("No Se han asignado elementos");
+        }
+        else if(this.verifyData()){
             let data ={
                 "job":this.job,
                 "maquina":this.maquina,
                 "empleado":this.empleado,
-                "user":"admin"
+                "user":"91b990e9fe9776c93017b2c451fef7",
+                "externo":0
             }
             this.service.postLoan(this.herramientas,this.consumibles,data)
         }
