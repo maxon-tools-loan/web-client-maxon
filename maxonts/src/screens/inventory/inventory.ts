@@ -1,4 +1,4 @@
-import { IInventoryItem, InventoryService } from "../../services/inventory"
+import {  InventoryService } from "../../services/inventory"
 import { inject } from "aurelia-framework"
 import { createCipheriv } from "crypto";
 @inject(InventoryService)

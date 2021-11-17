@@ -37,7 +37,7 @@
         <td>${record.Maximo}</td>
         <td>${record.Prestados}</td>
         <td>${record.Disponibles!=null ? record.disponibles:0}</td>
-        <td><input type="checkbox" checked.bind="record.estado==1" name="ordered" />&nbsp;</td>
+        <td><input type="checkbox" checked.bind="item.estado" model.bind="item.estado" value.bind="item.estado"   name="ordered" />&nbsp;</td>
       </tr>
     </tbody>
   </table>

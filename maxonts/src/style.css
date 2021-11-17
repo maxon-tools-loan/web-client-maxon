@@ -1,8 +1,26 @@
+main {
+  margin: 0px;
+  padding: 0px;
+}
+
+.router_view {
+  padding: 32px;
+}
+
+.container {
+  margin: 16px;
+}
+
+.child {
+  margin-left: 16px;
+}
+
 .sidebar{
   background-color: #424347;
   display: flex;
   flex-direction: column;
   min-width: fit-content;
+  height: 100vh;
 }
 .sidebar-title {
   width: 100%;
@@ -52,6 +70,11 @@ a{
   background-color:#3D3F44;
   margin: 0.3rem;
   min-width: fit-content;
+}
+
+.sidebar_container > * {
+  width: 100%;
+  margin: 8px;
 }
 
 .login.container {

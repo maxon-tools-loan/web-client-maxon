@@ -1,43 +1,7 @@
+import { API } from "../../../config";
 import { sleep } from "../utils";
 const fetch = require('node-fetch');
-export interface IInventoryItem {
-  partNo: number;
-  family: string;
-  name: string;
-  minimum: number;
-  maximum: number;
-  loaned?: number;
-  available: boolean;
-}
 
-const dummyInventory: IInventoryItem[] = [
-  {
-    partNo: 123,
-    family: "Hello",
-    name: "eqwieqw",
-    minimum: 3,
-    maximum: 5,
-    loaned: 12321,
-    available: false,
-  },
-  {
-    partNo: 123,
-    family: "Hello",
-    name: "eqwieqw",
-    minimum: 3,
-    maximum: 5,
-    available: false,
-  },
-  {
-    partNo: 123,
-    family: "Hello",
-    name: "eqwieqw",
-    minimum: 3,
-    maximum: 5,
-    loaned: 12321,
-    available: false,
-  },
-];
 
 export class InventoryService {
 
@@ -69,5 +33,20 @@ export class InventoryService {
    console.log(response)
    if (response['code']=="api.success") return response['data']['value'];
     return
+  }
+
+  async updateStatus(data): Promise<{}>{
+    let props = {
+      "id":data.idParte,
+      "state":data.estado
+    };
+    const response = await fetch(API.URL + '/items/updateState',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+   
+    return response;
+    
   }
 }
