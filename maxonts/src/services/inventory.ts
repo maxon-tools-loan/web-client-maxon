@@ -5,6 +5,21 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
+ 
+  async registerItems(items) {
+    let props = {
+      "items": items
+    };
+    const response = await fetch(API.URL + '/items/registerItem', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+
+    return response;
+  }
+
+
   async registerManteinance(tools, consumibles, metadata) {
     let props = {
       "tools": tools,
@@ -25,6 +40,7 @@ export class InventoryService {
     const response = await fetch('http://localhost:3000/api/items/orders').then(response => {
       return response.json()
     });
+    console.log(response)
     if (response['code'] == "api.success") return response['data']['value'];
   }
 
@@ -46,6 +62,7 @@ export class InventoryService {
       return response.json()
     });
     console.log("Inventory Items: ", response)
+    console.log(response)
     if (response['code'] == "api.success") return response['data']['value'];
   }
 
@@ -58,6 +75,13 @@ export class InventoryService {
     console.log(response)
     if (response['code'] == "api.success") return response['data']['value'];
     return
+  }
+
+  async getAllItemsInfo(): Promise<[]> {
+    const response = await fetch(API.URL + 'items/allitemInfo').then(response => {
+      return response.json()
+    });
+    if (response['code'] == "api.success") return response['data'];
   }
 
   async updateStatus(data): Promise<{}> {
