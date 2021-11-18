@@ -1,10 +1,21 @@
+import {inject} from "aurelia-framework"
+import { InventoryService } from "services/inventory"
+@inject(InventoryService)
 export class Maintenance {
     public consumibles =[]
     public tools = []
+    meta ={
+        "usuario":"admin"
+    }
+    service:InventoryService
     opt = 1
     
-    constructor(){
+    constructor(service:InventoryService){
+        this.service = service;
+    }
 
+    commit(){
+        this.service.registerManteinance(this.tools,this.consumibles,this.meta)
     }
     addConsumible(){
         this.consumibles.push(consu(this.consumibles.length))

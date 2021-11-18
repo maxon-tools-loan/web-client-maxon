@@ -15,18 +15,10 @@ export class Inventory {
     this.items = await this.inventoryService.getOrderInfo();
   }
 
-  update(item){
+  async update(item):Promise<void>{
     console.log(item)
-    let val = true
-    if(item.estado==1){
-      item.estado ==0;
-    }
-    else{
-      item.estado =1;
-      val=false;
-    }
-     this.inventoryService.updateStatus(item);
-    return val;
+    item.estado ==1? item.estado=0:item.estado=1
+    await this.inventoryService.updateStatus(item);
   }
 
 }

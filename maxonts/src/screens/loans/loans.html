@@ -3,16 +3,22 @@
   <form>
     <div>
       <div class="mb-3 filters">
-        <label for="employeeid" class="form-label">Empleado Id <input type="text" value.bind="empleado" class="form-control"></label>
-        <label for="job" class="form-label">Job <input type="text" value.bind="job" class="form-control"></label>
-        <label for="machine" class="form-label">Maquina <input type="text" value.bind="maquina" class="form-control"></label>
+        <label for="employeeid" class="form-label">No. Empleado
+          <input type="text" value.bind="empleado" class="form-control"></label>
+
+        <label for="job" class="form-label">Job
+          <input type="text" value.bind="job" class="form-control"></label>
+
+        <label for="machine" class="form-label">Maquina
+          <input type="text" value.bind="maquina" class="form-control"></label>
       </div>
     </div>
+    
     <div>
-      <button click.delegate="add(1)" class="btn btn-outline-dark">+ Añadir Consumible</button>
-      <button click.delegate="add(0)" class="btn btn-outline-dark">+ Añadir Herramienta </button>
-      <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
+      <button click.delegate="add(1)">Añadir Consumible</button>
+      <button click.delegate="add(0)">Añadir Herramienta</button>
     </div>
+
     <div if.bind="consumibles.length>=1" class="container">
       <h3><button click.delegate="add(1)" class="btn btn-dark">+</button> Consumibles</h3>
       <div repeat.for="i of consumibles.length" class="container">
