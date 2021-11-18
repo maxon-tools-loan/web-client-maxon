@@ -16,7 +16,7 @@
               <div class="filters">
                 <label for="exampleFormControlInput1" class="form-label"># de Consumible
 
-                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.consumibles[item]['idConsumible']">
+                  <input type="text" class="form-control" input.delegate="updateData(item,1)" id="exampleFormControlInput1" value.bind="$parent.consumibles[item]['idConsumible']">
                 </label>
                 <label for="exampleFormControlInput2" class="form-label"># Parte
 
@@ -44,9 +44,9 @@
             <h3> Herramienta</h3>
             <li repeat.for="item of tools.length">
               <div class="filters">
-                <label for="exampleFormControlInput1" class="form-label"># de Consumible
+                <label for="exampleFormControlInput1" class="form-label"># de Herramienta
 
-                  <input type="text" class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
+                  <input type="text" class="form-control" input.delegate="updateData(item,0)" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
                 </label>
                 <label for="exampleFormControlInput2" class="form-label"># Parte 
 
