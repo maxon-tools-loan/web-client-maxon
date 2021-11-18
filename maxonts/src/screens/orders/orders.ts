@@ -1,25 +1,38 @@
+import { UNDEFINED } from './../../utils/index';
 import { InventoryService} from "../../services/inventory"
 import {inject} from "aurelia-framework"
 import { SearchService } from "services/search";
+import { FormatService } from "services/format";
 
 const searchTemplate = {
   idParte: {
     evaluator: (expected) => (current: string) => current.includes(expected)
+  },
+  Familia: {
+    evaluator: (expected) => (current: string) => current.toLowerCase() == expected
+  },
+  estado: {
+    evaluator: (expected) => (current: number) => current === parseInt(expected)
   }
 }
 
-@inject(InventoryService, SearchService)
+@inject(InventoryService, SearchService, FormatService)
 export class Inventory {
+  UNDEFINED=UNDEFINED
 
   inventoryService: InventoryService;
   searchService: SearchService;
+  formatService: FormatService
+  familias: []
   items = []
   rawItems = []
   filter: Function
   query: {}
-  constructor(inventory: InventoryService, search: SearchService) {
+  constructor(inventory: InventoryService, search: SearchService, format: FormatService) {
     this.inventoryService = inventory;
     this.searchService = search;
+    this.formatService = format
+
     const rawFilter = this.searchService.createFilter(searchTemplate)
     this.filter = () => this.items = rawFilter(this.query, this.rawItems as [])
 
@@ -27,6 +40,8 @@ export class Inventory {
   }
   async setup() {
     this.rawItems = await this.inventoryService.getOrderInfo();
+    this.familias = this.searchService.getUniqueProperties(this.rawItems, (v) => v.Familia.toLowerCase())
+    console.log(this.familias)
     this.items = this.rawItems
   }
 

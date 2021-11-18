@@ -7,6 +7,21 @@
         <label>No. Item</label>
         <input type="text" class="form-control" value.bind="query.idParte">
       </div>
+      <div>
+        <label>Familia</label>
+        <select value.bind="query.Familia" class="form-control">
+          <option value=${UNDEFINED}>Seleccionar</option>
+          <option repeat.for="item of familias" value=${item}>${formatService.capitalize(item)}</option>
+        </select>
+      </div>
+      <div>
+        <label>Pedido</label>
+        <select value.bind="query.estado" class="form-control">
+          <option value="" selected>Seleccionar</option>
+          <option value=1>Sí</option>
+          <option value=0>No</option>
+        </select>
+      </div>
       <button class="btn btn-primary" type="submit">Buscar</button>
     </div>
   </form>
