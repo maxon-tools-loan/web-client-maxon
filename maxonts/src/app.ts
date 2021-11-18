@@ -15,8 +15,8 @@ export class App {
     config.options.root = '/';
     config.options.pushState = true;
     config.map([
-      { route: '/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
-      { route: '/register', name: 'register', moduleId: PLATFORM.moduleName('screens/register/register'),  title:'Register Page' },
+      { route: '/auth/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
+      { route: '/auth/register', name: 'register', moduleId: PLATFORM.moduleName('screens/register/register'),  title:'Register Page' },
       { route: '/loans', name: "loans", moduleId: PLATFORM.moduleName('screens/loans/loans')},
       { route: '/returns', name: "returns", moduleId: PLATFORM.moduleName('screens/returns/returns')},
       { route: '/inventory', name: "inventory", moduleId: PLATFORM.moduleName('screens/inventory/inventory')},
@@ -28,7 +28,7 @@ export class App {
       { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut')},
       { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info')},
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info')},
-      { route: '', redirect: '/login' },
+      { route: '', redirect: '/auth/login' },
     ]);
   }
 }
