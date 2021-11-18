@@ -51,19 +51,20 @@ export class SessionService {
 
   public userData?: LoginData
 
-  async getFullSession() {
-    return localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+  getFullSession() {
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION))
   }
 
-  async login(username: string, password: string): Promise<boolean> {
+  async login(username: string, password: string): Promise<string> {
     const response = await sendToApi('login', {
       username,
       password
-    })
-    this.userData = (await response.json()).data as LoginData
-    // nose ontas ector, voy a tomar malas decisiones
-    localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
-    return  (await response.json()).code
+    }).then(v=>v.json())
+    if (response.code === "api.user.login.success") {
+      this.userData = response.data as LoginData
+      localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+    }
+    return response.code
   }
 
   async createUser(registerInput: RegisterInput): Promise<boolean> {
