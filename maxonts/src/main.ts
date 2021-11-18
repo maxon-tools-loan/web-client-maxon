@@ -6,7 +6,6 @@ import "bootstrap/dist/css/bootstrap.css";
 import "font-awesome/css/font-awesome.css";
 import 'eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css';
 
-
 export function configure(aurelia: Aurelia): void {
   aurelia.use
     .standardConfiguration()

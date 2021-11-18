@@ -1,16 +1,18 @@
 import {  InventoryService } from "../../services/inventory"
 import { inject } from "aurelia-framework"
 import { createCipheriv } from "crypto";
+import { SessionService } from "services/session";
 
 const sorters = {
   ascending: (prop) => (a, b) => a[prop] - b[prop],
   descending: (prop) => (a, b) => b[prop] - a[prop]
 }
 
-@inject(InventoryService)
+@inject(InventoryService, SessionService)
 export class Inventory {
 
   inventoryService: InventoryService;
+  sessionService: SessionService;
   items = []
   rawItems = []
   query = {}
@@ -35,7 +37,11 @@ export class Inventory {
     encryptedData += cipher.final("hex");
     return encryptedData;
   }
-  constructor(inventory: InventoryService) {
+  constructor(inventory: InventoryService, sessionService: SessionService) {
+    this.sessionService = sessionService;
+
+    console.log(sessionService.userData)
+
     this.inventoryService = inventory;
     this.setup()
   }
