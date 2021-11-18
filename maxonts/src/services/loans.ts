@@ -37,13 +37,13 @@ const returns: Returns[] = [
 
 export class LoansService {
 
-  async searchReturns(query) {
-    let loans = await this.getLoans()
+  async searchReturns(query, raw_loans=undefined) {
+    let loans = raw_loans ?? await this.getLoans()
     console.log(query)
     if (query?.idEmpleado)
       loans = loans.filter((v: any) => v.idEmpleado === parseInt(query.idEmpleado)) as []
     if (query?.status) {
-      loans = loans.filter((v: any) => v.status) as []
+      loans = loans.filter((v: any) => v.status === parseInt(query.status)) as []
     }
     if (query?.startDate) {
       loans = loans.filter((v: any) => moment(v.fecha).format('YYYY-MM-DD') >= query.startDate) as []

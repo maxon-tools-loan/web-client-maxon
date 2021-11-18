@@ -11,19 +11,22 @@ export class Returns {
   
   param: string;
   returns = [];
+  rawLoans = [];
 
   loanService: LoansService;
 
   constructor(loans: LoansService) {
     this.loanService = loans
+    this.setupReturns()
+  }
+
+  async setupReturns() {
+    this.rawLoans = await this.loanService.getLoans()
     this.search()
   }
 
   async search(): Promise<void> {
-    console.log(this.query)
-    this.returns = await this.loanService.searchReturns(this.query)
-    // this.returns = await this.loanService.getLoans(this.param)
-    console.log(this.returns);
+    this.returns = await this.loanService.searchReturns(this.query, this.rawLoans)
   }
 
 
