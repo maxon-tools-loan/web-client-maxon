@@ -1,18 +1,33 @@
 import { InventoryService} from "../../services/inventory"
 import {inject} from "aurelia-framework"
+import { SearchService } from "services/search";
 
-@inject(InventoryService)
+const searchTemplate = {
+  idParte: {
+    evaluator: (expected) => (current: string) => current.includes(expected)
+  }
+}
+
+@inject(InventoryService, SearchService)
 export class Inventory {
 
   inventoryService: InventoryService;
+  searchService: SearchService;
   items = []
-
-  constructor(inventory: InventoryService) {
+  rawItems = []
+  filter: Function
+  query: {}
+  constructor(inventory: InventoryService, search: SearchService) {
     this.inventoryService = inventory;
-  }
+    this.searchService = search;
+    const rawFilter = this.searchService.createFilter(searchTemplate)
+    this.filter = () => this.items = rawFilter(this.query, this.rawItems as [])
 
-  async search(): Promise<void> {
-    this.items = await this.inventoryService.getOrderInfo();
+    this.setup()
+  }
+  async setup() {
+    this.rawItems = await this.inventoryService.getOrderInfo();
+    this.items = this.rawItems
   }
 
   async update(item):Promise<void>{

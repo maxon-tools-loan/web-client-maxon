@@ -1,15 +1,14 @@
 <template>
-  <h2> Inventory </h2>
+  <h2> Pedidos </h2>
 
-  <form submit.delegate="search()">
-
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label"># Item
-      </label>
-      <input type="text" class="form-control" id="exampleFormControlInput1"
-        value.bind="param">
+  <form submit.delegate="filter()">
+    <div class="mb-3 search">
+      <div>
+        <label>No. Item</label>
+        <input type="text" class="form-control" value.bind="query.idParte">
+      </div>
+      <button class="btn btn-primary" type="submit">Buscar</button>
     </div>
-    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 
   <h2> Resultados </h2>

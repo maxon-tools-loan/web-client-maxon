@@ -37,7 +37,7 @@ export class InventoryService {
 
 
   async getOrderInfo(): Promise<[]> {
-    const response = await fetch('http://localhost:3000/api/items/orders').then(response => {
+    const response = await fetch(API.URL +'/items/orders').then(response => {
       return response.json()
     });
     console.log(response)
@@ -68,7 +68,7 @@ export class InventoryService {
 
   async getItemInfo(idParte): Promise<[]> {
     const params = new URLSearchParams({ "idParte": idParte })
-    const response = await fetch('http://localhost:3000/api/items/itemInfo?' + params).then(response => {
+    const response = await fetch(API.URL + '/items/itemInfo?' + params).then(response => {
       return response.json()
     });
 
