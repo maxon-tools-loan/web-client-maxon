@@ -95,10 +95,10 @@ export class Up_Downs {
     }
     commitDown(){
         if(this.verifyDown()){
-
+            this.inventory.disableItems(this.down)
         }
         else{
-            this.inventory.disableItems(this.down)
+            
         }
     }
     
