@@ -40,8 +40,6 @@ export class Inventory {
   constructor(inventory: InventoryService, sessionService: SessionService) {
     this.sessionService = sessionService;
 
-    console.log(sessionService.userData)
-
     this.inventoryService = inventory;
     this.setup()
   }

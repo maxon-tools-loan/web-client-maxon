@@ -26,6 +26,8 @@
       </a>
       <a class="sidebar_modifications" route-href="up_downs"> Altas/Bajas </a>
       <a class="sidebar_modifications" route-href="inOut"> Entrada/Salida </a>
+      <a if.bind="sessionService.userData" click.delegate="logout()">Logout
+      </a>
     </div>
   </div>
 </template>
