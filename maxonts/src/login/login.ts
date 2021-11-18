@@ -15,6 +15,7 @@ export class Login {
 
   constructor(sessionService: SessionService) {
     this.sessionService = sessionService;
+    sessionService.isLoggedIn()
   }
 
   async submit(): Promise<void> {

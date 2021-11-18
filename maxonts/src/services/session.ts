@@ -38,7 +38,7 @@ interface LoginData {
 
 }
 
-const sendToApi = async (endpointName: string, data: unknown) => { 
+const callApi = async (endpointName: string, data: unknown) => { 
   return await fetch(endpoint(endpointName), {
       method: 'POST',
       body: JSON.stringify(data),
@@ -51,12 +51,30 @@ export class SessionService {
 
   public userData?: LoginData
 
+  async isLoggedIn() : Promise<boolean> {
+    const session = this.getFullSession() as LoginData
+    if (!session)
+      return false
+    const result = await (await callApi('refresh', {sessionKey: session.session.key})).json()
+    if (result.code === "api.user.invalidSession") {
+      this.logout()
+      return false
+    }
+    this.userData = result.data
+    return true
+  }
+
   getFullSession() {
     return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION))
   }
 
+  // strategy: just delete localstorage
+  logout() {
+    localStorage.removeItem(STORAGE_KEYS.USER_SESSION)
+  }
+
   async login(username: string, password: string): Promise<string> {
-    const response = await sendToApi('login', {
+    const response = await callApi('login', {
       username,
       password
     }).then(v=>v.json())
@@ -68,7 +86,7 @@ export class SessionService {
   }
 
   async createUser(registerInput: RegisterInput): Promise<boolean> {
-    const response = await sendToApi('create', registerInput)
+    const response = await callApi('create', registerInput)
     console.log(await response.json())
     return true;
   }

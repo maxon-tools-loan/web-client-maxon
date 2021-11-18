@@ -1,3 +1,5 @@
+import { SessionService } from 'services/session';
+import { inject } from 'aurelia-framework';
 import { autoinject } from 'aurelia-dependency-injection'
 import {PLATFORM} from "aurelia-pal"
 import {RouterConfiguration, Router} from 'aurelia-router';
@@ -5,11 +7,18 @@ import "reflect-metadata"
 
 
 @autoinject()
+@inject(SessionService)
 export class App {
   public message = 'Maxon Tools Loan';
   router: Router;
+  sessionService: SessionService;
 
-  configureRouter(config: RouterConfiguration, router: Router): void {
+  constructor(session: SessionService) {
+    this.sessionService = session
+  }
+
+  async configureRouter(config: RouterConfiguration, router: Router) {
+    
     this.router = router;
     config.title = 'Maxon Loan System';
     config.options.root = '/';
@@ -28,7 +37,14 @@ export class App {
       { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut')},
       { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info')},
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info')},
-      { route: '', redirect: '/login' },
+      { route: '', redirect: '/loans' },
     ]);
+
+    if (!(await this.sessionService.isLoggedIn())) {
+      setTimeout(() => {
+        console.log("User not logged in, redirecting to /login", this.sessionService.getFullSession())
+        router.navigate('login')
+      })
+    }
   }
 }
