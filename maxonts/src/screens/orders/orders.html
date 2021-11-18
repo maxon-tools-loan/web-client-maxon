@@ -1,15 +1,29 @@
 <template>
-  <h2> Inventory </h2>
+  <h2> Pedidos </h2>
 
-  <form submit.delegate="search()">
-
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label"># Item
-      </label>
-      <input type="text" class="form-control" id="exampleFormControlInput1"
-        value.bind="param">
+  <form submit.delegate="filter()">
+    <div class="mb-3 search">
+      <div>
+        <label>No. Item</label>
+        <input type="text" class="form-control" value.bind="query.idParte">
+      </div>
+      <div>
+        <label>Familia</label>
+        <select value.bind="query.Familia" class="form-control">
+          <option value=${UNDEFINED}>Seleccionar</option>
+          <option repeat.for="item of familias" value=${item}>${formatService.capitalize(item)}</option>
+        </select>
+      </div>
+      <div>
+        <label>Pedido</label>
+        <select value.bind="query.estado" class="form-control">
+          <option value="" selected>Seleccionar</option>
+          <option value=1>Sí</option>
+          <option value=0>No</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit">Buscar</button>
     </div>
-    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 
   <h2> Resultados </h2>

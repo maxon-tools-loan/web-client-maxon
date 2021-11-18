@@ -17,7 +17,11 @@
     "moment": "^2.29.1",
     "mssql": "^7.2.1",
     "reflect-metadata": "^0.1.13",
+<<<<<<< HEAD
     "rxjs": "^7.4.0",
+=======
+    "sweetalert2": "^11.1.10",
+>>>>>>> 5f3fcb005cd3367c6d04ff03baefa1b3f80eba8a
     "typeorm": "^0.2.38"
   },
   "devDependencies": {

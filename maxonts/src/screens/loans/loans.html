@@ -15,8 +15,9 @@
     </div>
     
     <div>
-      <button click.delegate="add(1)">Añadir Consumible</button>
-      <button click.delegate="add(0)">Añadir Herramienta</button>
+      <button click.delegate="add(1)" class="btn btn-outline-dark">Añadir Consumible</button>
+      <button click.delegate="add(0)" class="btn btn-outline-dark">Añadir Herramienta</button>
+      <button type="submit" click.delegate="commit()" class="btn btn-primary" if.bind="herramientas.length > 0 || consumibles.length > 0"> Prestar </button>
     </div>
 
     <div if.bind="consumibles.length>=1" class="container">
