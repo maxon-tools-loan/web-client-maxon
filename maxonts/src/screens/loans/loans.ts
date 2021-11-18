@@ -1,6 +1,7 @@
 import { inject } from "aurelia-framework"
 import { LoansService } from "services/loans"
 
+
 @inject(LoansService)
 export class Loans {
     validParts = []
@@ -15,6 +16,8 @@ export class Loans {
     consumibles = []
     herramientas = []
     service: LoansService
+
+    deudores =[]
     constructor(service: LoansService) {
         this.service = service;
         this.getInfo();
@@ -39,7 +42,11 @@ export class Loans {
             this.validConsumibles.push(element['idConsumible'])
             this.dictConsumibles[element['idConsumible']]=element['idParte']
         });
-        console.log(this.dictConsumibles)
+        let datas = await this.service.getLoans();
+        datas['loans'].forEach(element => {
+            this.deudores.push(element['idEmpleado'])
+        });
+        
     }
     updateData(i,type){
         console.log(i,type)
@@ -52,13 +59,20 @@ export class Loans {
 
     }
     verifyData() {
+        console.log(this.deudores.includes(parseInt(this.empleado)))
+        if(this.deudores.includes(parseInt(this.empleado))){
+            alert('Se debe marterial');
+            return false;
+        }
 
         if (!this.validUsers.includes(parseInt(this.empleado))) {
             return false;
         }
 
         this.herramientas.forEach(element => {
-            
+            if(element==null || element==''){
+                return false;
+            }
             if (!this.validHerramientas.includes(element['idHerramienta'])) {
                 return false;
             }
@@ -67,7 +81,10 @@ export class Loans {
             }
         });
         this.consumibles.forEach(element => {
-            console.log(this.validConsumibles.includes(element['idConsumible']))
+            
+            if(element==null || element==''){
+                return false;
+            }
             if (!this.validConsumibles.includes(element['idConsumible'])) {
                 return false;
             }
