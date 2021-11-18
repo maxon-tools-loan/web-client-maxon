@@ -17,17 +17,24 @@ export class Up_Downs {
     constructor(loan:LoansService,Inventory:InventoryService){
         this.loan = loan;
         this.inventory = Inventory;
+        this.loadIdParte();
     }
 
     async loadIdParte(){
         let data =await this.inventory.getAllItemsInfo()
-        data['items'].forEach(element => {
+        console.log(data)
+        data.forEach(element => {
             this.ids.push(element['idParte'])
             this.downData[element['idParte']] = element;
         });
     }
     matchData(i){
-        this.down[i]['Familia'] = this.downData[this.down[i]['idParte']]['Familia']
+        this.down[i]['Familia'] = this.downData[this.down[i]['idParte']]['Familia'];
+        this.down[i]['Descripcion'] = this.downData[this.down[i]['idParte']]['Descripcion'];
+        console.log(i);
+        console.log(this.down[i])
+        console.log(this.downData[this.down[i]['idParte']]['Familia'])
+        console.log(this.downData[this.down[i]['idParte']]['Descripcion'])
     }
 
     addUp(){

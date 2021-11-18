@@ -61,18 +61,18 @@
             <input type="text" value.bind="down[i]['idParte']" class="form-control">
           </label>
           <label class="form-label">Buscar
-            <button class="form-control"></button>
+            <button class="form-control" click.trigger="matchData(i)"></button>
           </label>
         </div>
 
         <div class="mb-3 filters">
           <label class="form-label">Familia
-            <input type="text" value.bind="ups[i]['Familia']" class="form-control">
+            <input type="text" value.bind="down[i]['Familia']" class="form-control">
           </label>
 
 
           <label class="form-label">Nombre/Descripcion
-            <input type="text" value.bind="ups[i]['Descripcion']" class="form-control">
+            <input type="text" value.bind="down[i]['Descripcion']" class="form-control">
           </label>
           <label>Eliminar
             <input class="form-check-input" change.delegate="removeDown(i)" type="checkbox" id="inlineCheckbox2">

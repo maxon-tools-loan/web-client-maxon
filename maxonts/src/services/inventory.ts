@@ -78,10 +78,10 @@ export class InventoryService {
   }
 
   async getAllItemsInfo(): Promise<[]> {
-    const response = await fetch(API.URL + 'items/allitemInfo').then(response => {
+    const response = await fetch(API.URL + '/items/allitemInfo').then(response => {
       return response.json()
     });
-    if (response['code'] == "api.success") return response['data'];
+    if (response['code'] == "api.success") return response['data']['value'];
   }
 
   async updateStatus(data): Promise<{}> {
