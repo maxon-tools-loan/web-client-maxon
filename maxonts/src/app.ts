@@ -32,7 +32,6 @@ export class App {
       { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut')},
       { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info')},
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info')}
-      //...obj
     ]);
   }
 }

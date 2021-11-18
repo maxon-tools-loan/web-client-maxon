@@ -7,6 +7,7 @@ const project = require('./aurelia_project/aurelia.json');
 const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const { ProvidePlugin } = require('webpack');
 
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -28,12 +29,12 @@ const cssRules = [
 ];
 
 
-module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, host } = {}) => ({
- 
+module.exports = ({ production } = {}, { extractCss, analyze, tests, hmr, port, host } = {}) => ({
+
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [srcDir, 'node_modules'],
-    
+
     alias: {
       // https://github.com/aurelia/dialog/issues/387
       // Uncomment next line if you had trouble to run aurelia-dialog on IE11
@@ -42,7 +43,8 @@ module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, h
       // https://github.com/aurelia/binding/issues/702
       // Enforce single aurelia-binding, to avoid v1/v2 duplication due to
       // out-of-date dependencies on 3rd party aurelia plugins
-      'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding')
+      'aurelia-binding': path.resolve(__dirname, 'node_modules/aurelia-binding'),
+      'jquery': path.join(__dirname, 'node_modules/jquery/src/jquery')
     }
   },
   entry: {
@@ -50,7 +52,9 @@ module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, h
       // Uncomment next line if you need to support IE11
       // 'promise-polyfill/src/polyfill',
       'aurelia-bootstrapper'
-    ]
+    ],
+    // 'aurelia-bootstrap': coreBundles.bootstrap,
+    // 'aurelia': coreBundles.aurelia.filter(pkg => coreBundles.bootstrap.indexOf(pkg) === -1)
   },
   mode: production ? 'production' : 'development',
   output: {
@@ -227,9 +231,11 @@ module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, h
       { test: /\.woff(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'url-loader', options: { limit: 10000, mimetype: 'application/font-woff' } },
       // load these fonts normally, as files:
       { test: /\.(ttf|eot|svg|otf)(\?v=[0-9]\.[0-9]\.[0-9])?$/i, loader: 'file-loader' },
-      { test: /environment\.json$/i, use: [
-        {loader: "app-settings-loader", options: {env: production ? 'production' : 'development' }},
-      ]},
+      {
+        test: /environment\.json$/i, use: [
+          { loader: "app-settings-loader", options: { env: production ? 'production' : 'development' } },
+        ]
+      },
       ...when(tests, {
         test: /\.[jt]s$/i, loader: 'istanbul-instrumenter-loader',
         include: srcDir, exclude: [/\.(spec|test)\.[jt]s$/i],
@@ -239,6 +245,13 @@ module.exports = ({ production } = {}, {extractCss, analyze, tests, hmr, port, h
   },
   plugins: [
     ...when(!tests, new DuplicatePackageCheckerPlugin()),
+    new ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+      'window.jQuery': 'jquery',
+      'window.Tether': 'tether',
+      Tether: 'tether'
+    }),
     new AureliaPlugin(),
     new ModuleDependenciesPlugin({
       'aurelia-testing': ['./compile-spy', './view-spy']

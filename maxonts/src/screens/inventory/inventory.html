@@ -1,19 +1,49 @@
 <template>
-  <h2> Inventory </h2>
+  <h2> Inventario </h2>
 
   <form submit.delegate="search()">
-
-    <div class="mb-3">
-      <label for="exampleFormControlInput1" class="form-label"># Item
-      </label>
-      <input type="text" class="form-control" id="exampleFormControlInput1"
-        value.bind="param">
+    <b>Buscar</b>
+    <div class="mb-3 search">
+      <div>
+        <label>Número de Parte</label>
+        <input type="text" class="form-control" value.bind="query.idParte">
+      </div>
+      <div>
+        <label>Tipo</label>
+        <select value.bind="query.Tipo" class="form-control">
+          <option selected value=${undefined}>Seleccionar</option>
+          <option repeat.for="type of types" value=${type}>${capitalize(type)}</option>
+        </select>
+      </div>
+      <div>
+        <label>Familia</label>
+        <select value.bind="query.Familia" class="form-control">
+          <option selected value=${undefined}>Seleccionar</option>
+          <option repeat.for="family of families" value=${family}>${capitalize(family)}</option>
+        </select>
+      </div>
+      <div>
+        <label class="transparent">.</label>
+        <button class="btn btn-primary" type="submit">Buscar</button>
+      </div>
     </div>
-    <button class="btn btn-primary" type="submit">Buscar</button>
   </form>
 
+  <form submit.delegate="sort()">
+    <b>Ordenar</b>
+    <div class="mb-3 search">
+      <div>
+        <label>Disponible</label>
+        <select value.bind="sorts.Disponible" class="form-control">
+          <option value="" selected>Seleccionar</option>
+          <option value="descending">Descendente</option>
+          <option value="ascending">Ascendente</option>
+        </select>
+      </div>
+      <button class="btn btn-primary" type="submit">Ordenar</button>
+    </div>
+  </form>
   <h2> Resultados </h2>
-
   <!-- TODO: tabla -->
   <table class="table table-hover">
     <thead>
@@ -36,13 +66,9 @@
         <td>${record.Descripcion}</td>
         <td>${record.Minimo}</td>
         <td>${record.Maximo}</td>
-        <td>${record.Prestados}</td>
-        <td>${record.Disponibles}</td>
+        <td>${amount(record.Prestados)}</td>
+        <td>${amount(record.Disponible)}</td>
       </tr>
     </tbody>
   </table>
-
-
-
-
 </template>

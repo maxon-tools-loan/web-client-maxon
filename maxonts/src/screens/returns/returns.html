@@ -1,28 +1,40 @@
 <template>
   <h2> Información de Prestamo </h2>
 
-   <div class="mb-3 filters">
-      <label for="exampleFormControlInput1" class="form-label"># De Empleado
-      
-      <input type="text" class="form-control" id="exampleFormControlInput1"
-        value.bind="param">
-        </label>
-        <label for="Status">Estado
-        <select name="status" id="stats">
-          <option value="Entregado">Entregado</option>
-          <option value="Entrega Parcial">Entrega Parcial</option>
-          <option value="No Entregado">No Entregado</option>
-        </select>
-      </label> 
-        <label for="exampleFormControlInput1" class="form-label"> Rango - Fechas
-      
-      <input type="text" class="form-control" id="exampleFormControlInput3"
-        value.bind="param">
-      </label>
+
+  <!-- START SEARCH FILTERES -->
+  <div class="mb-3 filters">
+    <div>
+      <label for="loan_info_employee" class="form-label label"> # De Empleado </label>
+      <input value.bind="query.idEmpleado" type="text" class="form-control" id="loan_info_employee">
+    </div>
+    <div>
+      <label for="Status">Estado</label>
+      <select value.bind="query.status" name="status" id="stats" class="form-control" >
+        <option disabled selected>Seleccionar</option>
+        <option value=0>No Entregado</option>
+        <option value=1>Entrega Parcial</option>
+        <option value=2>Entregado</option>
+      </select>
+    </div>
+    <div>
+      <label>Fecha Inicio</label>
+      <abp-datetime-picker value.bind="query.startDate" options.bind="{ format: 'YYYY-MM-DD' }"></abp-datetime-picker>
+    </div>
+    <div>
+      <label>Fecha Final</label>
+      <abp-datetime-picker value.bind="query.endDate" options.bind="{ format: 'YYYY-MM-DD' }"></abp-datetime-picker>
     </div>
 
-  <h2> Resultados </h2>
+    <div>
+      <label class="transparent">.</label>
+      <button class="btn btn-primary" click.trigger="search()">Buscar</button>
+    </div>
+  </div>
+  <!-- END SEARCH FILTERS -->
 
+
+  <h2> Resultados </h2>
   <!-- TODO: tabla -->
   <table class="table table-hover">
     <thead>
@@ -38,14 +50,10 @@
       <tr repeat.for="record of returns">
         <td><a route-href="route: loanInfo; params.bind: {id:record.idPrestamo, readOnly:'1'}">${record.idPrestamo}</a></td>
         <td><a route-href="route: employeeInfo; params.bind: {employee:record.idEmpleado}">${record.idEmpleado}</a></td>
-        <td>${record.status}</td>
-        <td>${record.idUsuario}</td>
-        <td>${record.fecha}</td>
+        <td>${mapStatus(record.status)}</td>
+        <td>${idToUser(record.idUsuario)}</td>
+        <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
       </tr>
     </tbody>
   </table>
-
-
-
-
 </template>

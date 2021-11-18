@@ -27,7 +27,7 @@
       <label for="exampleFormControlInput3" class="form-label">Cantidad
         <input type="text" value.bind="item['cantidad']"class="form-control" id="exampleFormControlInput3" >
       </label>
-      <label for="Status">Estado
+      <label >Estado
         <select name="status" value.bind="item['devuelto']" id="stats">
           <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
@@ -39,22 +39,24 @@
   </div>
 
   <!-- TODO: No consumible -->
-  <div repeat.for="item of Herramienta">
+  <div repeat.for="item of herramienta">
     <div class="mb-3 filters">
-      <label for="exampleFormControlInput1" class="form-label"># Parte
+      <label  class="form-label"># Parte
         <input type="text" value.bind="item['idParte']" class="form-control" id="exampleFormControlInput1">
       </label>
-      <label for="exampleFormControlInput2" class="form-label"># Pieza
+      <label  class="form-label"># Pieza
         <input type="text" value.bind="item['idHerramienta']" class="form-control" id="exampleFormControlInput2">
       </label>
-      <label for="exampleFormControlInput3" class="form-label">Nombre
+      <label  class="form-label">Nombre
         <input type="text" value.bind="item['Descripcion']" class="form-control" id="exampleFormControlInput3">
       </label>
-      <label for="Status">Estado
-        <select name="status" value.bind="item['Devuelto']" id="stats">
-          <option repeat.for="option of options" model.bind="$option.value">${option.name}</option>
+
+      <label >Estado
+        <select name="status" value.bind="item['devuelto']" id="stats">
+          <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
-      </label> 
+      </label>
+      
       <label if.bind="readonly" class="form-label">Fecha
         <input type="text" value.bind="item['fechaDevolucion']" class="form-control" id="exampleFormControlInput3" >
       </label> 
@@ -64,7 +66,7 @@
   
   <form if.bind="!readonly">
     
-      <button class="btn btn-primary" type="submit">Guardar Cambios</button>
+      <button class="btn btn-primary" click.delegate="commitChanges()" type="submit">Guardar Cambios</button>
     
   </form>
 

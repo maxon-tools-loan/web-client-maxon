@@ -2,18 +2,11 @@
   <require from="./style.css"></require>
   <require from="./sidebar"></require>
 
-  <main class="container-fluid">
-    <h1>${message}</h1>
-
-    <section class="container-fluid d-flex flex-row">
-
-      <sidebar class="col-4 "></sidebar>
-
-      <router-view class="col-8 p-5">
-      </router-view>
-
+  <main>
+    <section class="d-flex flex-row">
+      <sidebar class="col-3"></sidebar>
+      <router-view class="col-9 router_view"></router-view>
     </section>
-
   </main>
 
 </template>

@@ -1,11 +1,11 @@
-import {IInventoryItem, InventoryService} from "../../services/inventory"
+import { InventoryService} from "../../services/inventory"
 import {inject} from "aurelia-framework"
 
 @inject(InventoryService)
 export class Inventory {
 
   inventoryService: InventoryService;
-  items: IInventoryItem[] = []
+  items = []
 
   constructor(inventory: InventoryService) {
     this.inventoryService = inventory;
@@ -15,7 +15,11 @@ export class Inventory {
     this.items = await this.inventoryService.getOrderInfo();
   }
 
-
+  async update(item):Promise<void>{
+    console.log(item)
+    item.estado ==1? item.estado=0:item.estado=1
+    await this.inventoryService.updateStatus(item);
+  }
 
 }
 
