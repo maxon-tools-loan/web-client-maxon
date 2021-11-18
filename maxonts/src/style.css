@@ -3,6 +3,11 @@ main {
   padding: 0px;
 }
 
+.mock_sidebar {
+  width: min-content;
+  visibility: hidden;
+}
+
 .transparent {
   visibility: hidden;
 }
@@ -24,6 +29,11 @@ main {
 }
 
 .sidebar{
+  min-width: min-content;
+  width: calc(100/12 * 3vw);
+  position: fixed;
+  top: 0;
+  left: 0;
   background-color: #424347;
   display: flex;
   flex-direction: column;
