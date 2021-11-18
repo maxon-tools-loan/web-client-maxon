@@ -52,7 +52,7 @@ export class SessionService {
   public userData?: LoginData
 
   async getFullSession() {
-    return localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+    return localStorage.getItem(STORAGE_KEYS.USER_SESSION)
   }
 
   async login(username: string, password: string): Promise<boolean> {
