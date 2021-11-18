@@ -37,7 +37,11 @@
         <td>${record.Maximo}</td>
         <td>${record.Prestados}</td>
         <td>${record.Disponibles!=null ? record.disponibles:0}</td>
-        <td><input type="checkbox" checked.bind="item.estado" model.bind="item.estado" value.bind="item.estado"   name="ordered" />&nbsp;</td>
+        <td>
+          <input  if.bind="record['estado']==1" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />
+          <input  if.bind="record['estado']==0" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />
+        </td>
+        
       </tr>
     </tbody>
   </table>

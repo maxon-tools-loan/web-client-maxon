@@ -5,6 +5,21 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
+  async registerManteinance(tools,consumibles,metadata){
+    let props = {
+      "tools":tools,
+      "consumibles":consumibles,
+      "metadata":metadata,
+    };
+    const response = await fetch(API.URL + '/items/registerMaintenance',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+   
+    return response;
+  }
+
 
   async getOrderInfo():Promise<[]>{
     const response = await fetch('http://localhost:3000/api/items/orders').then(response => {
