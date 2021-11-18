@@ -65,7 +65,7 @@ export class SessionService {
   }
 
   getFullSession() {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION))
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION)??"null")
   }
 
   // strategy: just delete localstorage
