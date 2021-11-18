@@ -51,18 +51,22 @@ export class LoansService {
     if (query?.endDate) {
       loans = loans.filter((v: any) => moment(v.fecha).format('YYYY-MM-DD') <= query.endDate) as []
     }
-
     return loans
   }
   
-  async getLoans(search: string=""): Promise<[]> {
+  async getLoans(search: string=""): Promise<{loans:[], users:[]}> {
     // console.log(search);
     
 //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
     const response = await fetch(API.URL + '/loans/allactive').then(response => {
       return response.json()
    });
-   if (response['code']=="api.success") return response['data']['value'] ;
+   console.log(response)
+   if (response['code']=="api.success") 
+   return {
+     loans: response['data']['value'],
+     users: response['data']['users'],
+    };
   }
 
   async getAllLoans(search: string): Promise<[]> {

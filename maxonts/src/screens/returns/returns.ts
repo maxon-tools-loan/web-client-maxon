@@ -12,6 +12,7 @@ export class Returns {
   param: string;
   returns = [];
   rawLoans = [];
+  rawUsers = [];
 
   loanService: LoansService;
 
@@ -21,7 +22,9 @@ export class Returns {
   }
 
   async setupReturns() {
-    this.rawLoans = await this.loanService.getLoans()
+    const {loans, users} = await this.loanService.getLoans()
+    this.rawLoans = loans
+    this.rawUsers = users
     this.search()
   }
 
@@ -29,6 +32,9 @@ export class Returns {
     this.returns = await this.loanService.searchReturns(this.query, this.rawLoans)
   }
 
+  idToUser(id) {
+    return this.rawUsers.filter(v=>v.idUsuario == id)[0].nombre ?? "No Encontrado"
+  }
 
   mapStatus(statusId) {
     const existing = {

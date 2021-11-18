@@ -51,7 +51,7 @@
         <td><a route-href="route: loanInfo; params.bind: {id:record.idPrestamo, readOnly:'1'}">${record.idPrestamo}</a></td>
         <td><a route-href="route: employeeInfo; params.bind: {employee:record.idEmpleado}">${record.idEmpleado}</a></td>
         <td>${mapStatus(record.status)}</td>
-        <td>${record.idUsuario}</td>
+        <td>${idToUser(record.idUsuario)}</td>
         <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
       </tr>
     </tbody>
