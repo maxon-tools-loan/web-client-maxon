@@ -10,9 +10,7 @@ export class InOut {
         {"name":"Salida",
         "valor":1}
     ]
-    constructor(){
 
-    }
     getName(){
         this.name= this.options[this.type].name
     }

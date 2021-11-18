@@ -1,0 +1,35 @@
+<template>
+  <div class="login container d-flex justify-content-center align-items-center">
+    <div class="container border border-dark d-flex flex-column">
+      <h4>Registrar usuario</h4> <a route-href="login"> To login page </a>
+      <form>
+        <div class="mb-3">
+          <label for="name" class="form-label">Nombre de Usuario</label>
+          <input type="text" class="form-control" value.bind="username">
+        </div>
+        <div class="mb-3">
+          <label for="username" class="form-label">Nombre</label>
+          <input type="text" class="form-control" value.bind="name">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" value.bind="email">
+        </div>
+        <div class="mb-3">
+          <label for="password" class="form-label">Contraseña</label>
+          <input type="password" class="form-control" value.bind="password">
+        </div>
+        <div class="mb-3">
+          <label for="confirmPassword" class="form-label">Confirma la Contraseña
+          </label>
+          <input type="password" class="form-control"
+            value.bind="confirmPassword">
+        </div>
+
+
+        <button class="btn btn-primary" click.trigger="submit()">Submit</button>
+      </form>
+    </div>
+
+  </div>
+</template>

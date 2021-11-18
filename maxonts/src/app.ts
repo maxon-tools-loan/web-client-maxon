@@ -19,7 +19,8 @@ export class App {
     config.options.pushState = true;
     config.map([
       { route: '',name:'test', moduleId: PLATFORM.moduleName("login/login"), title: 'Main' },
-      { route: '/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
+      { route: 'auth/login', name: 'login', moduleId: PLATFORM.moduleName('login/login'),  title:'Login Page' },
+      { route: 'auth/register', name: 'register', moduleId: PLATFORM.moduleName('screens/register/register'),  title:'Register Page' },
       { route: '/loans', name: "loans", moduleId: PLATFORM.moduleName('screens/loans/loans')},
       { route: '/returns', name: "returns", moduleId: PLATFORM.moduleName('screens/returns/returns')},
       { route: '/inventory', name: "inventory", moduleId: PLATFORM.moduleName('screens/inventory/inventory')},
@@ -28,7 +29,7 @@ export class App {
       { route: '/maintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance/maintenance')},
       { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs')},
       { route: '/loaninfo/:id/:readOnly', name: "loanInfo", moduleId: PLATFORM.moduleName('screens/loans_info/loans_info')},
-      { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/in-Out/inOut')},
+      { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut')},
       { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info')},
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info')}
       //...obj
