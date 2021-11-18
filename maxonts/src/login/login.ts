@@ -1,3 +1,5 @@
+import { SWAL_LOGIN_INCOMPLETE_CREDENTIALS, SWAL_LOGIN_INVALID_CREDENTIALS, SWAL_UNKNOWN_ERROR } from './../swals/error';
+import Swal from 'sweetalert2';
 import {SessionService} from "../services/session"
 import {inject} from "aurelia-framework"
 
@@ -16,12 +18,23 @@ export class Login {
   }
 
   async submit(): Promise<void> {
-    console.log(this.username, this.password)
+    const status = await this.sessionService.login(this.username, this.password)
+    console.log(status)
+    if (status === "api.user.login.incompleteCredentials") {
+      Swal.fire(SWAL_LOGIN_INCOMPLETE_CREDENTIALS)
+      return
+    }
+    if (status === "api.user.login.incorrectPassword") {
+      Swal.fire(SWAL_LOGIN_INVALID_CREDENTIALS)
+      return
+    }
+    
+    if (status !== "api.user.login.success") {
+      Swal.fire(SWAL_UNKNOWN_ERROR)
+      return
+    }
 
-    const bool = await this.sessionService.login(this.username, this.password)
-
-    console.log(bool)
-
+    console.log(this.sessionService.getFullSession())
   }
 
 }
