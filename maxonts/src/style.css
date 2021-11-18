@@ -3,6 +3,14 @@ main {
   padding: 0px;
 }
 
+.transparent {
+  visibility: hidden;
+}
+
+.label {
+  margin-bottom: 0;
+}
+
 .router_view {
   padding: 32px;
 }
