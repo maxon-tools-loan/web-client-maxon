@@ -1,8 +1,12 @@
 import {LoansService, Returns as IReturns} from "../../services/loans"
 import {inject} from "aurelia-framework"
+import * as moment from "moment";
+
 
 @inject(LoansService)
 export class Returns {
+  query: {};
+  moment = moment;
 
   
   param: string;
@@ -16,9 +20,19 @@ export class Returns {
   }
 
   async search(): Promise<void> {
-    this.returns = await this.loanService.getLoans(this.param)
+    console.log(this.query)
+    this.returns = await this.loanService.searchReturns(this.query)
+    // this.returns = await this.loanService.getLoans(this.param)
     console.log(this.returns);
   }
 
 
+  mapStatus(statusId) {
+    const existing = {
+      0: "No Entregado",
+      1: "Entrega Parcial",
+      2: "No Entregado"
+    }
+    return existing[statusId] ?? statusId
+  }
 }

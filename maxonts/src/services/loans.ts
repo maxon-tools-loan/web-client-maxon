@@ -1,5 +1,7 @@
+import * as moment from "moment";
 import { sleep } from "utils";
 import { API } from '../../../config'
+
 
 export interface Returns {
   loanNo: number;
@@ -34,9 +36,27 @@ const returns: Returns[] = [
 ];
 
 export class LoansService {
+
+  async searchReturns(query) {
+    let loans = await this.getLoans()
+    console.log(query)
+    if (query?.idEmpleado)
+      loans = loans.filter((v: any) => v.idEmpleado === parseInt(query.idEmpleado)) as []
+    if (query?.status) {
+      loans = loans.filter((v: any) => v.status) as []
+    }
+    if (query?.startDate) {
+      loans = loans.filter((v: any) => moment(v.fecha).format('YYYY-MM-DD') >= query.startDate) as []
+    }
+    if (query?.endDate) {
+      loans = loans.filter((v: any) => moment(v.fecha).format('YYYY-MM-DD') <= query.endDate) as []
+    }
+
+    return loans
+  }
   
-  async getLoans(search: string): Promise<[]> {
-    console.log(search);
+  async getLoans(search: string=""): Promise<[]> {
+    // console.log(search);
     
 //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
     const response = await fetch(API.URL + '/loans/allactive').then(response => {
