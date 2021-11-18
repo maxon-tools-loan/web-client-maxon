@@ -95,7 +95,20 @@ export class InventoryService {
       body: JSON.stringify(props)
     })
 
-    return response;
+    if (response['code'] == "api.success") return response;
 
+  }
+
+  async disableItems(item):Promise<{}>{
+    let props ={
+        "item":item
+    }
+    const response = await fetch(API.URL+ '/items/downItem',{
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+    
+    if (response['code'] == "api.success") return response;
   }
 }

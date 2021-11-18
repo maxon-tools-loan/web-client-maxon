@@ -84,8 +84,22 @@ export class Up_Downs {
 
         
     }
+    verifyDown(){
+        this.down.forEach(element=>{
+            if(!this.ids.includes(element['idParte'])) {
+                alert(`${element.idParte} No existe en la DB`)
+                return false;
+            }
+        })
+        return true;
+    }
     commitDown(){
-        console.log("TBD")
+        if(this.verifyDown()){
+
+        }
+        else{
+            this.inventory.disableItems(this.down)
+        }
     }
     
 }
