@@ -66,6 +66,20 @@ export class SessionService {
     return  (await response.json()).code
   }
 
+  async logout() {
+
+    if (!this.userData) return true;
+
+    const res = await sendToApi('logout', {
+      sessionKey: this.userData.session.key
+    })
+
+    console.log(await res.json());
+    localStorage.removeItem(STORAGE_KEYS.USER_SESSION)
+    this.userData = undefined
+    return true;
+  }
+
   async createUser(registerInput: RegisterInput): Promise<boolean> {
     const response = await sendToApi('create', registerInput)
     console.log(await response.json())

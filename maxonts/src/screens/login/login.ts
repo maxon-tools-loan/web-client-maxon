@@ -1,4 +1,4 @@
-import {SessionService} from "../services/session"
+import {SessionService} from "../../services/session"
 import {inject} from "aurelia-framework"
 
 @inject(SessionService)
