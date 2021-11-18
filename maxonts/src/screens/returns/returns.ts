@@ -40,7 +40,7 @@ export class Returns {
     const existing = {
       0: "No Entregado",
       1: "Entrega Parcial",
-      2: "No Entregado"
+      2: "Entregado"
     }
     return existing[statusId] ?? statusId
   }

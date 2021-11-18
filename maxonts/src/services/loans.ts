@@ -37,7 +37,7 @@ const returns: Returns[] = [
 
 export class LoansService {
 
-  async searchReturns(query, raw_loans=undefined) {
+  async searchReturns(query, raw_loans = undefined) {
     let loans = raw_loans ?? await this.getLoans()
     console.log(query)
     if (query?.idEmpleado)
@@ -53,54 +53,57 @@ export class LoansService {
     }
     return loans
   }
-  
-  async getLoans(search: string=""): Promise<{loans:[], users:[]}> {
+
+  async getLoans(search: string = ""): Promise<{ loans: [], users: [] }> {
     // console.log(search);
-    
-//the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
+
+    //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
     const response = await fetch(API.URL + '/loans/allactive').then(response => {
       return response.json()
-   });
-   console.log(response)
-   if (response['code']=="api.success") 
-   return {
-     loans: response['data']['value'],
-     users: response['data']['users'],
-    };
+    });
+    console.log(response)
+    if (response['code'] == "api.success")
+      return {
+        loans: response['data']['value'],
+        users: response['data']['users'],
+      };
   }
 
-  async getAllLoans(search: string): Promise<[]> {
-    console.log(search);
+  async getAllLoans(search: string): Promise<{ loans: [], users: [] }> {
     const fetch = require('node-fetch');
-//the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
+    //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
     const response = await fetch(API.URL + '/loans/all').then(response => {
       return response.json()
-   });
-   console.log(response)
-   if (response['code']=="api.success") return response['data']['value'] ;
+    });
+    console.log(response)
+    if (response['code'] == "api.success")
+      return {
+        loans: response['data']['value'],
+        users: response['data']['users'],
+      };
   }
 
-  async postLoan(herramientas,consumibles,datos):Promise<{}>{
+  async postLoan(herramientas, consumibles, datos): Promise<{}> {
     const fetch = require('node-fetch');
     let data = {
-      "tools":herramientas,
-      "consumibles":consumibles,
-      "datos":datos
+      "tools": herramientas,
+      "consumibles": consumibles,
+      "datos": datos
     };
     console.log(JSON.stringify(data))
-    const response = await fetch(API.URL + '/loans/postloan',{
-      method:'POST',
+    const response = await fetch(API.URL + '/loans/postloan', {
+      method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
-   
+
     return response;
   }
 
-  async getBasicData():Promise<{}>{
+  async getBasicData(): Promise<{}> {
     const response = await fetch(API.URL + '/items/allids').then(response => {
       return response.json()
-   });
-    if (response['code']=="api.success") return response['data'] ;
+    });
+    if (response['code'] == "api.success") return response['data'];
   }
 }
