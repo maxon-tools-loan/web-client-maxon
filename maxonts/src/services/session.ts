@@ -60,10 +60,11 @@ export class SessionService {
       username,
       password
     })
-    this.userData = (await response.json()).data as LoginData
+    const jsonData = response.json()
+    this.userData = (await jsonData).data as LoginData
     // nose ontas ector, voy a tomar malas decisiones
     localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
-    return  (await response.json()).code
+    return  (await jsonData).code
   }
 
   async logout() {

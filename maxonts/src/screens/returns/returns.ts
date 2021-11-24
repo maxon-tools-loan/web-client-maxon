@@ -13,6 +13,7 @@ export class Returns {
   returns = [];
   rawLoans = [];
   rawUsers = [];
+  areas = [];
 
   loanService: LoansService;
 
@@ -26,6 +27,11 @@ export class Returns {
     this.rawLoans = loans
     this.rawUsers = users
     this.search()
+    this.rawLoans.forEach(element => {
+      if(!this.areas.includes(element.area)){
+        this.areas.push(element.area)
+      }
+    });
   }
 
   async search(): Promise<void> {

@@ -29,12 +29,14 @@ export class Up_Downs {
         });
     }
     matchData(i){
+        console.log("EXECUTED")
+        if(this.ids.includes(this.down[i]['idParte'])){
         this.down[i]['Familia'] = this.downData[this.down[i]['idParte']]['Familia'];
         this.down[i]['Descripcion'] = this.downData[this.down[i]['idParte']]['Descripcion'];
-        console.log(i);
-        console.log(this.down[i])
-        console.log(this.downData[this.down[i]['idParte']]['Familia'])
-        console.log(this.downData[this.down[i]['idParte']]['Descripcion'])
+        }
+        else{
+        
+        }
     }
 
     addUp(){
@@ -85,6 +87,7 @@ export class Up_Downs {
         
     }
     verifyDown(){
+        console.log("EXECUTED")
         this.down.forEach(element=>{
             if(!this.ids.includes(element['idParte'])) {
                 alert(`${element.idParte} No existe en la DB`)
@@ -93,12 +96,13 @@ export class Up_Downs {
         })
         return true;
     }
-    commitDown(){
+    async commitDown(){
+        console.log("EXECUTED")
         if(this.verifyDown()){
-            this.inventory.disableItems(this.down)
+           await  this.inventory.disableItems(this.down);
         }
         else{
-            
+           alert("No existe el coso");
         }
     }
     

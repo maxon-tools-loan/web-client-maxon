@@ -6,12 +6,25 @@ import { LoansService } from "services/loans"
 
 @inject(LoansService)
 export class Loans {
+  sacannerMode =false
   validParts = []
   validUsers = []
   validConsumibles = []
   validHerramientas = []
   dictHerramientas = {}
   dictConsumibles = {}
+
+  NombresDeConsumibles = []
+  matchesConsumibles = []
+  matchesIdConsumibles = []
+
+  NombresDeHerramientas = []
+  matchesHerramientas = []
+  matchesIdHerramientas = []
+
+  fullDataConsumibles =[]
+  fullDataHerramientas =[]  
+
   empleado: string
   job = null
   maquina = null
@@ -19,17 +32,98 @@ export class Loans {
   herramientas = []
   service: LoansService
 
+  ConsumibleSelected =null
+  IDConsumibleSelected = null
+
+  HerramientaSelected=null
+  IDHerramientaSelected=null
+
   deudores = []
   constructor(service: LoansService) {
     this.service = service;
     this.getInfo();
   }
 
+  AddCustom(i){
+    if(i){
+      this.consumibles.push(
+        {
+          "idParte": this.ConsumibleSelected,
+          "idConsumible":this.IDConsumibleSelected,
+          "cantidad": 1,
+          "condicion": 0
+          
+        }
+      )
+    }
+    else{
+      console.log(this.HerramientaSelected,this.IDHerramientaSelected)
+      this.herramientas.push({
+        "idHerramienta": this.IDHerramientaSelected,
+        "idParte": this.HerramientaSelected
+      })
+      console.log(this.herramientas)
+    }
+  }
+  matchParte(i,name){
+    this.matchesConsumibles=[]
+    console.log(i,name)
+    if(i==1){
+      this.matchesConsumibles=[]
+      this.fullDataConsumibles.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesConsumibles.push(element['idParte'])
+        }
+        
+      });
+    }
+    else{
+      this.matchesHerramientas=[]
+      this.fullDataHerramientas.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesHerramientas.push(element['idParte'])
+        }
+        
+      });
+    }
+  }
+  matchId(i,name){
+    console.log(i,name)
+    if(i==1){
+      this.matchesIdConsumibles=[]
+      for (const [key, value] of Object.entries(this.dictConsumibles)) {
+        if(value == name){
+          this.matchesIdConsumibles.push(key.toString())
+        }
+      }
+    }
+    else{
+      this.matchesIdHerramientas=[]
+      for (const [key, value] of Object.entries(this.dictHerramientas)) {
+        if(value == name){
+          this.matchesIdHerramientas.push(key.toString())
+        }
+      }
+    }
+  }
   postLoan() {
     this.service.postLoan(this.consumibles, this.herramientas, {});
   }
   async getInfo() {
     let data = await this.service.getBasicData();
+    let descs = await this.service.getConsumiblesAndTools();
+
+    descs['tools'].forEach(element => {
+      this.NombresDeHerramientas.push(element['Descripcion'])
+    });
+    descs['consumibles'].forEach(element => {
+      this.NombresDeConsumibles.push(element['Descripcion'])
+    });
+    this.fullDataConsumibles = descs['consumibles']
+    this.fullDataHerramientas = descs['tools']
+
+
+
     data['items'].forEach(element => {
       this.validParts.push(element['idParte'])
     });
@@ -143,7 +237,8 @@ export class Loans {
       "idParte": "",
       "idConsumible": "",
       "cantidad": 1,
-      "condicion": 0,
+      "condicion": 0
+      
     }
   }
 
