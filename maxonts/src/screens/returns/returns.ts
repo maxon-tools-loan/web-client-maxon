@@ -5,16 +5,16 @@ import * as moment from "moment";
 
 @inject(LoansService)
 export class Returns {
-  query: {};
-  moment = moment;
+  private query: {};
+  private moment = moment;
 
   
-  param: string;
-  returns = [];
-  rawLoans = [];
-  rawUsers = [];
+  private param: string;
+  private returns = [];
+  private rawLoans = [];
+  private rawUsers = [];
 
-  loanService: LoansService;
+  private loanService: LoansService;
 
   constructor(loans: LoansService) {
     this.loanService = loans
@@ -32,11 +32,11 @@ export class Returns {
     this.returns = await this.loanService.searchReturns(this.query, this.rawLoans)
   }
 
-  idToUser(id) {
+  private idToUser(id) {
     return this.rawUsers.filter(v=>v.idUsuario == id)[0].nombre ?? "No Encontrado"
   }
 
-  mapStatus(statusId) {
+  private mapStatus(statusId) {
     const existing = {
       0: "No Entregado",
       1: "Entrega Parcial",

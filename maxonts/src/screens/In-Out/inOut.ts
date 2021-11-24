@@ -2,37 +2,37 @@ export class InOut {
     public type=0;
     public consumibles =[]
     public tools = []
-    opt = 1
-    name = "Entrada"
-    options=[
+    private opt = 1
+    private name = "Entrada"
+    private options=[
         {"name":"Entrada",
         "valor":0},
         {"name":"Salida",
         "valor":1}
     ]
 
-    getName(){
+    private getName(){
         this.name= this.options[this.type].name
     }
-    addConsumible(){
+    private addConsumible(){
         this.consumibles.push(consu(this.consumibles.length))
     }
-    addTool(){
+    private addTool(){
         this.tools.push(tool(this.tools.length))
     }
-    removeTool(index){
+    private removeTool(index){
         console.log(index)
         if (index > -1) {
             this.tools.splice(index, 1);
           }
     }
-    removeConsu(index){
+    private removeConsu(index){
         console.log(index)
         if (index > -1) {
             this.consumibles.splice(index, 1);
           }
     }
-    addElement(){
+    private addElement(){
         if(this.opt==1){
             this.addConsumible();
             console.log(this.consumibles)
@@ -43,7 +43,7 @@ export class InOut {
         }
     }
 
-    commit(){
+    private commit(){
         const type = (this.type) ? "Entrada" : "Salida"
         
         if(this.type){

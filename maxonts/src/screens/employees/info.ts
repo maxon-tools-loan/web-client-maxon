@@ -2,12 +2,12 @@ import {inject} from "aurelia-framework"
 import {EmployeeService} from "../../services/employee"
 @inject(EmployeeService)
 export class EmpleadoInfo{
-    service:EmployeeService
+    private service:EmployeeService
     constructor(service:EmployeeService){
         this.service=service;
     }
-    data = {}
-    activate(params) {
+    private data = {}
+    private activate(params) {
      
         this.getInfo(params.employee)
     

@@ -1,9 +1,9 @@
 export class FormatService {
-  capitalize(v) {
+  private capitalize(v) {
     return v[0].toUpperCase() + v.slice(1).toLowerCase()
   }
 
-  amount(v) {
+  private amount(v) {
     return v ?? 0
   }
 }

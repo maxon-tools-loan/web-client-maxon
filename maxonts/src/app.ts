@@ -8,9 +8,9 @@ import { SessionService } from './services/session'
 @autoinject()
 export class App {
   public message = 'Maxon Tools Loan';
-  router: Router;
+  private router: Router;
 
-  configureRouter(config: RouterConfiguration, router: Router): void {
+  private configureRouter(config: RouterConfiguration, router: Router): void {
     this.router = router;
     config.title = 'Maxon Loan System';
     config.addAuthorizeStep(AuthorizeStep);

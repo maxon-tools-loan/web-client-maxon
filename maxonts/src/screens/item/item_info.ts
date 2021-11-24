@@ -4,13 +4,13 @@ import { inject } from "aurelia-framework"
 @inject(InventoryService)
 
 export class itemInfo {
-    inventoryService: InventoryService
+    private inventoryService: InventoryService
     constructor(inventory: InventoryService) {
         this.inventoryService = inventory;
     }
-    Empleado = ""
-    data = []
-    activate(params) {
+    private Empleado = ""
+    private data = []
+    private activate(params) {
         this.Empleado = params.partNo
         console.log(params.partNo)
         this.get(params.partNo);

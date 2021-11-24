@@ -4,12 +4,12 @@ import {inject} from "aurelia-framework"
 @inject(SessionService)
 export class Login {
   
-  title = "Login Screen"
+  private title = "Login Screen"
 
-  username = ''
-  password = ''
+  private username = ''
+  private password = ''
 
-  sessionService: SessionService
+  private sessionService: SessionService
 
   constructor(sessionService: SessionService) {
     this.sessionService = sessionService;
