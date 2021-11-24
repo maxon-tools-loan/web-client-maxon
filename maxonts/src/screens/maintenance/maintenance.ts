@@ -10,19 +10,19 @@ export class Maintenance {
   public tools = []
 
 
-  validParts = []
-  validUsers = []
-  validConsumibles = []
-  validHerramientas = []
-  dictHerramientas = {}
-  dictConsumibles = {}
+  private validParts = []
+  private validUsers = []
+  private validConsumibles = []
+  private validHerramientas = []
+  private dictHerramientas = {}
+  private dictConsumibles = {}
 
-  meta = {
+  private meta = {
     "usuario": "admin"
   }
-  service: InventoryService
-  loan: LoansService
-  opt = 1
+  private service: InventoryService
+  private loan: LoansService
+  private opt = 1
 
   constructor(service: InventoryService, loan: LoansService) {
     this.service = service;
@@ -30,7 +30,7 @@ export class Maintenance {
     this.getInfo();
   }
 
-  verifyData() {
+  private verifyData() {
     let valid = true
     this.consumibles.forEach(element => {
       console.log(element)
@@ -71,7 +71,7 @@ export class Maintenance {
     console.log(this.dictConsumibles)
   }
 
-  updateData(i, type) {
+  private updateData(i, type) {
     console.log(i, type)
     if (type == 0) {
       this.tools[i]['idParte'] = this.dictHerramientas[this.tools[i]['idHerramienta']]
@@ -82,7 +82,7 @@ export class Maintenance {
 
   }
 
-  commit() {
+  private commit() {
     if (this.tools.length === 0 && this.consumibles.length === 0)
       return Swal.fire(SWAL_EMPTY_MAINTENANCE)
 
@@ -94,25 +94,25 @@ export class Maintenance {
     }
 
   }
-  addConsumible() {
+  private addConsumible() {
     this.consumibles.push(consu(this.consumibles.length))
   }
-  addTool() {
+  private addTool() {
     this.tools.push(tool(this.tools.length))
   }
-  removeTool(index) {
+  private removeTool(index) {
     console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
-  removeConsu(index) {
+  private removeConsu(index) {
     console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
   }
-  addElement() {
+  private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
       console.log(this.consumibles)

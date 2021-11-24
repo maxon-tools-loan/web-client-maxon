@@ -144,7 +144,7 @@ export class Loans {
     });
 
   }
-  updateData(i, type) {
+  private updateData(i, type) {
     console.log(i, type)
     if (type == 0) {
       this.herramientas[i]['idParte'] = this.dictHerramientas[this.herramientas[i]['idHerramienta']]
@@ -154,7 +154,7 @@ export class Loans {
     }
 
   }
-  verifyData() {
+  private verifyData() {
     if (this.deudores.includes(parseInt(this.empleado))) {
       Swal.fire(SWAL_LOAN_MATERIAL_REMAINING)
       return false;
@@ -191,7 +191,7 @@ export class Loans {
     Swal.fire(SWAL_INCORRECT_INPUT)
     return valid
   }
-  add(value) {
+  private add(value) {
     if (value == 1) {
       this.consumibles.push(this.dummyConsumible())
     }
@@ -199,7 +199,7 @@ export class Loans {
       this.herramientas.push(this.dummyHerramienta())
     }
   }
-  commit() {
+  private commit() {
     if (this.herramientas.length < 1 && this.consumibles.length < 1) {
       return Swal.fire(SWAL_LOAN_NO_ELEMENTS)
     }
@@ -214,7 +214,7 @@ export class Loans {
       this.service.postLoan(this.herramientas, this.consumibles, data)
     }
   }
-  remove(i, value) {
+  private remove(i, value) {
     if (value == 1) {
       if (i > -1) {
         this.consumibles.splice(i, 1);
@@ -227,12 +227,12 @@ export class Loans {
     }
   }
 
-  setcondition(i, val) {
+  private setcondition(i, val) {
     this.consumibles[i]['condicion'] = parseInt(val);
     console.log(i + val);
   }
 
-  dummyConsumible() {
+  private dummyConsumible() {
     return {
       "idParte": "",
       "idConsumible": "",
@@ -242,7 +242,7 @@ export class Loans {
     }
   }
 
-  dummyHerramienta() {
+  private dummyHerramienta() {
     return {
       "idHerramienta": "",
       "idParte": ""

@@ -5,10 +5,10 @@ import {Router, Redirect} from "aurelia-router"
 @inject(SessionService, Router)
 export class Login {
   
-  title = "Login Screen"
+  private title = "Login Screen"
 
-  username = ''
-  password = ''
+  private username = ''
+  private password = ''
 
   sessionService: SessionService
   router: Router;

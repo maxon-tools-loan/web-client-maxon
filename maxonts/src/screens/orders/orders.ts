@@ -18,16 +18,16 @@ const searchTemplate = {
 
 @inject(InventoryService, SearchService, FormatService)
 export class Inventory {
-  UNDEFINED=UNDEFINED
+  private UNDEFINED=UNDEFINED
 
-  inventoryService: InventoryService;
-  searchService: SearchService;
-  formatService: FormatService
-  familias: []
-  items = []
-  rawItems = []
-  filter: Function
-  query: {}
+  private inventoryService: InventoryService;
+  private searchService: SearchService;
+  private formatService: FormatService
+  private familias: []
+  private items = []
+  private rawItems = []
+  private filter: Function
+  private query: {}
   constructor(inventory: InventoryService, search: SearchService, format: FormatService) {
     this.inventoryService = inventory;
     this.searchService = search;

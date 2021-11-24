@@ -9,11 +9,11 @@ export class Up_Downs {
     public down = []
 
     public downData = {}
-    ids =[];
+    private ids =[];
     
 
-    loan:LoansService
-    inventory:InventoryService
+    private loan:LoansService
+    private inventory:InventoryService
     constructor(loan:LoansService,Inventory:InventoryService){
         this.loan = loan;
         this.inventory = Inventory;
@@ -39,23 +39,23 @@ export class Up_Downs {
         }
     }
 
-    addUp(){
+    private addUp(){
         this.ups.push(Item())
     }
-    addDown(){
+    private addDown(){
         this.down.push(Item())
     }
-    removeUp(i){
+    private removeUp(i){
         if (i > -1) {
             this.ups.splice(i, 1);
           }
     }
-    removeDown(i){
+    private removeDown(i){
         if (i > -1) {
             this.down.splice(i, 1);
           }
     }
-    verifyData(){
+    private verifyData(){
         this.ups.forEach(element=>{
             if(this.ids.includes(element['idParte'])) {
                 alert(`${element.idParte} Ya existe Prueba con otro ID`)

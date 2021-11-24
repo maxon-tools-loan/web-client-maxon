@@ -4,16 +4,16 @@ import * as moment from "moment";
 
 @inject(LoansService)
 export class History {
-  moment = moment
+  private moment = moment
 
-  read = 0;
-  param: string;
-  query: {}
-  loans: IReturns[] = [];
-  rawLoans: []
-  rawUsers: []
+  private read = 0;
+  private param: string;
+  private query: {}
+  private loans: IReturns[] = [];
+  private rawLoans: []
+  private rawUsers: []
 
-  loanService: LoansService;
+  private loanService: LoansService;
 
   constructor(loans: LoansService) {
     this.loanService = loans
@@ -31,12 +31,12 @@ export class History {
     this.loans = await this.loanService.searchReturns(this.query, this.rawLoans)
   }
 
-  idToUser(id: string) {
+  private idToUser(id: string) {
     // @ts-ignore
     return this.rawUsers.filter(v => v.idUsuario == id)[0].nombre ?? "No Encontrado"
   }
 
-  mapStatus(statusId) {
+  private mapStatus(statusId) {
     const existing = {
       0: "No Entregado",
       1: "Entrega Parcial",
