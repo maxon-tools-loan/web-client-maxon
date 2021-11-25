@@ -49,8 +49,8 @@
         <td>${record.Descripcion}</td>
         <td>${record.Minimo}</td>
         <td>${record.Maximo}</td>
-        <td>${record.Prestados}</td>
-        <td>${record.Disponibles!=null ? record.disponibles:0}</td>
+        <td>${record.Prestado}</td>
+        <td>${record.Disponible}</td>
         <td>
           <input  if.bind="record['estado']==1" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />
           <input  if.bind="record['estado']==0" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />

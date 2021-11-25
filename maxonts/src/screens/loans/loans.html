@@ -13,64 +13,138 @@
           <input type="text" value.bind="maquina" class="form-control"></label>
       </div>
     </div>
-    
+
     <div>
       <button click.delegate="add(1)" class="btn btn-outline-dark">Añadir Consumible</button>
       <button click.delegate="add(0)" class="btn btn-outline-dark">Añadir Herramienta</button>
-      <button type="submit" click.delegate="commit()" class="btn btn-primary" if.bind="herramientas.length > 0 || consumibles.length > 0"> Prestar </button>
+      <button type="submit" click.delegate="commit()" class="btn btn-primary"
+        if.bind="herramientas.length > 0 || consumibles.length > 0"> Prestar </button>
     </div>
 
-    <div if.bind="consumibles.length>=1" class="container">
+
+
+    <div class="container">
+      <div>
+        <div class="filters">
+          <label> Nombre
+            <select value.bind="property" change.delegate="matchParte(1,property)">
+              <option model.bind="null">Seleccionar</option>
+              <option repeat.for="name of NombresDeConsumibles" model.bind="name">${name}</option>
+            </select>
+          </label>
+
+          <label> No Parte
+            <select value.bind="ConsumibleSelected" change.delegate="matchId(1,ConsumibleSelected)">
+              <option model.bind="null">Seleccionar</option>
+              <option repeat.for="item of matchesConsumibles" model.bind="item">${item}</option>
+            </select>
+          </label>
+
+          <label> idConsumible
+            <select value.bind="IDConsumibleSelected">
+              <option model.bind="null">Selecciona</option>
+              <option repeat.for="item of matchesIdConsumibles" , model.bind='item'>${item}</option>
+            </select>
+          </label>
+          <label>Añadir <button click.delegate="AddCustom(1)"> + </button> </label>
+        </div>
+        
+      </div>
       <h3><button click.delegate="add(1)" class="btn btn-dark">+</button> Consumibles</h3>
       <div repeat.for="i of consumibles.length" class="container">
+
+        <div class="filters">
+          <label for="partno" class="form-label"> # Consumible <input type="text" input.delegate="updateData(i,1)"
+              value.bind="consumibles[i]['idConsumible']" class="form-control">
+          </label>
+          <label for="partno" class="form-label"> # Parte <input type="text" value.bind="consumibles[i]['idParte']"
+              class="form-control">
+          </label>
+          <label for="quantity" class="form-label"> Cantidad <input type="text" value.bind="consumibles[i]['cantidad']"
+              class="form-control">
+          </label>
+          <label> Eliminar <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">
+          </label>
+        </div>
+        <div> Condición de Cambio <div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,0)"
+                checked.bind="consumibles[i]['condicion']==0" value=0>
+              <label class="form-check-label">No aplica</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,1)"
+                checked.bind="consumibles[i]['condicion']==1" value=1>
+              <label class="form-check-label">No Regreso</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,2)"
+                checked.bind="consumibles[i]['condicion']==2" value=2>
+              <label class="form-check-label">Cambio</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,3)"
+                checked.bind="consumibles[i]['condicion']==3" value=3>
+              <label class="form-check-label">Dañado</label>
+            </div>
+          </div>
+        </div>
+
+
+
+
+
+
+
+      </div>
+
+    </div>
+    </div>
+    <div class="container">
+      
         <div>
           <div class="filters">
-            <label for="partno" class="form-label"> # Consumible <input type="text" input.delegate="updateData(i,1)" value.bind="consumibles[i]['idConsumible']" class="form-control">
+            <label> Nombre
+              <select value.bind="props" change.trigger="matchParte(0,props)">
+                <option model.bind="null">Seleccionar</option>
+                <option repeat.for="name of NombresDeHerramientas" model.bind="name">${name}</option>
+              </select>
             </label>
-            <label for="partno" class="form-label"> # Parte <input type="text" value.bind="consumibles[i]['idParte']" class="form-control">
+
+            <label> No Parte
+              <select value.bind="HerramientaSelected" change.trigger="matchId(0,HerramientaSelected)">
+                <option model.bind="null">Seleccionar</option>
+                <option repeat.for="item of matchesHerramientas" model.bind="item">${item}</option>
+              </select>
             </label>
-            <label for="quantity" class="form-label"> Cantidad <input type="text" value.bind="consumibles[i]['cantidad']" class="form-control">
+
+            <label> idConsumible
+              <select value.bind="IDHerramientaSelected">
+                <option model.bind="null">Seleccionar</option>
+                <option repeat.for="item of matchesIdHerramientas" , model.bind='item'>${item}</option>
+              </select>
             </label>
-            <label> Eliminar <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">
+            <label>Añadir
+              <button click.delegate="AddCustom(0)"> +</button>
             </label>
           </div>
-          <div> Condición de Cambio <div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,0)" checked.bind="consumibles[i]['condicion']==0" value=0>
-                <label class="form-check-label">No aplica</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,1)" checked.bind="consumibles[i]['condicion']==1" value=1>
-                <label class="form-check-label">No Regreso</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,2)" checked.bind="consumibles[i]['condicion']==2" value=2>
-                <label class="form-check-label">Cambio</label>
-              </div>
-              <div class="form-check form-check-inline">
-                <input class="form-check-input" type="checkbox" change.delegate="setcondition(i,3)" checked.bind="consumibles[i]['condicion']==3" value=3>
-                <label class="form-check-label">Dañado</label>
-              </div>
+          
+        </div>
+        <h3><button click.delegate="add(0)" class="btn btn-dark">+</button> Herramientas</h3>
+        <div repeat.for="i of herramientas.length" class="container">
+          <div>
+            <div class="mb-3 filters">
+              <label class="form-label"># Herramienta <input type="text" value.bind="herramientas[i]['idHerramienta']" input.delegate="updateData(i,0)"
+                  class="form-control"></label>
+              <label  class="form-label"># Parte <input disabled type="text" value.bind="herramientas[i]['idParte']" class="form-control"></label>
+              <label>Eliminar <input class="form-check-input"  change.delegate="remove(i,0)" type="checkbox">
+              </label>
             </div>
           </div>
         </div>
       </div>
-    </div>
-    <div if.bind="herramientas.length>=1" class="container">
-      <h3><button click.delegate="add(0)" class="btn btn-dark">+</button> Herramientas</h3>
-      <div repeat.for="i of herramientas.length" class="container">
-        <div>
-          <div class="mb-3 filters">
-            <label for="partno" class="form-label"># Herramienta <input type="text" input.delegate="updateData(i,0)" class="form-control"></label>
-            <label for="quantity" class="form-label"># Parte <input type="text" class="form-control"></label>
-            <label>Eliminar <input class="form-check-input" change.delegate="remove(i,0)" type="checkbox">
-            </label>
-          </div>
-        </div>
+      <div if.bind="herramientas.length > 0 || consumibles.length > 0">
+        <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
       </div>
-    </div>
-    <div if.bind="herramientas.length > 0 || consumibles.length > 0">
-      <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
-    </div>
   </form>
 </template>

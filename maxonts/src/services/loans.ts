@@ -1,4 +1,5 @@
 import * as moment from "moment";
+import { identity } from "rxjs";
 import { sleep } from "utils";
 import { API } from '../../../config'
 
@@ -40,9 +41,11 @@ export class LoansService {
 
   async searchReturns(query, raw_loans = undefined) {
     let loans = raw_loans ?? await this.getLoans()
-    console.log(query)
+    //console.log(query)
     if (query?.idEmpleado)
       loans = loans.filter((v: any) => v.idEmpleado === parseInt(query.idEmpleado)) as []
+    if(query?.area)
+      loans = loans.filter((v:any) => v.area === query.area) as []
     if (query?.status) {
       loans = loans.filter((v: any) => v.status === parseInt(query.status)) as []
     }
@@ -62,7 +65,7 @@ export class LoansService {
     const response = await fetch(API.URL + '/loans/allactive').then(response => {
       return response.json()
     });
-    console.log(response)
+    //console.log(response)
     if (response['code'] == "api.success")
       return {
         loans: response['data']['value'],
@@ -76,7 +79,7 @@ export class LoansService {
     const response = await fetch(API.URL + '/loans/all').then(response => {
       return response.json()
     });
-    console.log(response)
+    //console.log(response)
     if (response['code'] == "api.success")
       return {
         loans: response['data']['value'],
@@ -99,6 +102,13 @@ export class LoansService {
     })
 
     return response;
+  }
+
+  async getConsumiblesAndTools(){
+    const response = await fetch(API.URL + '/loans/activeItems').then(response =>{
+      return response.json()
+    });
+    if(response.code == "api.success") return response['data'];
   }
 
   async getBasicData(): Promise<{}> {

@@ -10,19 +10,36 @@ export class Maintenance {
   public tools = []
 
 
-  validParts = []
-  validUsers = []
-  validConsumibles = []
-  validHerramientas = []
-  dictHerramientas = {}
-  dictConsumibles = {}
+  private validParts = []
+  private validUsers = []
+  private validConsumibles = []
+  private validHerramientas = []
+  private dictHerramientas = {}
+  private dictConsumibles = {}
 
-  meta = {
-    "usuario": "admin"
+  NombresDeConsumibles = []
+  matchesConsumibles = []
+  matchesIdConsumibles = []
+
+  NombresDeHerramientas = []
+  matchesHerramientas = []
+  matchesIdHerramientas = []
+
+  fullDataConsumibles = []
+  fullDataHerramientas = []
+
+  ConsumibleSelected = null
+  IDConsumibleSelected = null
+
+  HerramientaSelected = null
+  IDHerramientaSelected = null
+
+  private meta = {
+    "usuario": "394fbaab64153b5b0db2344c7e1bc7"
   }
-  service: InventoryService
-  loan: LoansService
-  opt = 1
+  private service: InventoryService
+  private loan: LoansService
+  private opt = 1
 
   constructor(service: InventoryService, loan: LoansService) {
     this.service = service;
@@ -30,7 +47,74 @@ export class Maintenance {
     this.getInfo();
   }
 
-  verifyData() {
+
+
+  AddCustom(i) {
+    if (i) {
+      this.consumibles.push(
+        {
+          "idParte": this.ConsumibleSelected,
+          "idConsumible": this.IDConsumibleSelected,
+          'cantidad': 1,
+          'comentario': '',
+          'area': '',
+
+        }
+      )
+    }
+    else {
+      this.tools.push({
+        "idHerramienta": this.IDHerramientaSelected,
+        "idParte": this.HerramientaSelected,
+        'comentario': '',
+        'area': ''
+      })
+
+    }
+  }
+
+  matchParte(i,name){
+   
+    if(i==1){
+      this.matchesConsumibles=[]
+      this.fullDataConsumibles.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesConsumibles.push(element['idParte'])
+        }
+        
+      });
+    }
+    else{
+      this.matchesHerramientas=[]
+      this.fullDataHerramientas.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesHerramientas.push(element['idParte'])
+        }
+        
+      });
+    }
+  }
+  matchId(i,name){
+    console.log(i,name)
+    if(i==1){
+      this.matchesIdConsumibles=[]
+      for (const [key, value] of Object.entries(this.dictConsumibles)) {
+        if(value == name){
+          this.matchesIdConsumibles.push(key.toString())
+        }
+      }
+    }
+    else{
+      this.matchesIdHerramientas=[]
+      for (const [key, value] of Object.entries(this.dictHerramientas)) {
+        if(value == name){
+          this.matchesIdHerramientas.push(key.toString())
+        }
+      }
+    }
+  }
+
+  private verifyData() {
     let valid = true
     this.consumibles.forEach(element => {
       console.log(element)
@@ -44,7 +128,7 @@ export class Maintenance {
     this.tools.forEach(element => {
       console.log("tool", element)
       if (element.idHerramienta === "")
-      valid = valid && false
+        valid = valid && false
       if (!this.validHerramientas.includes(element['idHerramienta'])) {
         valid = valid && false;
       }
@@ -54,6 +138,18 @@ export class Maintenance {
 
   async getInfo() {
     let data = await this.loan.getBasicData();
+
+    let descs = await this.loan.getConsumiblesAndTools();
+  
+    descs['tools'].forEach(element => {
+      this.NombresDeHerramientas.push(element['Descripcion'])
+    });
+    descs['consumibles'].forEach(element => {
+      this.NombresDeConsumibles.push(element['Descripcion'])
+    });
+    this.fullDataConsumibles = descs['consumibles']
+    this.fullDataHerramientas = descs['tools']
+
     data['items'].forEach(element => {
       this.validParts.push(element['idParte'])
     });
@@ -71,7 +167,7 @@ export class Maintenance {
     console.log(this.dictConsumibles)
   }
 
-  updateData(i, type) {
+  private updateData(i, type) {
     console.log(i, type)
     if (type == 0) {
       this.tools[i]['idParte'] = this.dictHerramientas[this.tools[i]['idHerramienta']]
@@ -82,7 +178,7 @@ export class Maintenance {
 
   }
 
-  commit() {
+  private commit() {
     if (this.tools.length === 0 && this.consumibles.length === 0)
       return Swal.fire(SWAL_EMPTY_MAINTENANCE)
 
@@ -94,25 +190,25 @@ export class Maintenance {
     }
 
   }
-  addConsumible() {
+  private addConsumible() {
     this.consumibles.push(consu(this.consumibles.length))
   }
-  addTool() {
+  private addTool() {
     this.tools.push(tool(this.tools.length))
   }
-  removeTool(index) {
+  private removeTool(index) {
     console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
-  removeConsu(index) {
+  private removeConsu(index) {
     console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
   }
-  addElement() {
+  private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
       console.log(this.consumibles)

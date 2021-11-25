@@ -4,15 +4,15 @@ import {inject} from "aurelia-framework"
 @inject(SessionService)
 export class Register {
   
-  title = "Register Screen"
+  private title = "Register Screen"
 
-  name = ''
-  username = ''
-  email = ''
-  password = ''
-  confirmPassword = ''
+  private name = ''
+  private username = ''
+  private email = ''
+  private password = ''
+  private confirmPassword = ''
 
-  sessionService: SessionService
+  private sessionService: SessionService
 
   constructor( sessionService: SessionService) {
     this.sessionService =  sessionService;

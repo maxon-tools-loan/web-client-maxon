@@ -9,12 +9,12 @@ export class Up_Downs {
     public down = []
 
     public downData = {}
-    public upData = {}
-    ids =[];
+    private ids =[];
+    private data = []
     
 
-    loan:LoansService
-    inventory:InventoryService
+    private loan:LoansService
+    private inventory:InventoryService
     constructor(loan:LoansService,Inventory:InventoryService){
         this.loan = loan;
         this.inventory = Inventory;
@@ -24,37 +24,40 @@ export class Up_Downs {
     async loadIdParte(){
         let data =await this.inventory.getAllItemsInfo()
         console.log(data)
+        this.data = data
         data.forEach(element => {
             this.ids.push(element['idParte'])
             this.downData[element['idParte']] = element;
         });
     }
     matchData(i){
+        console.log("EXECUTED")
+        if(this.ids.includes(this.down[i]['idParte'])){
         this.down[i]['Familia'] = this.downData[this.down[i]['idParte']]['Familia'];
         this.down[i]['Descripcion'] = this.downData[this.down[i]['idParte']]['Descripcion'];
-        console.log(i);
-        console.log(this.down[i])
-        console.log(this.downData[this.down[i]['idParte']]['Familia'])
-        console.log(this.downData[this.down[i]['idParte']]['Descripcion'])
+        }
+        else{
+            alert("No coinciden los datos")
+        }
     }
 
-    addUp(){
+    private addUp(){
         this.ups.push(Item())
     }
-    addDown(){
+    private addDown(){
         this.down.push(Item())
     }
-    removeUp(i){
+    private removeUp(i){
         if (i > -1) {
             this.ups.splice(i, 1);
           }
     }
-    removeDown(i){
+    private removeDown(i){
         if (i > -1) {
             this.down.splice(i, 1);
           }
     }
-    verifyData(){
+    private verifyData(){
         this.ups.forEach(element=>{
             if(this.ids.includes(element['idParte'])) {
                 alert(`${element.idParte} Ya existe Prueba con otro ID`)
@@ -86,6 +89,7 @@ export class Up_Downs {
         
     }
     verifyDown(){
+        console.log("EXECUTED")
         this.down.forEach(element=>{
             if(!this.ids.includes(element['idParte'])) {
                 alert(`${element.idParte} No existe en la DB`)
@@ -94,12 +98,13 @@ export class Up_Downs {
         })
         return true;
     }
-    commitDown(){
+    async commitDown(){
+        console.log("EXECUTED")
         if(this.verifyDown()){
-            this.inventory.disableItems(this.down)
+           await  this.inventory.disableItems(this.down);
         }
         else{
-            
+           alert("No existe el coso");
         }
     }
     

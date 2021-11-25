@@ -9,6 +9,13 @@
       <input value.bind="query.idEmpleado" type="text" class="form-control" id="loan_info_employee">
     </div>
     <div>
+      <label for="Status">Area</label>
+      <select value.bind="query.area" name="status" id="stats" class="form-control" >
+        <option disabled selected>Seleccionar</option>
+        <option repeat.for="item of areas" model.bind="item">${item }</option>
+      </select>
+    </div>
+    <div>
       <label for="Status">Estado</label>
       <select value.bind="query.status" name="status" id="stats" class="form-control" >
         <option disabled selected>Seleccionar</option>
@@ -41,6 +48,7 @@
       <tr>
         <th scope="col"># Prestamo</th>
         <th scope="col"># Empleado</th>
+        <th scope="col">Area</th>
         <th scope="col">Status</th>
         <th scope="col">Presto</th>
         <th scope="col">Fecha</th>
@@ -50,6 +58,7 @@
       <tr repeat.for="record of returns">
         <td><a route-href="route: loanInfo; params.bind: {id:record.idPrestamo, readOnly:'1'}">${record.idPrestamo}</a></td>
         <td><a route-href="route: employeeInfo; params.bind: {employee:record.idEmpleado}">${record.idEmpleado}</a></td>
+        <td>${record.area}</td>
         <td>${mapStatus(record.status)}</td>
         <td>${idToUser(record.idUsuario)}</td>
         <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>

@@ -11,16 +11,16 @@ const sorters = {
 @inject(InventoryService, SessionService)
 export class Inventory {
 
-  inventoryService: InventoryService;
-  sessionService: SessionService;
-  items = []
-  rawItems = []
-  query = {}
-  sorts = {}
-  families = []
-  types = []
+  private inventoryService: InventoryService;
+  private sessionService: SessionService;
+  private items = []
+  private rawItems = []
+  private query = {}
+  private sorts = {}
+  private families = []
+  private types = []
 
-  getSHA = function (input) {
+  private getSHA = function (input) {
     const algorithm = "aes-256-cbc";
 
     // generate 16 bytes of random data
@@ -68,11 +68,11 @@ export class Inventory {
   async update() {
   }
 
-  capitalize(v) {
+  private capitalize(v) {
     return v[0].toUpperCase() + v.slice(1).toLowerCase()
   }
 
-  amount(v) {
+  private amount(v) {
     return v ?? 0
   }
 

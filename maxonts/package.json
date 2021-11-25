@@ -18,6 +18,7 @@
     "mssql": "^7.2.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.4.0",
+    "swal": "^0.1.0",
     "sweetalert2": "^11.1.10",
     "typeorm": "^0.2.38"
   },

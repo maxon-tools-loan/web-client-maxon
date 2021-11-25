@@ -5,13 +5,14 @@ import { inject } from "aurelia-framework"
 
 @inject(LoansInfoService)
 export class LoanInfo {
-    options =[{"name":"Devuelto","value":1},{"name":"No Devuelto", "value":0}]
+    private options =[{"name":"Devuelto","value":1},{"name":"No Devuelto", "value":0}]
+    private posibles = [{"name":"Buen Estado","value":0},{"name":"Dañado", "value":1}]
     public herramienta =[]
-    consumible = []
-    prestamoid = null
-    readonly = null
-    loan: LoansInfoService
-    meta = {}
+    private consumible = []
+    private prestamoid = null
+    private readonly = null
+    private loan: LoansInfoService
+    private meta = {}
     constructor(loans: LoansInfoService) {
         this.loan = loans
     }
@@ -29,7 +30,16 @@ export class LoanInfo {
     
 
     }
-
+    integrityCheck(type,item){
+        if(item['devuelto']==0){
+            if(type==1){
+                item['condicionDevolucion']==null
+            }
+            else{
+                item['cantidadDevuelta']==0
+            }
+        }
+    }
     async update(id): Promise<void> {
         let info = await this.loan.getLoanInfo(id)
     
