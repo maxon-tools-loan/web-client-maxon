@@ -19,14 +19,16 @@ export class Register {
   }
 
   async submit(): Promise<void> {
-    console.log(this.username, this.password)
+    if (this.password !== this.confirmPassword) {
+      console.log('passwords don\'t match')
+      return;
+    }
 
-    const bool = await this. sessionService.createUser({
+    const response = await this. sessionService.createUser({
       name: this.name, email: this.email, username: this.username, password: this.password 
     })
 
-    console.log(bool)
-
+    console.log(response);
   }
 
 }

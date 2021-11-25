@@ -56,14 +56,24 @@ export class SessionService {
   }
 
   async login(username: string, password: string): Promise<boolean> {
-    const response = await sendToApi('login', {
-      username,
-      password
-    })
-    this.userData = (await response.json()).data as LoginData
-    // nose ontas ector, voy a tomar malas decisiones
-    localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
-    return  (await response.json()).code
+    try {
+      const response = await (await sendToApi('login', {
+        username,
+        password
+      })).json()
+
+      if(!response.code.includes('success')) {
+        console.log('algo fallo')
+        return response.code;
+      }
+
+      this.userData = response.data as LoginData
+      // nose ontas ector, voy a tomar malas decisiones
+      localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+      return  response.code
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   async logout() {

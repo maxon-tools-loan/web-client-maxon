@@ -9,6 +9,7 @@ export class Up_Downs {
     public down = []
 
     public downData = {}
+    public upData = {}
     ids =[];
     
 
