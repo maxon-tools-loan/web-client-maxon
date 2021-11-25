@@ -65,9 +65,9 @@ export class Loans {
       console.log(this.herramientas)
     }
   }
+  
   matchParte(i,name){
-    this.matchesConsumibles=[]
-    console.log(i,name)
+   
     if(i==1){
       this.matchesConsumibles=[]
       this.fullDataConsumibles.forEach(element => {
@@ -112,7 +112,8 @@ export class Loans {
   async getInfo() {
     let data = await this.service.getBasicData();
     let descs = await this.service.getConsumiblesAndTools();
-
+    console.log(descs)
+    console.log(data)
     descs['tools'].forEach(element => {
       this.NombresDeHerramientas.push(element['Descripcion'])
     });
@@ -154,41 +155,46 @@ export class Loans {
     }
 
   }
+
+
   private verifyData() {
     if (this.deudores.includes(parseInt(this.empleado))) {
       Swal.fire(SWAL_LOAN_MATERIAL_REMAINING)
+      console.log("ERROR AQUI")
       return false;
     }
 
     if (!this.validUsers.includes(parseInt(this.empleado))) {
       Swal.fire(SWAL_EMPLOYEE_NOT_EXISTS)
+      console.log("ERROR AQUI")
       return false;
     }
 
     let valid = true
     this.herramientas.forEach(element => {
       if (element == null || element == '') {
-        valid = valid && false;
+        valid =  false;
       }
       if (!this.validHerramientas.includes(element['idHerramienta'])) {
-        valid = valid && false;
+        valid =  false;
       }
       if (!this.validParts.includes(element['idParte'])) {
-        valid = valid && false;
+        valid =  false;
       }
     });
     this.consumibles.forEach(element => {
       if (element == null || element == '') {
-        valid = valid && false;
+        valid =  false;
       }
       if (!this.validConsumibles.includes(element['idConsumible'])) {
-        valid = valid && false;
+        valid =  false;
       }
       if (!this.validParts.includes(element['idParte'])) {
-        valid = valid && false;
+        valid = false;
       }
     });
-    Swal.fire(SWAL_INCORRECT_INPUT)
+    if(!valid){
+      Swal.fire(SWAL_INCORRECT_INPUT)}
     return valid
   }
   private add(value) {
@@ -208,7 +214,7 @@ export class Loans {
         "job": this.job,
         "maquina": this.maquina,
         "empleado": this.empleado,
-        "user": "91b990e9fe9776c93017b2c451fef7",
+        "user": "394fbaab64153b5b0db2344c7e1bc7",
         "externo": 0
       }
       this.service.postLoan(this.herramientas, this.consumibles, data)

@@ -17,8 +17,25 @@ export class Maintenance {
   private dictHerramientas = {}
   private dictConsumibles = {}
 
+  NombresDeConsumibles = []
+  matchesConsumibles = []
+  matchesIdConsumibles = []
+
+  NombresDeHerramientas = []
+  matchesHerramientas = []
+  matchesIdHerramientas = []
+
+  fullDataConsumibles = []
+  fullDataHerramientas = []
+
+  ConsumibleSelected = null
+  IDConsumibleSelected = null
+
+  HerramientaSelected = null
+  IDHerramientaSelected = null
+
   private meta = {
-    "usuario": "admin"
+    "usuario": "394fbaab64153b5b0db2344c7e1bc7"
   }
   private service: InventoryService
   private loan: LoansService
@@ -28,6 +45,73 @@ export class Maintenance {
     this.service = service;
     this.loan = loan;
     this.getInfo();
+  }
+
+
+
+  AddCustom(i) {
+    if (i) {
+      this.consumibles.push(
+        {
+          "idParte": this.ConsumibleSelected,
+          "idConsumible": this.IDConsumibleSelected,
+          'cantidad': 1,
+          'comentario': '',
+          'area': '',
+
+        }
+      )
+    }
+    else {
+      this.tools.push({
+        "idHerramienta": this.IDHerramientaSelected,
+        "idParte": this.HerramientaSelected,
+        'comentario': '',
+        'area': ''
+      })
+
+    }
+  }
+
+  matchParte(i,name){
+   
+    if(i==1){
+      this.matchesConsumibles=[]
+      this.fullDataConsumibles.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesConsumibles.push(element['idParte'])
+        }
+        
+      });
+    }
+    else{
+      this.matchesHerramientas=[]
+      this.fullDataHerramientas.forEach(element => {
+        if(element['Descripcion']==name){
+          this.matchesHerramientas.push(element['idParte'])
+        }
+        
+      });
+    }
+  }
+  matchId(i,name){
+    console.log(i,name)
+    if(i==1){
+      this.matchesIdConsumibles=[]
+      for (const [key, value] of Object.entries(this.dictConsumibles)) {
+        if(value == name){
+          this.matchesIdConsumibles.push(key.toString())
+        }
+      }
+    }
+    else{
+      this.matchesIdHerramientas=[]
+      for (const [key, value] of Object.entries(this.dictHerramientas)) {
+        if(value == name){
+          this.matchesIdHerramientas.push(key.toString())
+        }
+      }
+    }
   }
 
   private verifyData() {
@@ -44,7 +128,7 @@ export class Maintenance {
     this.tools.forEach(element => {
       console.log("tool", element)
       if (element.idHerramienta === "")
-      valid = valid && false
+        valid = valid && false
       if (!this.validHerramientas.includes(element['idHerramienta'])) {
         valid = valid && false;
       }
@@ -54,6 +138,18 @@ export class Maintenance {
 
   async getInfo() {
     let data = await this.loan.getBasicData();
+
+    let descs = await this.loan.getConsumiblesAndTools();
+  
+    descs['tools'].forEach(element => {
+      this.NombresDeHerramientas.push(element['Descripcion'])
+    });
+    descs['consumibles'].forEach(element => {
+      this.NombresDeConsumibles.push(element['Descripcion'])
+    });
+    this.fullDataConsumibles = descs['consumibles']
+    this.fullDataHerramientas = descs['tools']
+
     data['items'].forEach(element => {
       this.validParts.push(element['idParte'])
     });

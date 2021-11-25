@@ -10,6 +10,7 @@ export class Up_Downs {
 
     public downData = {}
     private ids =[];
+    private data = []
     
 
     private loan:LoansService
@@ -23,6 +24,7 @@ export class Up_Downs {
     async loadIdParte(){
         let data =await this.inventory.getAllItemsInfo()
         console.log(data)
+        this.data = data
         data.forEach(element => {
             this.ids.push(element['idParte'])
             this.downData[element['idParte']] = element;
@@ -35,7 +37,7 @@ export class Up_Downs {
         this.down[i]['Descripcion'] = this.downData[this.down[i]['idParte']]['Descripcion'];
         }
         else{
-        
+            alert("No coinciden los datos")
         }
     }
 

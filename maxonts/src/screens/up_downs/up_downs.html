@@ -58,10 +58,15 @@
 
         <div class="mb-3 filters">
           <label class="form-label"># Parte
-            <input type="text" value.bind="down[i]['idParte']" class="form-control">
+            <input input.trigger="matchData(i)" type="text" value.bind="down[i]['idParte']" class="form-control">
           </label>
           <label class="form-label">Buscar
             <button class="form-control" click.trigger="matchData(i)"></button>
+          </label>
+          <label>Nombre
+            <select change.delegate="matchData(i)" value.bind="down[i]['idParte']">
+            <option repeat.for="option of data" model.bind="option.idParte">${option.Descripcion}</option>
+            </select>
           </label>
         </div>
 

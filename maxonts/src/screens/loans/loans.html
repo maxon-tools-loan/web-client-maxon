@@ -27,15 +27,15 @@
       <div>
         <div class="filters">
           <label> Nombre
-            <select value.bind="property" change.trigger="matchParte(1,property)">
-              <option model.bind="null">Selecciona</option>
+            <select value.bind="property" change.delegate="matchParte(1,property)">
+              <option model.bind="null">Seleccionar</option>
               <option repeat.for="name of NombresDeConsumibles" model.bind="name">${name}</option>
             </select>
           </label>
 
           <label> No Parte
-            <select value.bind="ConsumibleSelected" change.trigger="matchId(1,ConsumibleSelected)">
-              <option model.bind="null">Selecciona</option>
+            <select value.bind="ConsumibleSelected" change.delegate="matchId(1,ConsumibleSelected)">
+              <option model.bind="null">Seleccionar</option>
               <option repeat.for="item of matchesConsumibles" model.bind="item">${item}</option>
             </select>
           </label>
@@ -105,22 +105,22 @@
         <div>
           <div class="filters">
             <label> Nombre
-              <select value.bind="prop" change.trigger="matchParte(0,prop)">
-                <option model.bind="null">Selecciona</option>
+              <select value.bind="props" change.trigger="matchParte(0,props)">
+                <option model.bind="null">Seleccionar</option>
                 <option repeat.for="name of NombresDeHerramientas" model.bind="name">${name}</option>
               </select>
             </label>
 
             <label> No Parte
               <select value.bind="HerramientaSelected" change.trigger="matchId(0,HerramientaSelected)">
-                <option model.bind="null">Selecciona</option>
+                <option model.bind="null">Seleccionar</option>
                 <option repeat.for="item of matchesHerramientas" model.bind="item">${item}</option>
               </select>
             </label>
 
             <label> idConsumible
               <select value.bind="IDHerramientaSelected">
-                <option model.bind="null">Selecciona</option>
+                <option model.bind="null">Seleccionar</option>
                 <option repeat.for="item of matchesIdHerramientas" , model.bind='item'>${item}</option>
               </select>
             </label>
