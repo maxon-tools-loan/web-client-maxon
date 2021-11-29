@@ -28,10 +28,11 @@ export class App {
       { route: '/maintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance/maintenance'), settings: {auth: this.authNeeded}},
       { route: '/up_downs', name: "up_downs", moduleId: PLATFORM.moduleName('screens/up_downs/up_downs'), settings: {auth: this.authNeeded}},
       { route: '/loaninfo/:id/:readOnly', name: "loanInfo", moduleId: PLATFORM.moduleName('screens/loans_info/loans_info'), settings: {auth: this.authNeeded}},
-      { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut'), settings: {auth: this.authNeeded}},
+      { route: '/inout', name: "inOut", moduleId: PLATFORM.moduleName('screens/outs_register/outs'), settings: {auth: this.authNeeded}},
       { route: '/userinfo/:employee', name: "employeeInfo", moduleId: PLATFORM.moduleName('screens/employees/info'), settings: {auth: this.authNeeded}},
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info'), settings: {auth: this.authNeeded}},
       { route: '', redirect: '/auth/login' , settings: {auth: this.authNeeded}},
+      { route: '/registerInOuts', name: "reginOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut'), settings: {auth: this.authNeeded}}
     ]); 
   }
 }

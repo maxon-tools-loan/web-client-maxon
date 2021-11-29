@@ -131,13 +131,13 @@ export class Loans {
     data['empleados'].forEach(element => {
       this.validUsers.push(element['idEmpleado'])
     });
-    data['tools'].forEach(element => {
-      this.validHerramientas.push(element['idHerramienta'])
-      this.dictHerramientas[element['idHerramienta']] = element['idParte']
-    });
-    data['consumibles'].forEach(element => {
-      this.validConsumibles.push(element['idConsumible'])
-      this.dictConsumibles[element['idConsumible']] = element['idParte']
+      data['tools'].forEach(element => {
+        this.validHerramientas.push(element['idHerramienta'])
+        this.dictHerramientas[element['idHerramienta']] = element['idParte']
+      });
+      data['consumibles'].forEach(element => {
+        this.validConsumibles.push(element['idConsumible'])
+        this.dictConsumibles[element['idConsumible']] = element['idParte']
     });
     let datas = await this.service.getLoans();
     datas['loans'].forEach(element => {

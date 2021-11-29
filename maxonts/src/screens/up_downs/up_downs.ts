@@ -57,6 +57,8 @@ export class Up_Downs {
             this.down.splice(i, 1);
           }
     }
+    
+
     private verifyData(){
         this.ups.forEach(element=>{
             if(this.ids.includes(element['idParte'])) {
@@ -117,10 +119,28 @@ function Item(){
         "Descripcion":"",
         "Seccion":"",
         "Minimo":"",
-        "Maximo":""
+        "Maximo":"",
+        "Image":null
     }
 }
 
 
+export class FileListToArrayValueConverter {
+    toView(fileList) {
+      let files = [];
+      if (!fileList) {
+        return files;
+      }
+      for(let i = 0; i < fileList.length; i++) {
+        files.push(fileList.item(i));
+      }
+      return files;
+    }
+  }
 
+  export class BlobToUrlValueConverter {
+    toView(blob) {
+      return URL.createObjectURL(blob);
+    }
+  }
 

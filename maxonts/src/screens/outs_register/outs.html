@@ -1,0 +1,56 @@
+
+<template>
+
+    <button click.delegate="redirect()" >Registrar Entradas/Salidas</button>
+
+<h3>Herramientas</h3>
+<table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#Registro</th>
+        <th scope="col">#Parte</th>
+        <th scope="col">#Herramienta</th>
+        <th scope="col">Nombre</th>
+        <th scope="col">Registró</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr repeat.for="record of tools">
+        <td></td>
+        <td>${record.idSalida}</td>
+        <td>${record.idParte}</td>
+        <td>${record.idHerramienta}</td>
+        <td>${record.Descripcion}</td>
+        <td>${record.Nombre}</td>
+        <td>${record.fecha}</td>
+        <td>${record.comentario}</td>
+      </tr>
+    </tbody>
+  </table>
+  <h3>Consumibles</h3>
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th scope="col">#Registro</th>
+        <th scope="col">#Parte</th>
+        <th scope="col">#Consumible</th>
+        <th scope="col">#Cantidad</th>
+        <th scope="col">Registró</th>
+        <th scope="col">Fecha</th>
+        <th scope="col">Comentario</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr repeat.for="record of consumibles">
+        <td></td>
+        <td>${record.idEmpleado}</td>
+        <td>${mapStatus(record.status)}</td>
+        <td>${idToUser(record.idUsuario)}</td>
+        <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
