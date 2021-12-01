@@ -5,6 +5,12 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
+  async getInItems(){
+    const response = await fetch(API.URL + '/items/recordIns').then( response => {return response.json()})
+    console.log(response)
+    if (response['code'] == "api.success") return response['data'];
+  }
+
   async entryItem(tools,consumibles,meta){
     let props ={
       "tools":tools,
@@ -22,9 +28,9 @@ export class InventoryService {
   }
 
   async getOutItems(){
-    const response = await fetch(API.URL + '/items/recordOuts').then( response => {return response.json()})
-
-    if (response['code'] == "api.success") return response['data']['value'];
+    const response = await fetch(API.URL + '/items/recordOuts').then( res => {return res.json()})
+    console.log(response)
+    if (response['code'] == "api.success") return response['data'];
   
   }
 

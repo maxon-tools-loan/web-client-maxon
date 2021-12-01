@@ -32,7 +32,7 @@ export class LoansInfoService {
       body: JSON.stringify(data)
     })
     console.log(response['code']);
-    return response['code'];
+    return response;
 
   }
 

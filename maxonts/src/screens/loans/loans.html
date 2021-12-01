@@ -54,13 +54,13 @@
       <div repeat.for="i of consumibles.length" class="container">
 
         <div class="filters">
-          <label for="partno" class="form-label"> # Consumible <input type="text" input.delegate="updateData(i,1)"
+          <label for="partno" class="form-label"> # Consumible <input type="text" min=0 input.delegate="updateData(i,1)"
               value.bind="consumibles[i]['idConsumible']" class="form-control">
           </label>
-          <label for="partno" class="form-label"> # Parte <input type="text" value.bind="consumibles[i]['idParte']"
+          <label for="partno" class="form-label"> # Parte <input type="text" disabled value.bind="consumibles[i]['idParte']"
               class="form-control">
           </label>
-          <label for="quantity" class="form-label"> Cantidad <input type="text" value.bind="consumibles[i]['cantidad']"
+          <label for="quantity" class="form-label"> Cantidad <input type="number" value.bind="consumibles[i]['cantidad']"
               class="form-control">
           </label>
           <label> Eliminar <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">

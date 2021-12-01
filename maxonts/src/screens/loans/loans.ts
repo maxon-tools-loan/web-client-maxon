@@ -2,9 +2,8 @@ import { SWAL_LOAN_MATERIAL_REMAINING, SWAL_EMPLOYEE_NOT_EXISTS, SWAL_INCORRECT_
 import Swal from 'sweetalert2';
 import { inject } from "aurelia-framework"
 import { LoansService } from "services/loans"
-
-
-@inject(LoansService)
+import {Router, Redirect} from "aurelia-router"
+@inject(LoansService,Router)
 export class Loans {
   sacannerMode =false
   validParts = []
@@ -39,8 +38,10 @@ export class Loans {
   IDHerramientaSelected=null
 
   deudores = []
-  constructor(service: LoansService) {
+  router:Router
+  constructor(service: LoansService, rt:Router) {
     this.service = service;
+    this.router = rt;
     this.getInfo();
   }
 
@@ -218,6 +219,7 @@ export class Loans {
         "externo": 0
       }
       this.service.postLoan(this.herramientas, this.consumibles, data)
+      new Redirect('/returns').navigate(this.router)
     }
   }
   private remove(i, value) {

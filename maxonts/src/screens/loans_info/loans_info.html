@@ -1,60 +1,63 @@
 <template>
   <h2>Info de Préstamo</h2>
   <div class="mb-3 filters">
-    <label for="exampleFormControlInput1" class="form-label"># De Empleado <input type="text"
+    <label for="exampleFormControlInput1" class="form-label"># De Empleado <input disabled type="text"
         value.bind="meta['idEmpleado']" class="form-control" id="exampleFormControlInput1">
     </label>
-    <label for="exampleFormControlInput2" class="form-label">Nombre <input type="text" value.bind="meta['nombre']"
+    <label for="exampleFormControlInput2" class="form-label">Nombre <input disabled type="text" value.bind="meta['nombre']"
         class="form-control" id="exampleFormControlInput2">
     </label>
-    <label for="exampleFormControlInput3" class="form-label">Fecha <input type="text" value.bind="meta['fecha']"
+    <label for="exampleFormControlInput3" class="form-label">Fecha <input disabled type="text" value.bind="meta['fecha']"
         class="form-control" id="exampleFormControlInput3">
     </label>
-    <label for="exampleFormControlInput4" class="form-label"> # Prestamo <input type="text"
+    <label for="exampleFormControlInput4" class="form-label"> # Prestamo <input  disabled type="text"
         value.bind="meta['idPrestamo']" class="form-control" id="exampleFormControlInput4">
     </label>
   </div>
+
   <!-- TODO: Consumibles? -->
   <div repeat.for="item of consumible">
     <div class="mb-3 filters">
-      <label for="exampleFormControlInput1" class="form-label"># consumible <input type="text"
+      <label for="exampleFormControlInput1" class="form-label"># consumible <input disabled type="text"
           value.bind="item['idConsumible']" class="form-control" id="exampleFormControlInput1">
       </label>
-      <label for="exampleFormControlInput2" class="form-label">Nombre <input type="text"
+      <label for="exampleFormControlInput2" class="form-label">Nombre <input disabled type="text"
           value.bind="item['Descripcion']" class="form-control" id="exampleFormControlInput2">
       </label>
-      <label for="exampleFormControlInput3" class="form-label">Cantidad <input type="text" value.bind="item['cantidad']"
+      <label for="exampleFormControlInput3" class="form-label">Cantidad <input disabled type="text" value.bind="item['cantidad']"
           class="form-control" id="exampleFormControlInput3">
       </label>
-      <label>Estado <select disabled.bind="readonly" click.trigger="integrityCheck(0,item)" name="status"
+      <label>Estado <select disabled.bind="readonly || item.enabled" click.trigger="integrityCheck(0,item)" name="status"
           value.bind="item['devuelto']" id="stats" class="form-control">
           <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
       </label>
-      <label if.bind="item['devuelto']==1">Cantidad Devuelta <input disabled.bind='readonly' type="text"
-          value.bind="item['cantidadDevuelta']" class="form-control"> </label>
+      <label if.bind="item['devuelto']==1">Cantidad Devuelta <input disabled.bind='readonly || item.enabled ' type="number"
+          value.bind="item['cantidadDevuelta']"  max.bind="item['cantidad']" min=0 class="form-control"> </label>
 
       <label if.bind="readonly && item['fechaDevolucion']!=null" class="form-label">Fecha <input disabled type="text" value.bind="item['fechaDevolucion']"
           class="form-control" id="exampleFormControlInput3">
       </label>
     </div>
   </div>
+
+
   <!-- TODO: No consumible -->
   <div repeat.for="item of herramienta">
     <div class="mb-3 filters">
-      <label class="form-label"># Parte <input type="text" value.bind="item['idParte']" class="form-control">
+      <label class="form-label"># Parte <input disabled type="text" value.bind="item['idParte']" class="form-control">
       </label>
-      <label class="form-label"># Pieza <input type="text" value.bind="item['idHerramienta']" class="form-control">
+      <label class="form-label"># Pieza <input disabled type="text" value.bind="item['idHerramienta']" class="form-control">
       </label>
-      <label class="form-label">Nombre <input type="text" value.bind="item['Descripcion']" class="form-control">
+      <label class="form-label">Nombre <input disabled type="text" value.bind="item['Descripcion']" class="form-control">
       </label>
-      <label>Estado <select disabled.bind="readonly" click.trigger="integrityCheck(0,item)" name="status"
+      <label>Estado <select disabled.bind="readonly || item.enabled " click.trigger="integrityCheck(0,item)" name="status"
           value.bind="item['devuelto']" id="stats" class="form-control">
           <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
       </label>
       <label if.bind="item['devuelto']==1"> Condición
-        <select disabled.bind='readonly' value.bind="item['condicionDevolucion']">
+        <select disabled.bind='readonly || item.enabled' value.bind="item['condicionDevolucion']">
           <option disabled model.bind="null">Seleccionar</option>
           <option repeat.for="option of posibles" model.bind="option.value">${option.name}</option>
         </select>

@@ -35,7 +35,7 @@ export class Maintenance {
   IDHerramientaSelected = null
 
   private meta = {
-    "usuario": "394fbaab64153b5b0db2344c7e1bc7"
+    "user": "394fbaab64153b5b0db2344c7e1bc7"
   }
   private service: InventoryService
   private loan: LoansService
