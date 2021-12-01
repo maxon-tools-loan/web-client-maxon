@@ -5,6 +5,24 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
+  async updateMaintenance(item){
+    let props ={
+      'params':[item]
+    }
+    const response = await fetch (API.URL + '/items/updateMaintenance',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+
+    return response
+  }
+
+  async getMaintenanceItems(){
+    const response = await fetch(API.URL + '/items/recordMaintenance').then( response => {return response.json()})
+    if (response['code'] == "api.success") return response['data'];
+  }
+
   async getInItems(){
     const response = await fetch(API.URL + '/items/recordIns').then( response => {return response.json()})
     console.log(response)
@@ -74,7 +92,7 @@ export class InventoryService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
-    })
+    }).then(r => r.json())
 
     return response;
   }

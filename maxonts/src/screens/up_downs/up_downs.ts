@@ -1,6 +1,7 @@
 import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import { LoansService } from "services/loans"
+import {Redirect, Router} from "aurelia-router"
 @inject(LoansService,InventoryService)
 export class Up_Downs {
     public up = true
@@ -15,9 +16,11 @@ export class Up_Downs {
 
     private loan:LoansService
     private inventory:InventoryService
-    constructor(loan:LoansService,Inventory:InventoryService){
+    private router:Router
+    constructor(loan:LoansService,Inventory:InventoryService,rt:Router){
         this.loan = loan;
         this.inventory = Inventory;
+        this.router = rt
         this.loadIdParte();
     }
 
@@ -83,9 +86,13 @@ export class Up_Downs {
         return true;
     }
     async commit(){
-        console.log('commiting')
+        "ALERT COnfirmacion"
         if(this.verifyData()){
             this.inventory.registerItems(this.ups);
+            "ALTERR DE DECIR SISI YA SE HIZO COMMIT"
+            this.ups =[]
+        }else{
+            "TODO ALERT"
         }
 
         
@@ -101,11 +108,17 @@ export class Up_Downs {
         return true;
     }
     async commitDown(){
+
+        "ALERT COnfirmacion"
         console.log("EXECUTED")
         if(this.verifyDown()){
            await  this.inventory.disableItems(this.down);
+           "ALERT DE DECIR SISI YA SE HIZO COMMIT"
+          this.down =[]
+          
         }
         else{
+            "TODO ALERT"
            alert("No existe el coso");
         }
     }

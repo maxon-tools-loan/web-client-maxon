@@ -1,10 +1,12 @@
-import { SWAL_EMPTY_MAINTENANCE, SWAL_INCORRECT_INPUT } from './../../swals/error';
+import { SWAL_EMPTY_MAINTENANCE, SWAL_INCORRECT_INPUT, SWAL_CANCELLED, SWAL_ERROR } from './../../swals/error';
+import { SWAL_MAINTENANCE_CONFIRM, SWAL_SUCCESS} from './../../swals/question';
 import { inject } from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import { LoansService } from "services/loans"
 import Swal from 'sweetalert2'
+import {Redirect, Router} from "aurelia-router"
 
-@inject(InventoryService, LoansService)
+@inject(InventoryService, LoansService, Router)
 export class Maintenance {
   public consumibles = []
   public tools = []
@@ -33,7 +35,7 @@ export class Maintenance {
 
   HerramientaSelected = null
   IDHerramientaSelected = null
-
+  router:Router
   private meta = {
     "user": "394fbaab64153b5b0db2344c7e1bc7"
   }
@@ -41,9 +43,10 @@ export class Maintenance {
   private loan: LoansService
   private opt = 1
 
-  constructor(service: InventoryService, loan: LoansService) {
+  constructor(service: InventoryService, loan: LoansService,rt:Router) {
     this.service = service;
     this.loan = loan;
+    this.router=rt;
     this.getInfo();
   }
 
@@ -178,12 +181,30 @@ export class Maintenance {
 
   }
 
-  private commit() {
+  private async commit() { // hice esta cosa async, nose que partes vaya a romper 8)
+
+    //No se rommpe jala chido 8)
+    
+    const result = await Swal.fire(SWAL_MAINTENANCE_CONFIRM)
+    if (!result){
+      Swal.fire(SWAL_CANCELLED)
+      return
+    }
+    "TODO SWAL CONFIRMACION DE REGISTRO Y OZTRO PARA VERIFICACION"
+
+    
     if (this.tools.length === 0 && this.consumibles.length === 0)
       return Swal.fire(SWAL_EMPTY_MAINTENANCE)
 
     if (this.verifyData()) {
-      this.service.registerManteinance(this.tools, this.consumibles, this.meta)
+      const response = await this.service.registerManteinance(this.tools, this.consumibles, this.meta)
+      console.log(response)
+      if (response.data == "api.success")
+        Swal.fire(SWAL_SUCCESS)
+      else 
+        Swal.fire(SWAL_ERROR)
+      this.tools=[]
+      this.consumibles=[]
     }
     else {
       return Swal.fire(SWAL_INCORRECT_INPUT)
