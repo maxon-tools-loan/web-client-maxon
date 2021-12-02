@@ -3,6 +3,7 @@ import Swal from 'sweetalert2';
 import { inject } from "aurelia-framework"
 import { LoansService } from "services/loans"
 import {Router, Redirect} from "aurelia-router"
+import { SWAL_EMPLOYEE_DEBT } from 'swals/question';
 @inject(LoansService,Router)
 export class Loans {
   sacannerMode =false
@@ -158,11 +159,12 @@ export class Loans {
   }
 
 
-  private verifyData() {
+  private async verifyData() {
     if (this.deudores.includes(parseInt(this.empleado))) {
-      Swal.fire(SWAL_LOAN_MATERIAL_REMAINING)
-      console.log("ERROR AQUI")
+      let result =await Swal.fire(SWAL_EMPLOYEE_DEBT)
+      if(!result){
       return false;
+      }
     }
 
     if (!this.validUsers.includes(parseInt(this.empleado))) {
@@ -206,11 +208,11 @@ export class Loans {
       this.herramientas.push(this.dummyHerramienta())
     }
   }
-  private commit() {
+  private async commit() {
     if (this.herramientas.length < 1 && this.consumibles.length < 1) {
       return Swal.fire(SWAL_LOAN_NO_ELEMENTS)
     }
-    if (this.verifyData()) {
+    if (await this.verifyData()) {
       let data = {
         "job": this.job,
         "maquina": this.maquina,

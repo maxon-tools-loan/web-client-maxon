@@ -2,6 +2,9 @@ import { Console } from "console"
 import { LoansInfoService } from "../../services/loan_info"
 import { inject  } from "aurelia-framework"
 import {Router, Redirect} from "aurelia-router"
+import Swal from "sweetalert2"
+import { SWAL_LOANUPDATE_CONFIRM, SWAL_SUCCESS } from "swals/question"
+import { SWAL_ERROR } from "swals/error"
 
 
 @inject(LoansInfoService,Router)
@@ -60,8 +63,17 @@ export class LoanInfo {
       }
     
      async commitChanges() {
+        let result  = await Swal.fire(SWAL_LOANUPDATE_CONFIRM)
+        if (result){
         const res  = await this.loan.updateLoanInfo(this.herramienta,this.consumible,this.meta)
-        if (res['code']=="api.error") alert("Parece que Ocurrio un error intentelo mas tarde")
+        if (res['code']=="api.error"){
+            await Swal.fire(SWAL_ERROR)
+        
+        }
+        else{
+            await Swal.fire(SWAL_SUCCESS)
+        }
+        }
          new Redirect('/returns').navigate(this.router)
     }
 }

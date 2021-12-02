@@ -1,4 +1,4 @@
-import { SWAL_EMPTY_MAINTENANCE, SWAL_INCORRECT_INPUT, SWAL_CANCELLED, SWAL_ERROR } from './../../swals/error';
+import { SWAL_EMPTY_MAINTENANCE, SWAL_INCORRECT_INPUT, SWAL_CANCELLED, SWAL_ERROR, getErrorSwal } from './../../swals/error';
 import { SWAL_MAINTENANCE_CONFIRM, SWAL_SUCCESS} from './../../swals/question';
 import { inject } from "aurelia-framework"
 import { InventoryService } from "services/inventory"
@@ -117,7 +117,7 @@ export class Maintenance {
     }
   }
 
-  private verifyData() {
+  private async verifyData() {
     let valid = true
     this.consumibles.forEach(element => {
       console.log(element)
@@ -127,6 +127,20 @@ export class Maintenance {
         valid = valid && false;
       }
     });
+
+    for (const element of this.consumibles){
+      if(element.area=='' || element.area==null){
+        await Swal.fire(getErrorSwal("Area no debe estar vacio"))
+        return false
+      }
+    }
+
+    for (const element of this.tools){
+      if(element.area=='' || element.area==null){
+        await Swal.fire(getErrorSwal("Area no debe estar vacio"))
+        return false
+      }
+    }
 
     this.tools.forEach(element => {
       console.log("tool", element)
@@ -196,7 +210,7 @@ export class Maintenance {
     if (this.tools.length === 0 && this.consumibles.length === 0)
       return Swal.fire(SWAL_EMPTY_MAINTENANCE)
 
-    if (this.verifyData()) {
+    if (await this.verifyData()) {
       const response = await this.service.registerManteinance(this.tools, this.consumibles, this.meta)
       console.log(response)
       if (response.data == "api.success")

@@ -2,6 +2,10 @@ import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import { LoansService } from "services/loans"
 import {Redirect, Router} from "aurelia-router"
+import Swal from "sweetalert2"
+import { SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question"
+import { API } from "../../../../config"
+import { getErrorSwal, SWAL_ERROR } from "swals/error"
 @inject(LoansService,InventoryService)
 export class Up_Downs {
     public up = true
@@ -62,19 +66,34 @@ export class Up_Downs {
     }
     
 
-    private verifyData(){
-        this.ups.forEach(element=>{
+    private async  verifyData(){
+        if(this.ups.length==0){
+            await Swal.fire(getErrorSwal(" No existen elementos"))
+            return false;
+        }
+        console.log(this.ids)
+        for (let index = 0; index < this.ups.length ; index++){
+            let element = this.ups[index]
             if(this.ids.includes(element['idParte'])) {
-                alert(`${element.idParte} Ya existe Prueba con otro ID`)
+                console.log("AAAAAAAAAAAAAAAAA")
+                await Swal.fire(getErrorSwal(`${element.idParte} Ya existe Prueba con otro ID`))
                 return false;
-            }
-        })
+            };
+            for (const [key, value] of Object.entries(element)) {
+                if(value=="" || value ==null){
+                    console.log("AAAAAAAAAAA")
+                    await Swal.fire(getErrorSwal(`Existe un campo vacío en el elemento numero ${index}`))
+                    return false;
+                } 
+              }
+        }
+       
         for (let index = 0; index < this.ups.length -1; index++) {
             const element = this.ups[index].idParte;
             for (let idx = index +1 ; idx<this.ups.length; idx++){
                 const comparable = this.ups[idx].idParte;
                 if(comparable==element){
-                    alert("El id de parte se repite en tus opciones")
+                    await Swal.fire(getErrorSwal(`El ${comparable} se repite en tus opciones`))
                     return false;
                 }
 
@@ -86,13 +105,23 @@ export class Up_Downs {
         return true;
     }
     async commit(){
-        "ALERT COnfirmacion"
-        if(this.verifyData()){
-            this.inventory.registerItems(this.ups);
-            "ALTERR DE DECIR SISI YA SE HIZO COMMIT"
-            this.ups =[]
+        
+        if(await this.verifyData()){
+            let results = await (await Swal.fire(SWAL_UPS_CONFIRM)).isConfirmed
+            console.log(results)
+            if(results){ 
+            let reponse =await this.inventory.registerItems(this.ups);
+            console.log(reponse)
+                if(reponse['code']=='api.error'){
+                    await Swal.fire(SWAL_ERROR)
+                }
+                else{
+                    await Swal.fire(SWAL_SUCCESS)
+                    this.ups =[]
+            } 
+        }
         }else{
-            "TODO ALERT"
+        await Swal.fire(SWAL_ERROR)
         }
 
         

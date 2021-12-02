@@ -13,7 +13,7 @@ export class InventoryService {
       method:'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
-    })
+    }).then(r=>r.json())
 
     return response
   }
@@ -76,7 +76,7 @@ export class InventoryService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
-    })
+    }).then(res=> res.json())
 
     return response;
   }

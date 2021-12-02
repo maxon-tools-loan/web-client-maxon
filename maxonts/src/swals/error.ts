@@ -1,6 +1,6 @@
 import {SweetAlertOptions} from 'sweetalert2';
 
-const getErrorSwal = (message) => {
+export const  getErrorSwal = (message) => {
   return {
     icon: 'error',
     title: 'Error',
@@ -19,3 +19,4 @@ export const SWAL_EMPLOYEE_NOT_EXISTS = getErrorSwal("El empleado no existe")
 
 export const SWAL_CANCELLED = getErrorSwal("Cancelado")
 export const SWAL_ERROR = getErrorSwal("Ocurrio un error")
+
