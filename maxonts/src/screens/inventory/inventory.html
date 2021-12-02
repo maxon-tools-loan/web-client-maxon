@@ -55,7 +55,9 @@
         <th scope="col">Minimo</th>
         <th scope="col">Maximo</th>
         <th scope="col">Prestado</th>
+        <th scope="col">En Mantenimiento</th>
         <th scope="col">Disponible</th>
+        <th scope="col">Total</th>
       </tr>
     </thead>
     <tbody>
@@ -66,8 +68,10 @@
         <td>${record.Descripcion}</td>
         <td>${record.Minimo}</td>
         <td>${record.Maximo}</td>
-        <td>${amount(record.Prestados)}</td>
+        <td>${amount(record.Prestado)}</td>
+        <td>${amount(record.Mantenimiento)}</td>
         <td>${amount(record.Disponible)}</td>
+        <td>${amount(record.Total)}</td>
       </tr>
     </tbody>
   </table>

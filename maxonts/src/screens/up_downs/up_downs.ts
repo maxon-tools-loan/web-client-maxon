@@ -1,6 +1,11 @@
 import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import { LoansService } from "services/loans"
+import {Redirect, Router} from "aurelia-router"
+import Swal from "sweetalert2"
+import { SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question"
+import { API } from "../../../../config"
+import { getErrorSwal, SWAL_ERROR } from "swals/error"
 @inject(LoansService,InventoryService)
 export class Up_Downs {
     public up = true
@@ -15,9 +20,11 @@ export class Up_Downs {
 
     private loan:LoansService
     private inventory:InventoryService
-    constructor(loan:LoansService,Inventory:InventoryService){
+    private router:Router
+    constructor(loan:LoansService,Inventory:InventoryService,rt:Router){
         this.loan = loan;
         this.inventory = Inventory;
+        this.router = rt
         this.loadIdParte();
     }
 
@@ -57,19 +64,36 @@ export class Up_Downs {
             this.down.splice(i, 1);
           }
     }
-    private verifyData(){
-        this.ups.forEach(element=>{
+    
+
+    private async  verifyData(){
+        if(this.ups.length==0){
+            await Swal.fire(getErrorSwal(" No existen elementos"))
+            return false;
+        }
+        console.log(this.ids)
+        for (let index = 0; index < this.ups.length ; index++){
+            let element = this.ups[index]
             if(this.ids.includes(element['idParte'])) {
-                alert(`${element.idParte} Ya existe Prueba con otro ID`)
+                console.log("AAAAAAAAAAAAAAAAA")
+                await Swal.fire(getErrorSwal(`${element.idParte} Ya existe Prueba con otro ID`))
                 return false;
-            }
-        })
+            };
+            for (const [key, value] of Object.entries(element)) {
+                if(value=="" || value ==null){
+                    console.log("AAAAAAAAAAA")
+                    await Swal.fire(getErrorSwal(`Existe un campo vacío en el elemento numero ${index}`))
+                    return false;
+                } 
+              }
+        }
+       
         for (let index = 0; index < this.ups.length -1; index++) {
             const element = this.ups[index].idParte;
             for (let idx = index +1 ; idx<this.ups.length; idx++){
                 const comparable = this.ups[idx].idParte;
                 if(comparable==element){
-                    alert("El id de parte se repite en tus opciones")
+                    await Swal.fire(getErrorSwal(`El ${comparable} se repite en tus opciones`))
                     return false;
                 }
 
@@ -81,9 +105,23 @@ export class Up_Downs {
         return true;
     }
     async commit(){
-        console.log('commiting')
-        if(this.verifyData()){
-            this.inventory.registerItems(this.ups);
+        
+        if(await this.verifyData()){
+            let results = await (await Swal.fire(SWAL_UPS_CONFIRM)).isConfirmed
+            console.log(results)
+            if(results){ 
+            let reponse =await this.inventory.registerItems(this.ups);
+            console.log(reponse)
+                if(reponse['code']=='api.error'){
+                    await Swal.fire(SWAL_ERROR)
+                }
+                else{
+                    await Swal.fire(SWAL_SUCCESS)
+                    this.ups =[]
+            } 
+        }
+        }else{
+        await Swal.fire(SWAL_ERROR)
         }
 
         
@@ -99,11 +137,17 @@ export class Up_Downs {
         return true;
     }
     async commitDown(){
+
+        "ALERT COnfirmacion"
         console.log("EXECUTED")
         if(this.verifyDown()){
            await  this.inventory.disableItems(this.down);
+           "ALERT DE DECIR SISI YA SE HIZO COMMIT"
+          this.down =[]
+          
         }
         else{
+            "TODO ALERT"
            alert("No existe el coso");
         }
     }
@@ -117,10 +161,28 @@ function Item(){
         "Descripcion":"",
         "Seccion":"",
         "Minimo":"",
-        "Maximo":""
+        "Maximo":"",
+        "Image":null
     }
 }
 
 
+export class FileListToArrayValueConverter {
+    toView(fileList) {
+      let files = [];
+      if (!fileList) {
+        return files;
+      }
+      for(let i = 0; i < fileList.length; i++) {
+        files.push(fileList.item(i));
+      }
+      return files;
+    }
+  }
 
+  export class BlobToUrlValueConverter {
+    toView(blob) {
+      return URL.createObjectURL(blob);
+    }
+  }
 

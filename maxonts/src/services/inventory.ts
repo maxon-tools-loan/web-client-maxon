@@ -5,7 +5,69 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
- 
+  async updateMaintenance(item){
+    let props ={
+      'params':[item]
+    }
+    const response = await fetch (API.URL + '/items/updateMaintenance',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    }).then(r=>r.json())
+
+    return response
+  }
+
+  async getMaintenanceItems(){
+    const response = await fetch(API.URL + '/items/recordMaintenance').then( response => {return response.json()})
+    if (response['code'] == "api.success") return response['data'];
+  }
+
+  async getInItems(){
+    const response = await fetch(API.URL + '/items/recordIns').then( response => {return response.json()})
+    console.log(response)
+    if (response['code'] == "api.success") return response['data'];
+  }
+
+  async entryItem(tools,consumibles,meta){
+    let props ={
+      "tools":tools,
+      "consumibles":consumibles,
+      "metadata":meta
+    }
+    const response = await fetch (API.URL + '/items/registerUp',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+
+    return response
+
+  }
+
+  async getOutItems(){
+    const response = await fetch(API.URL + '/items/recordOuts').then( res => {return res.json()})
+    console.log(response)
+    if (response['code'] == "api.success") return response['data'];
+  
+  }
+
+  async downItems(tools,consumibles,meta){
+
+    let props ={
+      "tools":tools,
+      "consumibles":consumibles,
+      "metadata":meta
+    }
+    const response = await fetch (API.URL + '/items/registerDown',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    })
+
+    return response
+
+  }
   async registerItems(items) {
     let props = {
       "items": items
@@ -14,7 +76,7 @@ export class InventoryService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
-    })
+    }).then(res=> res.json())
 
     return response;
   }
@@ -30,7 +92,7 @@ export class InventoryService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
-    })
+    }).then(r => r.json())
 
     return response;
   }

@@ -39,6 +39,7 @@
         <th scope="col">Maximo</th>
         <th scope="col">Prestado</th>
         <th scope="col">Disponible</th>
+        <th scope="col">Total</th>
         <th scope='col'>Pedido </th>
       </tr>
     </thead>
@@ -51,6 +52,7 @@
         <td>${record.Maximo}</td>
         <td>${record.Prestado}</td>
         <td>${record.Disponible}</td>
+        <td>${record.Total}</td>
         <td>
           <input  if.bind="record['estado']==1" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />
           <input  if.bind="record['estado']==0" type="checkbox" checked.bind="record['estado']==1"  click.trigger="update(record)" />

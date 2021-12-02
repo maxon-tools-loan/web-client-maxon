@@ -1,0 +1,62 @@
+<template>
+    <button class=" waves-effect waves-light" click.delegate="Register()"type="submit" name="action">Registrar Mantenimiento</button>
+    <h3> Consumibles</h3>
+    <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"># Mantenimiento</th>
+            <th scope="col">No. Parte</th>
+            <th scope="col">No. Consumible</th>
+            <th scope="col">Nombre</th>
+            <th scopre="col">Cantidad</th>
+            <th scope="col">Area</th>
+            <th scope="col">Registró</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="record of consumibles">
+            <td>${record.idMantenimiento}</td>
+            <td>${record.idParte}</td>
+            <td>${record.idConsumible}</td>
+            <td>${record.Descripcion}</td>
+            <td>${record.cantidad}</td>
+            <td>${record.area}</td>
+            <td>${record.nombre}</td>
+            <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
+            <td click.delegate="triggerSave(record)">${mapStatus(record.completo)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3> Herramientas</h3>
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th scope="col"># Mantenimiento</th>
+            <th scope="col">No. Parte</th>
+            <th scope="col">No. Herramienta</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Area</th>
+            <th scope="col">Registró</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr repeat.for="record of tools">
+           
+            <td>${record.idMantenimiento}</td>
+            <td>${record.idParte}</td>
+            <td>${record.idHerramiena}</td>
+            <td>${record.Descripcion}</td>
+            <td>${record.area}</td>
+            <td>${record.nombre}</td>
+            <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
+            <td click.delegate="triggerSave(record)" >${mapStatus(record.completo)}</td>
+          </tr>
+        </tbody>
+      </table>
+
+<template>

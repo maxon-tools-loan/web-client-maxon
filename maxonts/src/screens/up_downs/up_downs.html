@@ -24,9 +24,15 @@
           <label class="form-label">Nombre/Descripcion
             <input type="text" value.bind="ups[i]['Descripcion']" class="form-control">
           </label>
-
+         
         </div>
-
+        <label>
+        <input type="file"  accept="image/*" files.bind="selectedFiles">
+        
+          <li repeat.for="file of selectedFiles | fileListToArray">
+            <img width ="200" height="200" src.bind="file | blobToUrl"><img>
+          </li>
+        </label>
         <div class="mb-3 filters">
           <label class="form-label">Seccion/Locker
             <input type="text" value.bind="ups[i]['Seccion']" class="form-control">
@@ -65,6 +71,7 @@
           </label>
           <label>Nombre
             <select change.delegate="matchData(i)" value.bind="down[i]['idParte']">
+            <option >Selecciona</option>
             <option repeat.for="option of data" model.bind="option.idParte">${option.Descripcion}</option>
             </select>
           </label>
@@ -72,12 +79,12 @@
 
         <div class="mb-3 filters">
           <label class="form-label">Familia
-            <input type="text" value.bind="down[i]['Familia']" class="form-control">
+            <input type="text" disabled value.bind="down[i]['Familia']" class="form-control">
           </label>
 
 
           <label class="form-label">Nombre/Descripcion
-            <input type="text" value.bind="down[i]['Descripcion']" class="form-control">
+            <input type="text" disabled value.bind="down[i]['Descripcion']" class="form-control">
           </label>
           <label>Eliminar
             <input class="form-check-input" change.delegate="removeDown(i)" type="checkbox" id="inlineCheckbox2">
