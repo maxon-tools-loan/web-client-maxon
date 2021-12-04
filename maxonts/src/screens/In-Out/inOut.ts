@@ -1,6 +1,9 @@
 import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory";
 import { LoansService } from "services/loans";
+import { SWAL_ERROR } from "swals/error";
+import { SWAL_INS_CONFIRM, SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question";
+import Swal from "sweetalert2";
 
 @inject(LoansService,InventoryService)
 export class InOut {
@@ -97,6 +100,7 @@ export class InOut {
         else {
           this.consumibles[i]['idParte'] = this.dictConsumibles[this.consumibles[i]['idConsumible']]
         }
+
     
       }
       matchParte(i,name){
@@ -174,44 +178,73 @@ export class InOut {
 
     private verifyData(){
 
-    this.tools.forEach(element => {
+    for (const element of this.tools) {
         if (element['idParte'] == null || element['idParte'] == '' ){
-          return false
+          return false;
         }
-      });
+        console.log(!Object.keys(this.dictHerramientas).includes(element.idParte))
+        if (!Object.keys(this.dictHerramientas).includes(element.idParte)){
+          console.log("AAAAAAAAAAA")
+          return false;
+          
+        }
 
-      this.consumibles.forEach(element => {
+      };
+  
+
+      for (const element of this.consumibles) {
         if (element['idParte'] == null || element['idParte'] == '' ){
           return false
         }
-      });
+        console.log(element.idParte)
+        if (!Object.keys(this.dictConsumibles).includes(element.idParte)){
+          return false
+        }
+      };
       return true
     }
 
-    private commit() {
+    private async commit() {
         const type = (this.type) ? "Entrada" : "Salida"
 
         if (this.type) {
-            console.log("Salida")
+            if(await this.verifyData()){
+
+            }
+          
             
         }
         else {
             console.log("Entrada")
-            if (this.verifyData()){
-            this.inventory.entryItem(this.tools,this.consumibles,this.meta)
+            if (await this.verifyData()==true){
+            let res = await Swal.fire(SWAL_INS_CONFIRM)
+            if (res.isConfirmed){
+            let res = await this.inventory.entryItem(this.tools,this.consumibles,this.meta)
+            if(res.data =='api.success'){
+              Swal.fire(SWAL_SUCCESS)
+            }
+            else{
+              Swal.fire(SWAL_ERROR)
+            }
+            this.consumibles =[]
+            this.tools=[]
+            this.setUp()
+            }
+            
+          }
+          else{
+            await Swal.fire(SWAL_ERROR)
           }
         }
     }
 
 }
 
-function consu(index) {
+function consu(index) { 
     const information = {
         'idConsumible': '',
         'idParte': '',
         'cantidad': 1,
-        'comentario': '',
-        'area': '',
         'index': index,
     }
     return information
@@ -221,8 +254,7 @@ function tool(index) {
     const information = {
         'idHerramienta': '',
         'idParte': '',
-        'comentario': '',
-        'area': '',
+        'marca': '',
         'index': index,
     }
     return information

@@ -72,8 +72,9 @@ export class LoanInfo {
         }
         else{
             await Swal.fire(SWAL_SUCCESS)
+            new Redirect('/returns').navigate(this.router)
         }
         }
-         new Redirect('/returns').navigate(this.router)
+         
     }
 }

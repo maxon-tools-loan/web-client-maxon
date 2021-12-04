@@ -58,12 +58,13 @@
               </select>
             </label>
 
-            <label> idHerramienta
+            <label if.bind="type"> idHerramienta
               <select value.bind="IDHerramientaSelected">
                 <option model.bind="null">Seleccionar</option>
                 <option repeat.for="item of matchesIdHerramientas" , model.bind='item'>${item}</option>
               </select>
             </label>
+
             <label>Añadir
               <button click.delegate="AddCustom(0)"> +</button>
             </label>
@@ -97,11 +98,14 @@
               <div class="filters">
                 <label for="exampleFormControlInput1"  class="form-label"># de Herramienta
 
-                  <input type="text" input.delegate="updateData(item,0)" class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
+                  <input type="text"  class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
                 </label>
                 <label for="exampleFormControlInput2" class="form-label"># Parte 
 
-                  <input type="text" disabled class="form-control" id="exampleFormControlInput2" value.bind="$parent.tools[item]['idParte']">
+                  <input type="text" disabled.bind="type" class="form-control" id="exampleFormControlInput2" value.bind="$parent.tools[item]['idParte']">
+                </label>
+                <label if.bind="!type"> Marca
+                  <input type="text" class="form-control" value.bind="tools[item].marca">
                 </label>
                 <label for="control">Eliminar<input type="checkbox" name="ordered" change.delegate="removeTool(item)"/>&nbsp; </label>
               </div>

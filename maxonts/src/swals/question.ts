@@ -8,7 +8,13 @@ export const SWAL_MAINTENANCE_CONFIRM = {
   closeOnCancel: true,
 } as SweetAlertOptions
 
-
+export const SWAL_INS_CONFIRM = {
+  title: "¿Seguro que quieres registrar dar de alta el material?",
+  type: "warning",
+  showCancelButton: true,
+  closeOnConfirm: true,
+  closeOnCancel: true,
+} as SweetAlertOptions
 export const SWAL_EMPLOYEE_DEBT = {
   title: "El empleado debe material ¿Deseas continuar con el prestamo?",
   type: "warning",

@@ -220,7 +220,8 @@ export class Loans {
         "user": "394fbaab64153b5b0db2344c7e1bc7",
         "externo": 0
       }
-      this.service.postLoan(this.herramientas, this.consumibles, data)
+      let res = await this.service.postLoan(this.herramientas, this.consumibles, data)
+
       new Redirect('/returns').navigate(this.router)
     }
   }
