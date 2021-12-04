@@ -39,6 +39,19 @@ const returns: Returns[] = [
 
 export class LoansService {
 
+  async commitDown(tools,consumibles,meta){
+
+    let data={'tools':tools,'meta':meta,'consumibles':consumibles }
+    const response = await fetch(API.URL + '/items/downMaterial', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)}).then(response => {
+      return response.json()
+    });
+    console.log(response)
+    if(response.data =="api.success") return response
+  }
+
   async getIdLoansByIdParte (data){
     data={'id':data}
     const response = await fetch(API.URL + '/items/filterParte', {
@@ -47,7 +60,7 @@ export class LoansService {
       body: JSON.stringify(data)}).then(response => {
       return response.json()
     });
-    if(response.code ="api.success") return response['data']['ids']
+    if(response.code =="api.success") return response['data']['ids']
   }
 
   async searchReturns(query, raw_loans = undefined) {

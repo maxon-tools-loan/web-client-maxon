@@ -33,7 +33,8 @@ export class App {
       { route: '/items/:partNo', name: "partInfo", moduleId: PLATFORM.moduleName('screens/item/item_info'), settings: {auth: this.authNeeded}},
       { route: '', redirect: '/auth/login' , settings: {auth: this.authNeeded}},
       { route: '/registerInOuts', name: "reginOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut'), settings: {auth: this.authNeeded}},
-      { route: '/recordsMaintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance_register/maintenance_register'), settings: {auth: this.authNeeded}}
+      { route: '/recordsMaintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance_register/maintenance_register'), settings: {auth: this.authNeeded}},
+      { route: '/newIn', name: "InsNotRegistered", moduleId: PLATFORM.moduleName('screens/newIn/newIn'), settings: {auth: this.authNeeded}}
     ]); 
   }
 }

@@ -5,6 +5,11 @@ const fetch = require('node-fetch');
 
 export class InventoryService {
 
+  async getItemsNotRegistered(){
+    const response = await fetch(API.URL + '/items/newIDs').then( response => {return response.json()})
+    if (response['code'] == "api.success") return response['data'];
+  }
+
   async updateMaintenance(item){
     let props ={
       'params':[item]
