@@ -34,7 +34,9 @@ export class App {
       { route: '', redirect: '/auth/login' , settings: {auth: this.authNeeded}},
       { route: '/registerInOuts', name: "reginOut", moduleId: PLATFORM.moduleName('screens/In-Out/inOut'), settings: {auth: this.authNeeded}},
       { route: '/recordsMaintenance', name: "maintenance", moduleId: PLATFORM.moduleName('screens/maintenance_register/maintenance_register'), settings: {auth: this.authNeeded}},
-      { route: '/newIn', name: "InsNotRegistered", moduleId: PLATFORM.moduleName('screens/newIn/newIn'), settings: {auth: this.authNeeded}}
+      { route: '/newIn', name: "InsNotRegistered", moduleId: PLATFORM.moduleName('screens/newIn/newIn'), settings: {auth: this.authNeeded}},
+      { route: '/Uploademployee', name: "employees", moduleId: PLATFORM.moduleName('screens/loadEmployees/load'), settings: {auth: this.authNeeded}}
+      
     ]); 
   }
 }
