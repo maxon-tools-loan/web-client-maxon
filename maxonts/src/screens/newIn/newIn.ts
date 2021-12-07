@@ -8,7 +8,7 @@ import {Redirect, Router} from 'aurelia-router';
 
 
 @inject(LoansService, InventoryService,Router)
-export class InOut {
+export class NewIns {
   public type = 0;
   public consumibles = []
   public tools = []

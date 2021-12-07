@@ -6,7 +6,7 @@ import {Router, Redirect} from "aurelia-router"
 import { SWAL_EMPLOYEE_DEBT } from 'swals/question';
 @inject(LoansService,Router)
 export class Loans {
-  sacannerMode =false
+  
   validParts = []
   validUsers = []
   validConsumibles = []
