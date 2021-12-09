@@ -1,34 +1,48 @@
 <template>
   <div class="mock_sidebar">
     <div class="d-flex flex-column sidebar_container">
-      <a class="sidebar_loans" route-href="loans"> Prestamos </a>
-      <a class="sidebar_returns" route-href="returns"> Devoluciones </a>
-      <a class="sidebar_consults" route-href="inventory"> Inventario </a>
-      <a class="sidebar_consults" route-href="history"> Historial de Prestamos
+      <a class="sidebarlink sidebar_loans" route-href="loans"> Prestamos </a>
+      <a class="sidebarlink sidebar_returns" route-href="returns"> Devoluciones
       </a>
-      <a class="sidebar_consults" route-href="orders"> Pedidos </a>
-      <a class="sidebar_modifications" route-href="maintenance"> Mantenimiento
+      <a class="sidebarlink sidebar_consults" route-href="inventory"> Inventario
       </a>
-      <a class="sidebar_modifications" route-href="up_downs"> Altas/Bajas </a>
-      <a class="sidebar_modifications" route-href="inOut"> Entrada/Salida </a>
+      <a class="sidebarlink sidebar_consults" route-href="history"> Historial de
+        Prestamos
+      </a>
+      <a class="sidebarlink sidebar_consults" route-href="orders"> Pedidos </a>
+      <a class="sidebarlink sidebar_modifications" route-href="maintenance">
+        Mantenimiento
+      </a>
+      <a class="sidebarlink sidebar_modifications" route-href="up_downs">
+        Altas/Bajas </a>
+      <a class="sidebarlink sidebar_modifications" route-href="inOut">
+        Entrada/Salida </a>
     </div>
   </div>
   <div class="sidebar">
-    <h1 class="sidebar-title" > <img  style="width: 20vw;" src="../11283_47706.jpg"> </h1>
+    <h1 class="sidebar-title"> <img style="width: 20vw;"
+        src="../11283_47706.jpg"> </h1>
 
 
     <div class="d-flex flex-column sidebar_container">
-      <a class="sidebar_loans" route-href="loans"> Prestamos </a>
-      <a class="sidebar_returns" route-href="returns"> Devoluciones </a>
-      <a class="sidebar_consults" route-href="inventory"> Inventario </a>
-      <a class="sidebar_consults" route-href="history"> Historial de Prestamos
+      <a class="sidebarlink sidebar_loans" route-href="loans"> Prestamos </a>
+      <a class="sidebarlink sidebar_returns" route-href="returns"> Devoluciones
       </a>
-      <a class="sidebar_consults" route-href="orders"> Pedidos </a>
-      <a class="sidebar_modifications" route-href="maintenance"> Mantenimiento
+      <a class="sidebarlink sidebar_consults" route-href="inventory"> Inventario
       </a>
-      <a class="sidebar_modifications" route-href="up_downs"> Altas/Bajas </a>
-      <a class="sidebar_modifications" route-href="inOut"> Entrada/Salida </a>
-      <a class="sidebar_modifications" route-href="employees"> Actualizacion de Usuarios </a>
+      <a class="sidebarlink sidebar_consults" route-href="history"> Historial de
+        Prestamos
+      </a>
+      <a class="sidebarlink sidebar_consults" route-href="orders"> Pedidos </a>
+      <a class="sidebarlink sidebar_modifications" route-href="maintenance">
+        Mantenimiento
+      </a>
+      <a class="sidebarlink sidebar_modifications" route-href="up_downs">
+        Altas/Bajas </a>
+      <a class="sidebarlink sidebar_modifications" route-href="inOut">
+        Entrada/Salida </a>
+      <a class="sidebarlink sidebar_modifications" route-href="employees">
+        Actualizacion de Usuarios </a>
       <a if.bind="sessionService.userData" click.delegate="logout()">Logout
       </a>
     </div>
