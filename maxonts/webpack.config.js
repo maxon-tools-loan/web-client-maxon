@@ -8,6 +8,16 @@ const { AureliaPlugin, ModuleDependenciesPlugin } = require('aurelia-webpack-plu
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const { ProvidePlugin } = require('webpack');
+var fs = require('fs');
+
+var nodeModules = {};
+fs.readdirSync('node_modules')
+  .filter(function(x) {
+    return ['.bin'].indexOf(x) === -1;
+  })
+  .forEach(function(mod) {
+    nodeModules[mod] = 'commonjs ' + mod;
+  });
 
 // config helpers:
 const ensureArray = (config) => config && (Array.isArray(config) ? config : [config]) || [];
@@ -30,7 +40,8 @@ const cssRules = [
 
 
 module.exports = ({ production } = {}, { extractCss, analyze, tests, hmr, port, host } = {}) => ({
-
+  externals: nodeModules,
+  target: 'node',
   resolve: {
     extensions: ['.ts', '.js'],
     modules: [srcDir, 'node_modules'],

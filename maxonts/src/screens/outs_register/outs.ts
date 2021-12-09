@@ -56,18 +56,21 @@ export class outs_register{
     async changeData(){
         if (this.titulo=='Registro de Salidas'){
             this.titulo ='Registro de Entradas'
+           
+            
             let data =await this.service.getInItems();
+            console.log("registroENTRADA")
             console.log(data)
             this.rawTools =data['tools']
             this.rawConsumibles = data['consumibles']
-            
 
         }
         else{
-            this.titulo=='Registro de Salidas'
+            this.titulo='Registro de Salidas'
             let data =await this.service.getOutItems();
-            this.tools =data['tools']
-            this.consumibles = data['consumibles']
+            
+            this.rawTools =data['tools']
+            this.rawConsumibles = data['consumibles']
         }
         this.tools = this.rawTools.slice(0,10)
         this.consumibles = this.rawConsumibles.slice(0,10)
@@ -75,8 +78,10 @@ export class outs_register{
     async setUp(){
         let data =await this.service.getOutItems();
         console.log(data)
-        this.tools =data['tools']
-        this.consumibles = data['consumibles']
+        this.rawTools =data['tools']
+        this.rawConsumibles = data['consumibles']
+        this.tools = this.rawTools.slice(0,10)
+        this.consumibles = this.rawConsumibles.slice(0,10)
         this.actualPageConsumibles =1
         this.actualPagetools=1
     }

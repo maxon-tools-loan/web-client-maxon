@@ -6,7 +6,7 @@ import {Router, Redirect} from "aurelia-router"
 import { SWAL_EMPLOYEE_DEBT } from 'swals/question';
 @inject(LoansService,Router)
 export class Loans {
-  sacannerMode =false
+  
   validParts = []
   validUsers = []
   validConsumibles = []
@@ -220,7 +220,8 @@ export class Loans {
         "user": "394fbaab64153b5b0db2344c7e1bc7",
         "externo": 0
       }
-      this.service.postLoan(this.herramientas, this.consumibles, data)
+      let res = await this.service.postLoan(this.herramientas, this.consumibles, data)
+
       new Redirect('/returns').navigate(this.router)
     }
   }

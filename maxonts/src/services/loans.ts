@@ -39,7 +39,32 @@ const returns: Returns[] = [
 
 export class LoansService {
 
+  async commitDown(tools,consumibles,meta){
+
+    let data={'tools':tools,'meta':meta,'consumibles':consumibles }
+    const response = await fetch(API.URL + '/items/downMaterial', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)}).then(response => {
+      return response.json()
+    });
+    console.log(response)
+    if(response.data =="api.success") return response
+  }
+
+  async getIdLoansByIdParte (data){
+    data={'id':data}
+    const response = await fetch(API.URL + '/items/filterParte', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)}).then(response => {
+      return response.json()
+    });
+    if(response.code =="api.success") return response['data']['ids']
+  }
+
   async searchReturns(query, raw_loans = undefined) {
+    console.log("AAAAAAAAAAAAA")
     let loans = raw_loans ?? await this.getLoans()
     //console.log(query)
     if (query?.idEmpleado)
@@ -54,6 +79,10 @@ export class LoansService {
     }
     if (query?.endDate) {
       loans = loans.filter((v: any) => moment(v.fecha).format('YYYY-MM-DD') <= query.endDate) as []
+    }
+    if (query?.idParte){
+      let ids = await this.getIdLoansByIdParte(query.idParte)
+      loans = loans = loans.filter((v: any) => ids.includes(v.idPrestamo))
     }
     return loans
   }
@@ -99,7 +128,7 @@ export class LoansService {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
-    })
+    }).then(r=> r.json())
 
     return response;
   }
