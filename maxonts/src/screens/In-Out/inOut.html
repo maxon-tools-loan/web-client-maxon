@@ -8,7 +8,7 @@
       <option repeat.for="option of options " model.bind="option.valor">${option.name}</option>
 
     </select>
-  </form>
+  </div>
   <div>
     <form submit.trigger="addElement()">
       <select name="type" value.bind="opt" id="type">
@@ -16,7 +16,7 @@
         <option model.bind="0">Herramienta</option>
       </select>
       <button type="submit" class="btn btn-primary"> Añadir + </button>
-      <form>
+      <div>
         <div if.bind="opt">
           <div class="filters">
             <label> Nombre
@@ -120,8 +120,8 @@
             </li>
           </div>
           </div>
-      </form>
-    </form>
+      </div>
+    </div>
   </div>
   <button click.trigger="commit()"type="submit" class="btn btn-primary"> Registrar ${name} </button>
 

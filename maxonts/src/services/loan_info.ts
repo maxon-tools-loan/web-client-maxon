@@ -11,7 +11,7 @@ export class LoansInfoService {
     let header = {"ID":id}
 
     let params = new URLSearchParams(header)
-    const response = await fetch('http://localhost:3000/api/loans/loanInfo?'+params).then(response => {
+    const response = await fetch(API.URL+'/loans/loanInfo?'+params).then(response => {
       return response.json()
    });
    console.log(response);

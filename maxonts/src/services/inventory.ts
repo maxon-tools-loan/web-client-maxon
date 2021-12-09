@@ -139,8 +139,8 @@ export class InventoryService {
       return response.json()
     });
 
-    console.log(response)
-    if (response['code'] == "api.success") return response['data']['value'];
+    
+    if (response['code'] == "api.success") return response['data'];
     return
   }
 

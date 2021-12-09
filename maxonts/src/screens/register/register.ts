@@ -1,7 +1,11 @@
 import {SessionService} from "../../services/session"
 import {inject} from "aurelia-framework"
+import { EmployeeService } from "services/employee"
+import Swal from "sweetalert2"
+import { SWAL_SUCCESS } from "swals/question"
+import { SWAL_ERROR } from "swals/error"
 
-@inject(SessionService)
+@inject(SessionService,EmployeeService)
 export class Register {
   
   private title = "Register Screen"
@@ -11,11 +15,23 @@ export class Register {
   private email = ''
   private password = ''
   private confirmPassword = ''
-
+  Empleado =null
+  empleados = []
   private sessionService: SessionService
-
-  constructor( sessionService: SessionService) {
+  EmployeeService:EmployeeService
+  ADMIN=false;
+  CONSULTAS=false;
+  PRESTAMOS=true;
+  REGISTROS=false;
+  
+  constructor( sessionService: SessionService,EmployeeService :EmployeeService ) {
     this.sessionService =  sessionService;
+    this.EmployeeService = EmployeeService;
+    this.setup()
+  }
+  async setup(){
+    let data = await this.EmployeeService.getactiveEmployees();
+    this.empleados = data['data']['value']
   }
 
   async submit(): Promise<void> {
@@ -24,8 +40,17 @@ export class Register {
     const bool = await this. sessionService.createUser({
       name: this.name, email: this.email, username: this.username, password: this.password 
     })
-
-    console.log(bool)
+    console.log(this.Empleado)
+    if (bool['code'] =='api.user.create.success'){
+        let x =await this.EmployeeService.registerUser(this.Empleado,bool['data']['username'])
+        console.log(x)
+        if(x['data']=='api.success'){
+          Swal.fire(SWAL_SUCCESS)
+        }else{
+          Swal.fire(SWAL_ERROR)
+        }
+        this.setup()
+    }
 
   }
 

@@ -6,6 +6,7 @@ import Swal from "sweetalert2"
 import { SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question"
 import { API } from "../../../../config"
 import { getErrorSwal, SWAL_ERROR } from "swals/error"
+import { read } from "csv-reader"
 @inject(LoansService,InventoryService)
 export class Up_Downs {
     public up = true
@@ -65,7 +66,15 @@ export class Up_Downs {
           }
     }
     
-
+    log(data){
+        let reader = new FileReader();
+        reader.onload = () =>{
+            data.Image = reader.result
+            console.log(data.Image)
+        }
+        reader.readAsDataURL(data.Images[0])
+        
+    }
     private async  verifyData(){
         if(this.ups.length==0){
             await Swal.fire(getErrorSwal(" No existen elementos"))
@@ -80,11 +89,14 @@ export class Up_Downs {
                 return false;
             };
             for (const [key, value] of Object.entries(element)) {
+                let vals = ['Image','Images']
+                if(!vals.includes(key)){
                 if(value=="" || value ==null){
                     console.log("AAAAAAAAAAA")
                     await Swal.fire(getErrorSwal(`Existe un campo vacío en el elemento numero ${index}`))
                     return false;
                 } 
+                }
               }
         }
        

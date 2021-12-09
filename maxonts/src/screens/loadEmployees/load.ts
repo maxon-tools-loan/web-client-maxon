@@ -1,11 +1,20 @@
 import { read } from "fs";
 import { BlobToUrlValueConverter } from "screens/up_downs/up_downs";
+import {inject} from "aurelia-framework"
+import { EmployeeService } from "services/employee";
+import Swal from "sweetalert2";
+import { SWAL_INS_CONFIRM, SWAL_SUCCESS } from "swals/question";
+import { SWAL_ERROR, SWAL_INCORRECT_INPUT } from "swals/error";
 
-const CsvReadableStream = require('csv-reader');
-
+@inject(EmployeeService)
 export class EmployeLoader{
  data:File = null;
- 
+ service:EmployeeService
+
+ constructor(serv:EmployeeService){
+   this.service = serv
+ }
+ ds 
 
  async load(){
      console.log(this.data)
@@ -13,16 +22,38 @@ export class EmployeLoader{
      let ls = reader.toView(this.data[0])
      let rd =  new FileReader()
      let ds
-     rd.onload= (function(file){
+     
+     rd.onload= ()=>{
         
             ds = rd.result;
             ds = csvToArray(ds,'|',['idEmpleado','nombre','area','supervisor'])
             console.log(ds)
+            this.commit(ds)
             
         
-     })
-     rd.readAsText(this.data[0])
+     }
+      rd.readAsText(this.data[0])
      
+     
+ }
+
+ async commit(ds){
+
+  if (ds ==null){
+    await Swal.fire(SWAL_INCORRECT_INPUT)
+    return
+  } 
+
+  let res =await Swal.fire(SWAL_INS_CONFIRM)
+  if(res.isConfirmed){
+    let res =await this.service.UpdateEmployyes(ds)
+    if(res.data =='api.success'){
+      await Swal.fire(SWAL_SUCCESS)
+    }
+    else{
+      await Swal.fire(SWAL_ERROR)
+    }
+  }
  }
 
  

@@ -40,12 +40,29 @@ export class Loans {
 
   deudores = []
   router:Router
+  empleados ={}
+  match ={
+    'area':null,
+    'nombre':null
+  }
   constructor(service: LoansService, rt:Router) {
     this.service = service;
     this.router = rt;
     this.getInfo();
   }
 
+  matchEmployee(){
+    console.log('AAAA')
+    if(Object.keys(this.empleados).includes(this.empleado)){
+    this.match.area = this.empleados[this.empleado].area
+    this.match.nombre = this.empleados[this.empleado].nombre
+    }
+    else{
+      this.match.area = null
+      this.match.nombre = null
+    }
+    console.log(this.match)
+  }
   AddCustom(i){
     if(i){
       this.consumibles.push(
@@ -132,6 +149,7 @@ export class Loans {
     });
     data['empleados'].forEach(element => {
       this.validUsers.push(element['idEmpleado'])
+      this.empleados[element.idEmpleado] = element
     });
       data['tools'].forEach(element => {
         this.validHerramientas.push(element['idHerramienta'])
@@ -217,8 +235,7 @@ export class Loans {
         "job": this.job,
         "maquina": this.maquina,
         "empleado": this.empleado,
-        "user": "394fbaab64153b5b0db2344c7e1bc7",
-        "externo": 0
+        "user": "7872d049336846270cd52d6411b381",
       }
       let res = await this.service.postLoan(this.herramientas, this.consumibles, data)
 
