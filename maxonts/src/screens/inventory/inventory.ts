@@ -1,3 +1,4 @@
+import { Router, Redirect } from 'aurelia-router';
 import {  InventoryService } from "../../services/inventory"
 import { inject } from "aurelia-framework"
 import { createCipheriv } from "crypto";
@@ -8,7 +9,7 @@ const sorters = {
   descending: (prop) => (a, b) => b[prop] - a[prop]
 }
 
-@inject(InventoryService, SessionService)
+@inject(InventoryService, SessionService, Router) 
 export class Inventory {
 
   private inventoryService: InventoryService;
@@ -37,7 +38,9 @@ export class Inventory {
     encryptedData += cipher.final("hex");
     return encryptedData;
   }
-  constructor(inventory: InventoryService, sessionService: SessionService) {
+  constructor(inventory: InventoryService, sessionService: SessionService,rt:Router){
+    if (!sessionService.hasPermission('dashboard.read.inventory'))
+      new Redirect('/auth/login').navigate(rt)
     this.sessionService = sessionService;
 
     this.inventoryService = inventory;

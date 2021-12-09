@@ -1,3 +1,4 @@
+import { SessionService } from 'services/session';
 import { SWAL_EMPTY_MAINTENANCE, SWAL_INCORRECT_INPUT, SWAL_CANCELLED, SWAL_ERROR, getErrorSwal } from './../../swals/error';
 import { SWAL_MAINTENANCE_CONFIRM, SWAL_SUCCESS} from './../../swals/question';
 import { inject } from "aurelia-framework"
@@ -6,7 +7,7 @@ import { LoansService } from "services/loans"
 import Swal from 'sweetalert2'
 import {Redirect, Router} from "aurelia-router"
 
-@inject(InventoryService, LoansService, Router)
+@inject(InventoryService, LoansService, SessionService, Router)
 export class Maintenance {
   public consumibles = []
   public tools = []
@@ -43,7 +44,9 @@ export class Maintenance {
   private loan: LoansService
   private opt = 1
 
-  constructor(service: InventoryService, loan: LoansService,rt:Router) {
+  constructor(service: InventoryService, loan: LoansService, session: SessionService,rt:Router){
+    if (!session.hasPermission('dashboard.read.maintenance'))
+      new Redirect('/auth/login').navigate(rt)
     this.service = service;
     this.loan = loan;
     this.router=rt;

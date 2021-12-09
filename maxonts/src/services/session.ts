@@ -50,9 +50,20 @@ const sendToApi = async (endpointName: string, data: unknown) => {
 export class SessionService {
 
   public userData?: LoginData
+  private watchList: Array<any>
 
   getFullSession(): LoginData {
-    return localStorage.getItem(STORAGE_KEYS.USER_SESSION) as unknown as LoginData
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION) ?? "{}") as unknown as LoginData
+  }
+
+  watch(fun) {
+    if (!this.watchList)
+      this.watchList = []
+    this.watchList.push(fun)
+  }
+
+  async refresh() {
+    this.watchList.map(v => v())
   }
 
   async login(username: string, password: string): Promise<boolean> {
@@ -70,6 +81,7 @@ export class SessionService {
       this.userData = response.data as LoginData
       // nose ontas ector, voy a tomar malas decisiones
       localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+      this.refresh()
       return  response.code
     } catch (e) {
       console.log(e);
@@ -79,20 +91,28 @@ export class SessionService {
   async logout() {
 
     if (!this.userData) return true;
+    const ata = this.getFullSession()
+    localStorage.removeItem(STORAGE_KEYS.USER_SESSION)
 
     const res = await sendToApi('logout', {
       sessionKey: this.userData.session.key
     })
 
     console.log(await res.json());
-    localStorage.removeItem(STORAGE_KEYS.USER_SESSION)
     this.userData = undefined
+    this.refresh()
     return true;
   }
 
   hasPermission(permission:string) {
-    const session = this.getFullSession()
+    const session = new SessionService().getFullSession()
+    if (!session)
+      return false
+    console.log(session)
     const permissions = session.permissionTree
+
+    if (!permission || !permissions)
+      return false
 
     let permissionParts = permission.split('.')
     let currentPermission = permissions
@@ -110,11 +130,25 @@ export class SessionService {
     return true
   }
 
+  async refreshSession() {
+    const session = new SessionService().getFullSession()
+    if (!session?.session?.key)
+      return
+    const data = await (await sendToApi('refresh', {
+      sessionKey: session.session.key
+    })).json()
+    if (data.code != "api.sessoinRefreshed")
+      this.logout()
+    this.userData = data.data  
+    localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
+  }
+
   async createUser(registerInput: RegisterInput): Promise<{}> {
     const response = await sendToApi('create', registerInput)
     let r =await response.json()
     console.log(r)
-    return r ;
+    this.refresh()
+    return r 
   }
 
 }

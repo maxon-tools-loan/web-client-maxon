@@ -1,3 +1,4 @@
+import { SessionService } from 'services/session';
 import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import { LoansService } from "services/loans"
@@ -7,7 +8,7 @@ import { SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question"
 import { API } from "../../../../config"
 import { getErrorSwal, SWAL_ERROR } from "swals/error"
 import { read } from "csv-reader"
-@inject(LoansService,InventoryService)
+@inject(LoansService,InventoryService, SessionService, Router)
 export class Up_Downs {
     public up = true
     
@@ -22,7 +23,12 @@ export class Up_Downs {
     private loan:LoansService
     private inventory:InventoryService
     private router:Router
-    constructor(loan:LoansService,Inventory:InventoryService,rt:Router){
+    private session: SessionService
+    constructor(loan:LoansService,Inventory:InventoryService, session: SessionService,rt:Router){
+        if (!session.hasPermission('dashboard.read.up_down'))
+          new Redirect('/auth/login').navigate(rt)
+
+        this.session = session
         this.loan = loan;
         this.inventory = Inventory;
         this.router = rt

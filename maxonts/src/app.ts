@@ -17,6 +17,7 @@ export class App {
     config.options.root = '/';
     config.options.pushState = true;
     
+    
     config.map([
       { route: '/auth/login', name: 'login', moduleId: PLATFORM.moduleName('screens/login/login'),  title:'Login Page' },
       { route: '/auth/register', name: 'register', moduleId: PLATFORM.moduleName('screens/register/register'),  title:'Register Page' },
@@ -51,7 +52,7 @@ class AuthorizeStep {
 
     run(navigationInstruction: NavigationInstruction, next: Next): Promise<any> {
       if (navigationInstruction.getAllInstructions().some(i => i.config.settings.auth)) {
-        var isLoggedIn = this.sessionService.userData ? true: false;
+        var isLoggedIn = this.sessionService.getFullSession();
         if (!isLoggedIn) {
           return next.cancel(new Redirect('/auth/login'));
         }

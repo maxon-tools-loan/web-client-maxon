@@ -23,25 +23,24 @@
     <h1 class="sidebar-title"> <img style="width: 20vw;"
         src="../11283_47706.jpg"> </h1>
 
-
-    <div class="d-flex flex-column sidebar_container">
-      <a class="sidebarlink sidebar_loans" route-href="loans"> Prestamos </a>
-      <a class="sidebarlink sidebar_returns" route-href="returns"> Devoluciones
+    <div class="d-flex flex-column sidebar_container" if.bind="dashboard.read.sidebar">
+      <a class="sidebarlink sidebar_loans" route-href="loans" if.bind="dashboard.read.loans"> Prestamos </a>
+      <a class="sidebarlink sidebar_returns" route-href="returns" if.bind="dashboard.read.returns"> Devoluciones
       </a>
-      <a class="sidebarlink sidebar_consults" route-href="inventory"> Inventario
+      <a class="sidebarlink sidebar_consults" route-href="inventory" if.bind="dashboard.read.inventory"> Inventario
       </a>
-      <a class="sidebarlink sidebar_consults" route-href="history"> Historial de
+      <a class="sidebarlink sidebar_consults" route-href="history" if.bind="dashboard.read.loan_history"> Historial de
         Prestamos
       </a>
-      <a class="sidebarlink sidebar_consults" route-href="orders"> Pedidos </a>
-      <a class="sidebarlink sidebar_modifications" route-href="maintenance">
+      <a class="sidebarlink sidebar_consults" route-href="orders" if.bind="dashboard.read.orders"> Pedidos </a>
+      <a class="sidebarlink sidebar_modifications" route-href="maintenance" if.bind="dashboard.read.maintenance">
         Mantenimiento
       </a>
-      <a class="sidebarlink sidebar_modifications" route-href="up_downs">
+      <a class="sidebarlink sidebar_modifications" route-href="up_downs" if.bind="dashboard.read.up_down">
         Altas/Bajas </a>
-      <a class="sidebarlink sidebar_modifications" route-href="inOut">
+      <a class="sidebarlink sidebar_modifications" route-href="inOut" if.bind="dashboard.read.in_out">
         Entrada/Salida </a>
-      <a class="sidebarlink sidebar_modifications" route-href="employees">
+      <a class="sidebarlink sidebar_modifications" route-href="employees" if.bind="dashboard.read.users">
         Actualizacion de Usuarios </a>
       <a if.bind="sessionService.userData" click.delegate="logout()">Logout
       </a>

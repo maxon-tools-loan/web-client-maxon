@@ -1,3 +1,4 @@
+import { SessionService } from 'services/session';
 import { inject } from "aurelia-framework"
 import { InventoryService } from "services/inventory";
 import { LoansService } from "services/loans";
@@ -7,7 +8,7 @@ import Swal from "sweetalert2";
 import {Redirect, Router} from 'aurelia-router';
 
 
-@inject(LoansService, InventoryService,Router)
+@inject(LoansService, InventoryService, SessionService, Router) 
 export class InOut {
   public type = 0;
   public consumibles = []
@@ -30,7 +31,9 @@ export class InOut {
   }
   service: LoansService
   inventory: InventoryService
-  constructor(serv: LoansService, invent: InventoryService,rt:Router) {
+  constructor(serv: LoansService, invent: InventoryService, session: SessionService,rt:Router){
+    if (!session.hasPermission('dashboard.read.in_out'))
+      new Redirect('/auth/login').navigate(rt)
     this.service = serv
     this.inventory = invent
     this.router=rt

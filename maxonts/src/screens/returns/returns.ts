@@ -1,9 +1,11 @@
+import { Router, Redirect } from 'aurelia-router';
+import { SessionService } from 'services/session';
 import {LoansService, Returns as IReturns} from "../../services/loans"
 import {inject} from "aurelia-framework"
 import * as moment from "moment";
 
 
-@inject(LoansService)
+@inject(LoansService, SessionService, Router)
 export class Returns {
   private query: {};
   private moment = moment;
@@ -17,7 +19,9 @@ export class Returns {
 
   private loanService: LoansService;
 
-  constructor(loans: LoansService) {
+  constructor(loans: LoansService, session: SessionService,rt:Router){
+    if (!session.hasPermission('dashboard.read.returns'))
+      new Redirect('/auth/login').navigate(rt)
     this.loanService = loans
     this.setupReturns()
   }

@@ -1,3 +1,5 @@
+import { Router, Redirect } from 'aurelia-router';
+import { SessionService } from 'services/session';
 import { UNDEFINED } from './../../utils/index';
 import { InventoryService} from "../../services/inventory"
 import {inject} from "aurelia-framework"
@@ -16,7 +18,7 @@ const searchTemplate = {
   }
 }
 
-@inject(InventoryService, SearchService, FormatService)
+@inject(InventoryService, SearchService, FormatService, SessionService, Router) 
 export class Inventory {
   private UNDEFINED=UNDEFINED
 
@@ -28,7 +30,9 @@ export class Inventory {
   private rawItems = []
   private filter: Function
   private query: {}
-  constructor(inventory: InventoryService, search: SearchService, format: FormatService) {
+  constructor(inventory: InventoryService, search: SearchService, format: FormatService, session: SessionService,rt:Router){
+    if (!session.hasPermission('dashboard.read.orders'))
+      new Redirect('/auth/login').navigate(rt)
     this.inventoryService = inventory;
     this.searchService = search;
     this.formatService = format

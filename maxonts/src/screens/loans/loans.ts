@@ -1,10 +1,11 @@
+import { SessionService } from 'services/session';
 import { SWAL_LOAN_MATERIAL_REMAINING, SWAL_EMPLOYEE_NOT_EXISTS, SWAL_INCORRECT_INPUT, SWAL_LOAN_NO_ELEMENTS } from './../../swals/error';
 import Swal from 'sweetalert2';
 import { inject } from "aurelia-framework"
 import { LoansService } from "services/loans"
 import {Router, Redirect} from "aurelia-router"
 import { SWAL_EMPLOYEE_DEBT } from 'swals/question';
-@inject(LoansService,Router)
+@inject(LoansService, SessionService,Router)
 export class Loans {
   
   validParts = []
@@ -45,7 +46,9 @@ export class Loans {
     'area':null,
     'nombre':null
   }
-  constructor(service: LoansService, rt:Router) {
+  constructor(service: LoansService, session: SessionService,rt:Router){
+    if (!session.hasPermission('dashboard.read.loans'))
+      new Redirect('/auth/login').navigate(rt)
     this.service = service;
     this.router = rt;
     this.getInfo();
