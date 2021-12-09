@@ -1,8 +1,8 @@
 <template>
 
     <h2>Info Items</h2>
-    <form>
-  
+    <div>
+      <img  src.bind="data[0].imagen" if.bind="data[0].imagen!=null" width='200' height="200">
       <div>
         <div class="mb-3">
           <label for="employeeid" class="form-label"># Parte</label>
@@ -32,5 +32,34 @@
         <label for="employeeid" class="form-label">Estado</label>
         <input type="text" value.bind="data[0]['activo']" class="form-control">
       </div>
+
+      <div>
+     
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th if.bind="items[0].idHerramienta == undefined"scope="col">No Consumible</th>
+                <th if.bind="items[0].idHerramienta != undefined"scope="col">No Herramienta</th>
+                <th if.bind="items[0].idHerramienta == undefined"scope="col">Cantidad</th>
+                <th scope="col">Marca</th>
+                <th >Pestado</th>
+                <th >Mantenimiento</th>
+                <th if.bind="items[0].idHerramienta != undefined"scope="col">Condicion</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr repeat.for="record of items">
+                <td if.bind="record.idHerramienta == undefined" >${record.idConsumible}</td>
+                <td if.bind="record.idHerramienta != undefined" >${record.idHerramienta}</td>
+                <td if.bind="record.idHerramienta == undefined" >${record.cantidad}</td>
+                <td >${record.marca}</td>
+                <td >${record.Prestado}</td>
+                <td >${record.Maintenance}</td>
+                <td if.bind="record.idHerramienta != undefined" >${record.condicion}</td>
+              </tr>
+            </tbody>
+          </table>
+
+      <div>
     
 </template>

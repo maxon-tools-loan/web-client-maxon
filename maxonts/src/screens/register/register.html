@@ -1,12 +1,9 @@
 <template>
   <div class="login container d-flex justify-content-center align-items-center">
-    <div class="container border border-dark d-flex flex-column p-3">
-      <h4>Registrar usuario</h4>
-      <p>
-        Tienes una cuenta? <a class='link-primary' route-href="login"> Inicia
-          sesión </a>
-      </p>
-      <form>
+    <div class="container border border-dark d-flex flex-column">
+      <h4>Registrar usuario</h4> <a class='link-primary' route-href="login"> To
+        login page </a>
+      <div>
         <div class="mb-3">
           <label for="name" class="form-label">Nombre de Usuario</label>
           <input type="text" class="form-control" value.bind="username">
@@ -29,10 +26,40 @@
           <input type="password" class="form-control"
             value.bind="confirmPassword">
         </div>
+        <div class="mb-3">
+          <label class="form-label" for="confirmPassword"
+            class="form-label">Empleado Asignado
+          </label>
+          <select class="form-control" value.bind="Empleado">
+            <option disabled model.bind="null">Seleccionar</option>
+            <option repeat.for="option of empleados"
+              model.bind="option.idEmpleado">${option.nombre} -
+              ${option.idEmpleado}</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label class="form-label" for="confirmPassword"
+            class="form-label">Permisos
+          </label>
+          <div class="filters">
+            <label>Consultas
+              <input value.bind="CONSULTAS" type="checkbox" />
+            </label>
+            <label> Prestamos
+              <input value.bind="PRESTAMOS" type="checkbox" />
+            </label>
+            <label>Administrador
+              <input value.bind="ADMIN" type="checkbox" />
+            </label>
+            <label> Registrar Material
+              <input value.bind="REGISTROS" type="checkbox" />
+            </label>
+          </div>
+        </div>
 
 
         <button class="btn btn-primary" click.trigger="submit()">Submit</button>
-      </form>
+      </div>
     </div>
 
   </div>

@@ -16,6 +16,14 @@ export const SWAL_INS_CONFIRM = {
   closeOnCancel: true,
 } as SweetAlertOptions
 
+export const SWAL_EMP_CONFIRM = {
+  title: "¿Seguro que quieres actualizar los empleados?",
+  type: "warning",
+  showCancelButton: true,
+  closeOnConfirm: true,
+  closeOnCancel: true,
+} as SweetAlertOptions
+
 export const SWAL_OUTS_CONFIRM = {
   title: "¿Seguro que quieres  dar de baja el material?",
   type: "warning",

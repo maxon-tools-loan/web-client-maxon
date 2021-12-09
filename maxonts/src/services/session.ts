@@ -51,8 +51,8 @@ export class SessionService {
 
   public userData?: LoginData
 
-  async getFullSession() {
-    return localStorage.getItem(STORAGE_KEYS.USER_SESSION)
+  getFullSession(): LoginData {
+    return localStorage.getItem(STORAGE_KEYS.USER_SESSION) as unknown as LoginData
   }
 
   async login(username: string, password: string): Promise<boolean> {
@@ -90,10 +90,31 @@ export class SessionService {
     return true;
   }
 
-  async createUser(registerInput: RegisterInput): Promise<boolean> {
+  hasPermission(permission:string) {
+    const session = this.getFullSession()
+    const permissions = session.permissionTree
+
+    let permissionParts = permission.split('.')
+    let currentPermission = permissions
+    for (const part of permissionParts) {
+      if (!currentPermission[part])
+        return false
+      if (currentPermission[part] === true)
+        return true 
+      currentPermission = currentPermission[part]
+    }
+    // if the permission dashboard.modify is asked
+    // and the permission dashboard.modify.{any}.{any} is defined
+    // we assume that the full parent permission is granted, because
+    // easier to hack 8)
+    return true
+  }
+
+  async createUser(registerInput: RegisterInput): Promise<{}> {
     const response = await sendToApi('create', registerInput)
-    console.log(await response.json())
-    return true;
+    let r =await response.json()
+    console.log(r)
+    return r ;
   }
 
 }

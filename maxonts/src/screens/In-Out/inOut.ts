@@ -26,7 +26,7 @@ export class InOut {
   ]
 
   meta = {
-    'user': '394fbaab64153b5b0db2344c7e1bc7'
+    'user': '7872d049336846270cd52d6411b381'
   }
   service: LoansService
   inventory: InventoryService

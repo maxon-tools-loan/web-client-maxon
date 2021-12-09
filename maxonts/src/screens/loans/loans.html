@@ -1,16 +1,25 @@
 <template>
   <h2>Préstamos</h2>
-  <form>
+  <div>
     <div>
       <div class="mb-3 filters">
         <label for="employeeid" class="form-label">No. Empleado
-          <input type="text" value.bind="empleado" class="form-control"></label>
+          <input type="text" input.delegate="matchEmployee()" value.bind="empleado" class="form-control"></label>
 
         <label for="job" class="form-label">Job
           <input type="text" value.bind="job" class="form-control"></label>
 
         <label for="machine" class="form-label">Maquina
           <input type="text" value.bind="maquina" class="form-control"></label>
+      </div>
+      <div class="mb-3 filters">
+        <label for="employeeid" class="form-label">Nombre
+          <input type="text" disabled  value.bind="match.nombre" class="form-control"></label>
+
+        <label for="job" class="form-label">Area
+          <input type="text" value.bind="match.area" disabled class="form-control"></label>
+
+      
       </div>
     </div>
 
@@ -146,5 +155,5 @@
       <div if.bind="herramientas.length > 0 || consumibles.length > 0">
         <button type="submit" click.delegate="commit()" class="btn btn-primary"> Prestar </button>
       </div>
-  </form>
+  </div>
 </template>

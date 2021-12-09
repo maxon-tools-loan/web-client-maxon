@@ -9,7 +9,9 @@ export class itemInfo {
         this.inventoryService = inventory;
     }
     private Empleado = ""
-    private data = []
+    private data = {}
+    items = []
+    
     private activate(params) {
         this.Empleado = params.partNo
         console.log(params.partNo)
@@ -17,7 +19,12 @@ export class itemInfo {
     }
 
     async get(param): Promise<void> {
-        this.data = await this.inventoryService.getItemInfo(param);
+        let data  = await this.inventoryService.getItemInfo(param);
+        console.log(data)
+        this.data = data['value']
+        this.items = data['items']
+        console.log(this.items)
     }
+    
 
 }

@@ -8,7 +8,7 @@
   </label>
   <br>
   <div if.bind="up">
-    <form>
+    <div>
       <Button click.delegate="addUp()">Añadir +</Button>
       <div repeat.for="i of ups.length">
         <div class="mb-3 filters">
@@ -27,10 +27,10 @@
          
         </div>
         <label>
-        <input type="file"  accept="image/*" files.bind="selectedFiles">
+        <input type="file"  change.delegate="log(ups[i])" accept="image/*" files.bind="ups[i].Images">
         
-          <li repeat.for="file of selectedFiles | fileListToArray">
-            <img width ="200" height="200" src.bind="file | blobToUrl"><img>
+          <li repeat.for="file of ups[i].Images | fileListToArray">
+            <img width ="200" height="200" src.bind="file | blobToUrl"  ><img>
           </li>
         </label>
         <div class="mb-3 filters">
@@ -41,24 +41,24 @@
 
 
           <label class="form-label">Stock Minimo
-            <input type="text" value.bind="ups[i]['Minimo']" class="form-control">
+            <input type="number" min=0 value.bind="ups[i]['Minimo']" class="form-control">
           </label>
 
 
           <label class="form-label">Stock Maximo
-            <input type="text" value.bind="ups[i]['Maximo']" class="form-control">
+            <input type="number" min=0 value.bind="ups[i]['Maximo']" class="form-control">
           </label>
           <label>Eliminar
-            <input class="form-check-input" change.delegate="removeUp(i)" type="checkbox" id="inlineCheckbox2">
+            <input class="form-check-input" change.delegate="removeUp(i)" type="checkbox" >
           </label>
         </div>
         </div>
         <button click.delegate="commit()">Guardar Cambios</button>
-    </form>
+    </div>
   </div>
 
   <div if.bind="!up">
-    <form>
+    <div>
       <Button click.delegate="addDown()">Añadir +</Button>
       <div repeat.for="i of down.length">
 
@@ -93,7 +93,7 @@
           
       </div>
       <button click.trigger="commitDown()">Guardar Cambios</button>
-    </form>
+    </div>
     
   </div>
 
