@@ -6,8 +6,10 @@ import * as moment from "moment";
 @inject(InventoryService, Router)
 export class outs_register{
     private moment =moment
-    private actualPagetools:number
-    private actualPageConsumibles:number
+    private actualPagetools:number=0
+    private actualPageConsumibles:number=0
+    private maxPagetools:number
+    private maxPageConsumibles:number
     titulo = "Registro de Salidas"
     rawTools =[]
     rawConsumibles =[]
@@ -23,34 +25,45 @@ export class outs_register{
     
     async updatePage(type){
        
-        if(type==1){
+        if(type==1 ){
             console.log("EXECUTED")
             console.log(this.actualPageConsumibles)
-            this.consumibles = this.rawConsumibles.slice(-10 + this.actualPageConsumibles*10,this.actualPageConsumibles*10 )
+            let data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10);
+            this.consumibles = data['consumibles']
+            this.maxPageConsumibles=data['pageConsumibles']
         }
         else{
             console.log("EXECUTED")
-            console.log(this.actualPagetools)
-            this.tools = this.rawTools.slice(-10 + this.actualPagetools*10,this.actualPagetools*10 )
+            let data =await this.service.getOutItems(undefined,this.actualPagetools,10);
+            this.tools = data['tools']
+            this.maxPagetools=data['pageTools']
         }
     }
 
     async pagination(type:number,movement:number){
         
         if(type==1){
-            if(movement==1){
-            this.actualPageConsumibles=(this.actualPageConsumibles+1)}
-            else{
-            this.actualPageConsumibles=(this.actualPageConsumibles-1)}
+            if(movement==1 && this.maxPageConsumibles==this.actualPageConsumibles){
+            this.actualPageConsumibles=(this.actualPageConsumibles+1)
+            await this.updatePage(type)
+        }
+            else if(movement==0 && 0!=this.actualPageConsumibles){
+            this.actualPageConsumibles=(this.actualPageConsumibles-1)
+            await this.updatePage(type)
+        }
+            
         }
         else{
             if(movement==1){
                
-            this.actualPagetools=(this.actualPagetools+1)}
+            this.actualPagetools=(this.actualPagetools+1)
+            await this.updatePage(type)}
             else{
-            this.actualPagetools=(this.actualPagetools-1)}
+            this.actualPagetools=(this.actualPagetools-1)
+            await this.updatePage(type)}
+            
         }
-        await this.updatePage(type)
+        
     }
 
     async changeData(){
@@ -82,8 +95,12 @@ export class outs_register{
         this.rawConsumibles = data['consumibles']
         this.tools = this.rawTools.slice(0,10)
         this.consumibles = this.rawConsumibles.slice(0,10)
-        this.actualPageConsumibles =1
-        this.actualPagetools=1
+        this.actualPageConsumibles =0
+        this.actualPagetools=0
+        this.maxPagetools =data['pageTools']
+        this.maxPageConsumibles=data['pageConsumibles']
+        console.log(this.maxPageConsumibles,this.maxPagetools)
+        
     }
 
     redirect(){

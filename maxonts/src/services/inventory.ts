@@ -50,8 +50,20 @@ export class InventoryService {
 
   }
 
-  async getOutItems(){
-    const response = await fetch(API.URL + '/items/recordOuts').then( res => {return res.json()})
+  async getOutItems(pageActualC=undefined,pageActualT=undefined,items=undefined){
+    let paramss = {pageTools: pageActualT,
+      pageConsumibles: pageActualC,
+      numberOfRecords: items}
+      let params ={}
+      for(const [key,value] of Object.entries(paramss)){
+        if(value==undefined){
+          continue
+        }
+        params[key]=value
+      }
+      let url = new URL(API.URL+'/items/recordOuts')
+      url.search = new URLSearchParams(params).toString();
+    const response = await fetch(url).then( res => {return res.json()})
     console.log(response)
     if (response['code'] == "api.success") return response['data'];
   
