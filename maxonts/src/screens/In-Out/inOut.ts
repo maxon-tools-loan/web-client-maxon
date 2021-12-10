@@ -27,16 +27,18 @@ export class InOut {
   ]
 
   meta = {
-    'user': '7872d049336846270cd52d6411b381'
+    'user': ''
   }
   service: LoansService
   inventory: InventoryService
   constructor(serv: LoansService, invent: InventoryService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.in_out'))
       new Redirect('/auth/login').navigate(rt)
+  
     this.service = serv
     this.inventory = invent
     this.router=rt
+    this.meta.user = session.getFullSession().user.username
     this.setUp()
   }
 

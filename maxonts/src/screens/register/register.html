@@ -42,17 +42,17 @@
             class="form-label">Permisos
           </label>
           <div class="filters">
-            <label>Consultas
-              <input value.bind="CONSULTAS" type="checkbox" />
-            </label>
             <label> Prestamos
-              <input value.bind="PRESTAMOS" type="checkbox" />
+              <input checked.bind="PRESTAMOS" type="checkbox" />
             </label>
-            <label>Administrador
-              <input value.bind="ADMIN" type="checkbox" />
+            <label>Consultas
+              <input checked.bind="CONSULTAS" type="checkbox" />
             </label>
             <label> Registrar Material
-              <input value.bind="REGISTROS" type="checkbox" />
+              <input checked.bind="REGISTROS" type="checkbox"/>
+            </label>
+            <label>Administrador
+              <input checked.bind="ADMIN" type="checkbox" />
             </label>
           </div>
         </div>

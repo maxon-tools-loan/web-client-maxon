@@ -1,7 +1,7 @@
 <template>
   <h2>Altas Bajas</h2>
   <label> Tipo de Movimiento
-    <select name="type" value.bind="up" id="type">
+    <select class="form-control" name="type" value.bind="up" id="type">
       <option model.bind="true">Altas</option>
       <option model.bind="false">Bajas</option>
     </select>
@@ -9,7 +9,7 @@
   <br>
   <div if.bind="up">
     <div>
-      <Button click.delegate="addUp()">Añadir +</Button>
+      <Button class=" btn btn-dark" click.delegate="addUp()">Añadir +</Button>
       <div repeat.for="i of ups.length">
         <div class="mb-3 filters">
           <label class="form-label"># Parte
@@ -30,7 +30,7 @@
 
         </div>
         <label>
-          <input type="file" change.delegate="log(ups[i])" accept="image/*"
+          <input class="form-control" type="file" change.delegate="log(ups[i])" accept="image/*"
             files.bind="ups[i].Images">
 
           <li repeat.for="file of ups[i].Images | fileListToArray">
@@ -68,7 +68,7 @@
 
   <div if.bind="!up">
     <div>
-      <Button click.delegate="addDown()">Añadir +</Button>
+      <Button class="btn btn-dark"  click.delegate="addDown()">Añadir +</Button>
       <div repeat.for="i of down.length">
 
         <div class="mb-3 filters">
@@ -76,11 +76,9 @@
             <input input.trigger="matchData(i)" type="text"
               value.bind="down[i]['idParte']" class="form-control">
           </label>
-          <label class="form-label">Buscar
-            <button class="form-control" click.trigger="matchData(i)"></button>
-          </label>
           <label>Nombre
-            <select change.delegate="matchData(i)"
+            
+            <select class="form-control" change.delegate="matchData(i)"
               value.bind="down[i]['idParte']">
               <option>Selecciona</option>
               <option repeat.for="option of data" model.bind="option.idParte">
@@ -106,8 +104,9 @@
           </label>
         </div>
 
+        <button class= 'btn btn-primary'click.trigger="commitDown()">Guardar Cambios</button>
       </div>
-      <button click.trigger="commitDown()">Guardar Cambios</button>
+     
     </div>
 
   </div>

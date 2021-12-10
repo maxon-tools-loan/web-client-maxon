@@ -128,7 +128,8 @@ a {
 }
 .sidebar_container {
   align-items: center;
-  top: 50%;
+  position: relative;
+  top: 15%;
   background-color: #3d3f44;
   margin: 0.3rem;
   min-width: fit-content;

@@ -5,9 +5,10 @@ import { SWAL_ERROR } from "swals/error";
 import { SWAL_INS_CONFIRM, SWAL_OUTS_CONFIRM, SWAL_SUCCESS, SWAL_UPS_CONFIRM } from "swals/question";
 import Swal from "sweetalert2";
 import {Redirect, Router} from 'aurelia-router';
+import { SessionService } from "services/session";
 
 
-@inject(LoansService, InventoryService,Router)
+@inject(LoansService, InventoryService,Router,SessionService)
 export class NewIns {
   public type = 0;
   public consumibles = []
@@ -26,12 +27,16 @@ export class NewIns {
   ]
 
   meta = {
-    'user': '7872d049336846270cd52d6411b381'
+    'user': ''
   }
   
   service: LoansService
   inventory: InventoryService
-  constructor(serv: LoansService, invent: InventoryService,rt:Router) {
+  constructor(serv: LoansService, invent: InventoryService,rt:Router,session:SessionService) {
+   
+    if (!session.hasPermission('dashboard.read.in_out'))
+      new Redirect('/auth/login').navigate(rt)
+    this.meta.user = session.getFullSession().user.username
     this.service = serv
     this.inventory = invent
     this.router=rt

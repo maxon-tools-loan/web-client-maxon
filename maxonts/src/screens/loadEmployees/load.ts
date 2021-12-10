@@ -14,12 +14,10 @@ export class EmployeLoader{
  constructor(serv:EmployeeService){
    this.service = serv
  }
- ds 
+ 
 
  async load(){
-     console.log(this.data)
-     var reader = new BlobToUrlValueConverter()
-     let ls = reader.toView(this.data[0])
+  
      let rd =  new FileReader()
      let ds
      
@@ -49,6 +47,7 @@ export class EmployeLoader{
     let res =await this.service.UpdateEmployyes(ds)
     if(res.data =='api.success'){
       await Swal.fire(SWAL_SUCCESS)
+      this.data=null
     }
     else{
       await Swal.fire(SWAL_ERROR)

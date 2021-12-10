@@ -46,9 +46,17 @@ export class Loans {
     'area':null,
     'nombre':null
   }
+
+   meta = {
+    user:''
+  
+  }
   constructor(service: LoansService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.loans'))
       new Redirect('/auth/login').navigate(rt)
+
+    this.meta.user = session.getFullSession().user.username
+    console.log(this.meta)
     this.service = service;
     this.router = rt;
     this.getInfo();
@@ -56,9 +64,9 @@ export class Loans {
 
   matchEmployee(){
     console.log('AAAA')
-    if(Object.keys(this.empleados).includes(this.empleado)){
-    this.match.area = this.empleados[this.empleado].area
-    this.match.nombre = this.empleados[this.empleado].nombre
+    if(Object.keys(this.empleados).includes(this.meta['empleado'])){
+    this.match.area = this.empleados[this.meta['empleado']].area
+    this.match.nombre = this.empleados[this.meta['empleado']].nombre
     }
     else{
       this.match.area = null
@@ -181,14 +189,14 @@ export class Loans {
 
 
   private async verifyData() {
-    if (this.deudores.includes(parseInt(this.empleado))) {
+    if (this.deudores.includes(parseInt(this.meta['empleado']))) {
       let result =await Swal.fire(SWAL_EMPLOYEE_DEBT)
       if(!result){
       return false;
       }
     }
 
-    if (!this.validUsers.includes(parseInt(this.empleado))) {
+    if (!this.validUsers.includes(parseInt(this.meta['empleado']))) {
       Swal.fire(SWAL_EMPLOYEE_NOT_EXISTS)
       console.log("ERROR AQUI")
       return false;
@@ -234,13 +242,8 @@ export class Loans {
       return Swal.fire(SWAL_LOAN_NO_ELEMENTS)
     }
     if (await this.verifyData()) {
-      let data = {
-        "job": this.job,
-        "maquina": this.maquina,
-        "empleado": this.empleado,
-        "user": "7872d049336846270cd52d6411b381",
-      }
-      let res = await this.service.postLoan(this.herramientas, this.consumibles, data)
+      
+      let res = await this.service.postLoan(this.herramientas, this.consumibles, this.meta )
 
       new Redirect('/returns').navigate(this.router)
     }

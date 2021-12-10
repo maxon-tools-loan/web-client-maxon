@@ -1,4 +1,5 @@
 <template>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="mock_sidebar">
     <div class="d-flex flex-column sidebar_container">
       <a class="sidebarlink sidebar_loans" route-href="loans"> Prestamos </a>
@@ -42,8 +43,7 @@
         Entrada/Salida </a>
       <a class="sidebarlink sidebar_modifications" route-href="employees" if.bind="dashboard.read.users">
         Actualizacion de Usuarios </a>
-      <a if.bind="sessionService.userData" click.delegate="logout()">Logout
-      </a>
+      <a class ='sidebarlink sidebar_returns ' if.bind="sessionService.userData" click.delegate="logout()">Logout <i class="fa fa-sign-out"></i> </a>
     </div>
   </div>
 </template>

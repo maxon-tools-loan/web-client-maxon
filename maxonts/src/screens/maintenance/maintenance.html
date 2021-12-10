@@ -1,7 +1,7 @@
 <template>
   <h2>Mantenimiento</h2>
   <div>
-    <form submit.trigger="addElement()">
+    <div submit.trigger="addElement()">
       <div class="search">
         <select value.bind="opt" class="form-control">
           <option model.bind="1">Consumible</option>
@@ -13,28 +13,28 @@
         <div>
           <div if.bind="opt ==1">
             <h3> Consumible</h3>
-            <div class="filters">
+            <div class="filters search">
               <label> Nombre
-                <select value.bind="property" change.delegate="matchParte(1,property)">
+                <select class = 'form-control'value.bind="property" change.delegate="matchParte(1,property)">
                   <option model.bind="null">Seleccionar</option>
                   <option repeat.for="name of NombresDeConsumibles" model.bind="name">${name}</option>
                 </select>
               </label>
     
               <label> No Parte
-                <select value.bind="ConsumibleSelected" change.delegate="matchId(1,ConsumibleSelected)">
+                <select class = 'form-control' value.bind="ConsumibleSelected" change.delegate="matchId(1,ConsumibleSelected)">
                   <option model.bind="null">Seleccionar</option>
                   <option repeat.for="item of matchesConsumibles" model.bind="item">${item}</option>
                 </select>
               </label>
     
               <label> idConsumible
-                <select value.bind="IDConsumibleSelected">
+                <select class='form-control' value.bind="IDConsumibleSelected">
                   <option model.bind="null">Selecciona</option>
                   <option repeat.for="item of matchesIdConsumibles" , model.bind='item'>${item}</option>
                 </select>
               </label>
-              <label>Añadir <button click.delegate="AddCustom(1)"> + </button> </label>
+              <label>Añadir <button class='btn btn-dark' click.delegate="AddCustom(1)"> + </button> </label>
             </div>
             
           </div>
@@ -44,27 +44,27 @@
             <h3>Herramientas</h3>
             <div class="filters">
               <label> Nombre
-                <select value.bind="props" change.trigger="matchParte(0,props)">
+                <select class = 'form-control' value.bind="props" change.trigger="matchParte(0,props)">
                   <option model.bind="null">Seleccionar</option>
                   <option repeat.for="name of NombresDeHerramientas" model.bind="name">${name}</option>
                 </select>
               </label>
   
               <label> No Parte
-                <select value.bind="HerramientaSelected" change.trigger="matchId(0,HerramientaSelected)">
+                <select class = 'form-control' value.bind="HerramientaSelected" change.trigger="matchId(0,HerramientaSelected)">
                   <option model.bind="null">Seleccionar</option>
                   <option repeat.for="item of matchesHerramientas" model.bind="item">${item}</option>
                 </select>
               </label>
   
               <label> idConsumible
-                <select value.bind="IDHerramientaSelected">
+                <select class = 'form-control' value.bind="IDHerramientaSelected">
                   <option model.bind="null">Seleccionar</option>
                   <option repeat.for="item of matchesIdHerramientas" , model.bind='item'>${item}</option>
                 </select>
               </label>
               <label>Añadir
-                <button click.delegate="AddCustom(0)"> +</button>
+                <button class='btn btn-dark' click.delegate="AddCustom(0)"> +</button>
               </label>
             </div>
             

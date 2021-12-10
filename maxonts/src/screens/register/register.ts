@@ -42,7 +42,7 @@ export class Register {
 
     const response = await this. sessionService.createUser({
       name: this.name, email: this.email, username: this.username, password: this.password 
-    })
+    },{"ADMIN":this.ADMIN,"CONSULTAS":this.CONSULTAS,"PRESTAMOS":this.PRESTAMOS,"REGISTROS":this.REGISTROS})
     console.log(this.Empleado)
     if (response['code'] =='api.user.create.success'){
         let x =await this.EmployeeService.registerUser(this.Empleado,response['data']['username'])

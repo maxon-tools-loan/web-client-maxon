@@ -125,6 +125,7 @@ export class LoansService {
     estado:query?.status,
     inicio:query?.startDate=='' ? undefined : query?.startDate,
     final:query?.endDate =='' ? undefined : query?.endDate,
+    idParte:query?.idParte=='' ? undefined : query?.idParte,
     numberOfRecords:15
   }
   let params ={}

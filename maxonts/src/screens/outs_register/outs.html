@@ -1,7 +1,7 @@
 <template>
-  <button class="grayish-button" click.delegate="redirect()">Registrar
+  <button class = 'btn btn-warning' click.delegate="redirect()">Registrar
     Entradas/Salidas</button>
-  <button class="grayish-button" click.trigger="changeData()"> Cambiar a
+  <button class="btn btn-warning" click.trigger="changeData()"> Cambiar a
     ${titulo} </button>
   <h1>${titulo}</h1>
   <h3>Herramientas</h3>
@@ -53,8 +53,8 @@
         <td>${record.idSalida}${record.idEntrada}</td>
         <td>${record.idParte}</td>
         <td>${record.idconsumible}</td>
-        <td>${record.cantidad}
         <td>${record.Descripcion}</td>
+        <td>${record.cantidad}
         <td>${record.nombre}</td>
         <td>${moment(record.fecha).format('DD/MM/YYYY')}</td>
         <td>${record.comentario}</td>

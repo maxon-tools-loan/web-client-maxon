@@ -1,8 +1,10 @@
 import fetch from "node-fetch";
+import { ReadPreference } from "typeorm";
 
 import { API, STORAGE_KEYS } from "../../../config"
 
-const endpoint = (endpoint: string) => (`${API.SESSION}/api/user/${endpoint}`) 
+const endpoint = (endpoint: string) => (`${API.SESSION}/api/user/${endpoint}`)
+const role = (endpoint: string) => (`${API.SESSION}/api/role/${endpoint}`)  
 
 interface RegisterInput {
   name: string
@@ -10,6 +12,9 @@ interface RegisterInput {
   password: string
   email: string
 }
+
+
+
 
 type PermissionTree = any;
 
@@ -21,6 +26,11 @@ interface UserData {
   createdAt: string;
   updatedAt: string;
   disabled: boolean
+}
+
+interface RoleGrant{
+  user:string
+  role:String|number
 }
 
 interface SessionData {
@@ -40,6 +50,13 @@ interface LoginData {
 
 const sendToApi = async (endpointName: string, data: unknown) => { 
   return await fetch(endpoint(endpointName), {
+      method: 'POST',
+      body: JSON.stringify(data),
+      headers: {'Content-Type': 'application/json'}  
+  });
+}
+const sendToRoleApi = async (endpointName: string, data: unknown) => { 
+  return await fetch(role(endpointName), {
       method: 'POST',
       body: JSON.stringify(data),
       headers: {'Content-Type': 'application/json'}  
@@ -143,9 +160,24 @@ export class SessionService {
     localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
   }
 
-  async createUser(registerInput: RegisterInput): Promise<{}> {
+  async createUser(registerInput: RegisterInput,roles:any): Promise<{}> {
     const response = await sendToApi('create', registerInput)
+    console.log(roles,'aaaaaaa')
+    
     let r =await response.json()
+    let z  =await this.getFullSession()
+
+    const data = await (await sendToApi('refresh', {
+      sessionKey: z.session.key
+    })).json()
+    console.log(data)
+    for (const [key,val] of Object.entries(roles)){
+      if(val==false) continue
+      
+      let res = await sendToRoleApi('grant',{user:{username:registerInput.username},role:{name:key}}).then(r=> r.json())
+      console.log(res)
+      
+    }
     console.log(r)
     this.refresh()
     return r 

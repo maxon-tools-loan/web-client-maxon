@@ -38,7 +38,7 @@ export class Maintenance {
   IDHerramientaSelected = null
   router:Router
   private meta = {
-    "user": "7872d049336846270cd52d6411b381"
+    "user": ""
   }
   private service: InventoryService
   private loan: LoansService
@@ -47,6 +47,7 @@ export class Maintenance {
   constructor(service: InventoryService, loan: LoansService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.maintenance'))
       new Redirect('/auth/login').navigate(rt)
+    this.meta.user = session.getFullSession().user.username
     this.service = service;
     this.loan = loan;
     this.router=rt;
