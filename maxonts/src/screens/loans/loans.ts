@@ -162,7 +162,7 @@ export class Loans {
         this.validConsumibles.push(element['idConsumible'])
         this.dictConsumibles[element['idConsumible']] = element['idParte']
     });
-    let datas = await this.service.getLoans();
+    let datas = await this.service.getLoans('',0,'',);
     datas['loans'].forEach(element => {
       this.deudores.push(element['idEmpleado'])
     });

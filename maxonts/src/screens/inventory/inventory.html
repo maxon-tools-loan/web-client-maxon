@@ -11,7 +11,7 @@
       <div>
         <label>Tipo</label>
         <select value.bind="query.Tipo" class="form-control">
-          <option selected value=${undefined}>Seleccionar</option>
+          <option selected model.bind="null">Seleccionar</option>
           <option repeat.for="type of types" value=${type}>${capitalize(type)}</option>
         </select>
       </div>
@@ -29,23 +29,27 @@
     </div>
   </div>
 
-  <form submit.delegate="sort()">
+  <form >
     <b>Ordenar</b>
     <div class="mb-3 search">
       <div>
         <label>Disponible</label>
-        <select value.bind="sorts.Disponible" class="form-control">
-          <option value="" selected>Seleccionar</option>
-          <option value="descending">Descendente</option>
-          <option value="ascending">Ascendente</option>
+        <select value.bind="query.order" class="form-control">
+          <option model.bind="null" selected>Seleccionar</option>
+          <option value="desc">Descendente</option>
+          <option value="asc">Ascendente</option>
         </select>
       </div>
-      <button class="btn btn-primary" type="submit">Ordenar</button>
+      <button click.delegate="search()" class="btn btn-primary" type="submit">Ordenar</button>
     </div>
   </div>
   <h2> Resultados </h2>
-  <!-- TODO: tabla -->
+  <div class="pagination">
+  <a click.trigger="previous()">❮</a>
+  <a  click.trigger="next()">❯</a>
+</div>
   <table class="table table-hover">
+ 
     <thead>
       <tr>
         <th scope="col"># Parte</th>

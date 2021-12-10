@@ -24,17 +24,30 @@ export class outs_register{
     }
     
     async updatePage(type){
-       
+       let data
         if(type==1 ){
             console.log("EXECUTED")
             console.log(this.actualPageConsumibles)
-            let data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10);
+            
+            if(this.titulo=='Registro de Salidas'){
+                data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10);
+            }
+            else{
+                data =await this.service.getInItems(this.actualPageConsumibles,undefined,10);
+            }
             this.consumibles = data['consumibles']
             this.maxPageConsumibles=data['pageConsumibles']
         }
         else{
             console.log("EXECUTED")
-            let data =await this.service.getOutItems(undefined,this.actualPagetools,10);
+        
+            if(this.titulo=='Registro de Salidas'){
+                
+            data =await this.service.getOutItems(undefined,this.actualPagetools,10);
+            }
+            else{
+                data =await this.service.getInItems(undefined,this.actualPagetools,10);
+            }
             this.tools = data['tools']
             this.maxPagetools=data['pageTools']
         }
@@ -43,22 +56,22 @@ export class outs_register{
     async pagination(type:number,movement:number){
         
         if(type==1){
-            if(movement==1 && this.maxPageConsumibles==this.actualPageConsumibles){
+            if(movement==1 && this.maxPageConsumibles-1 >this.actualPageConsumibles){
             this.actualPageConsumibles=(this.actualPageConsumibles+1)
             await this.updatePage(type)
         }
-            else if(movement==0 && 0!=this.actualPageConsumibles){
+            else if(movement==0 && 0<this.actualPageConsumibles){
             this.actualPageConsumibles=(this.actualPageConsumibles-1)
             await this.updatePage(type)
         }
             
         }
         else{
-            if(movement==1){
+            if(movement==1 && this.actualPagetools <this.maxPagetools-1){
                
             this.actualPagetools=(this.actualPagetools+1)
             await this.updatePage(type)}
-            else{
+            else if(movement==0 && this.actualPagetools >0) {
             this.actualPagetools=(this.actualPagetools-1)
             await this.updatePage(type)}
             
@@ -74,19 +87,23 @@ export class outs_register{
             let data =await this.service.getInItems();
             console.log("registroENTRADA")
             console.log(data)
-            this.rawTools =data['tools']
-            this.rawConsumibles = data['consumibles']
+            this.tools =data['tools']
+            this.consumibles = data['consumibles']
+            this.maxPagetools= data['pageTools']
+            this.maxPageConsumibles = data['pageConsumibles']
 
         }
         else{
             this.titulo='Registro de Salidas'
             let data =await this.service.getOutItems();
-            
-            this.rawTools =data['tools']
-            this.rawConsumibles = data['consumibles']
+            console.log("registroSALIDA")
+            console.log(data)
+            this.tools =data['tools']
+            this.consumibles = data['consumibles']
+            this.maxPagetools= data['pageTools']
+            this.maxPageConsumibles = data['pageConsumibles']
         }
-        this.tools = this.rawTools.slice(0,10)
-        this.consumibles = this.rawConsumibles.slice(0,10)
+       
     }
     async setUp(){
         let data =await this.service.getOutItems();

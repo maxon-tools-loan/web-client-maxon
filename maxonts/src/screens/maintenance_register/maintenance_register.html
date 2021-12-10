@@ -3,6 +3,10 @@
     click.delegate="Register()" type="submit" name="action">Registrar
     Mantenimiento</button>
   <h3> Consumibles</h3>
+  <div class="pagination">
+    <a click.trigger="previous(1)">❮</a>
+    <a  click.trigger="next(1)">❯</a>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -19,6 +23,7 @@
     </thead>
     <tbody>
       <tr repeat.for="record of consumibles">
+
         <td>${record.idMantenimiento}</td>
         <td>${record.idParte}</td>
         <td>${record.idConsumible}</td>
@@ -34,6 +39,10 @@
   </table>
 
   <h3> Herramientas</h3>
+  <div class="pagination">
+    <a click.trigger="previous(0)">❮</a>
+    <a  click.trigger="next(0)">❯</a>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>
@@ -52,7 +61,7 @@
 
         <td>${record.idMantenimiento}</td>
         <td>${record.idParte}</td>
-        <td>${record.idHerramiena}</td>
+        <td>${record.idHerramienta}</td>
         <td>${record.Descripcion}</td>
         <td>${record.area}</td>
         <td>${record.nombre}</td>

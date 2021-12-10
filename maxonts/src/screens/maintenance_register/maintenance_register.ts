@@ -14,6 +14,45 @@ export class MaintenanceRecord {
     consumibles = []
     tools = []
     router: Router
+    maxTools=0
+    maxConsumibles=0
+    actTools=0
+    actConsumibles=0
+
+    async next(tp){
+        if(tp && this.actConsumibles < this.maxConsumibles-1){
+            this.actConsumibles+=1
+            let data = await this.service.getMaintenanceItems(this.actConsumibles)
+        this.consumibles = data['consumibles']
+        this.maxConsumibles = data['pagesConsumibles']
+        
+        }
+        else if(!tp && this.actTools < this.maxTools-1 ){
+            this.actTools+=1
+            let data = await this.service.getMaintenanceItems(undefined,this.actTools)
+   
+        this.maxTools = data['pagesTools']
+        this.tools = data['tools']
+        }
+    }
+
+    async previous(tp){
+        if(tp && this.actConsumibles >0 ){
+            this.actConsumibles-=1
+            let data = await this.service.getMaintenanceItems(this.actConsumibles)
+            this.consumibles = data['consumibles']
+            this.maxConsumibles = data['pagesConsumibles']
+   
+        }
+        else if(!tp && tp && this.actConsumibles >0) {
+            this.actConsumibles-=1
+            let data = await this.service.getMaintenanceItems(undefined,this.actTools)
+
+            this.maxTools = data['pagesTools']
+            this.tools = data['tools']
+        }
+    }
+
     constructor(serv: InventoryService, rt: Router) {
         this.service = serv
         this.router = rt
@@ -22,6 +61,8 @@ export class MaintenanceRecord {
     async setUp() {
         let data = await this.service.getMaintenanceItems()
         this.consumibles = data['consumibles']
+        this.maxConsumibles = data['pagesConsumibles']
+        this.maxTools = data['pagesTools']
         this.tools = data['tools']
     }
 

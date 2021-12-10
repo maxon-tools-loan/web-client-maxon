@@ -65,7 +65,7 @@ export class LoansService {
 
   async searchReturns(query, raw_loans = undefined) {
     console.log("AAAAAAAAAAAAA")
-    let loans = raw_loans ?? await this.getLoans()
+    let loans = raw_loans ?? await this.getLoans(undefined,undefined,undefined)
     //console.log(query)
     if (query?.idEmpleado)
       loans = loans.filter((v: any) => v.idEmpleado === parseInt(query.idEmpleado)) as []
@@ -87,11 +87,25 @@ export class LoansService {
     return loans
   }
 
-  async getLoans(search: string = ""): Promise<{ loans: [], users: [] }> {
-    // console.log(search);
+  async getLoans(search:  "" | undefined,page=undefined ,query?): Promise<{ loans: [], users: [],maxPages:number,areas:[] }> {
+    let props = {
+      empleado:query?.idEmpleado ==''? undefined : query?.idEmpleado,
+      area:query?.area,
+      estado:query?.status,
+      inicio:query?.startDate=='' ? undefined : query?.startDate,
+      final:query?.endDate =='' ? undefined : query?.endDate,
+      page:page,
+      numberOfRecords:15
+    }
+    let params = {}
 
-    //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
-    const response = await fetch(API.URL + '/loans/allactive').then(response => {
+    for (const [key,value] of Object.entries(props)){
+      if(value==undefined) continue;
+      params[key] = value
+    }
+    var url = new URL(API.URL + '/loans/allactive')
+    url.search = new URLSearchParams(params).toString()
+    const response = await fetch(url).then(response => {
       return response.json()
     });
     //console.log(response)
@@ -99,13 +113,32 @@ export class LoansService {
       return {
         loans: response['data']['value'],
         users: response['data']['users'],
+        maxPages : response['data']['pages'],
+        areas: response['data']['areas']
       };
   }
 
-  async getAllLoans(search: string): Promise<{ loans: [], users: [] }> {
-    const fetch = require('node-fetch');
+  async getAllLoans(search?: string,page?:number,query?): Promise<{ loans: [], users: [],maxPages:number }> {
+  let props = {
+    empleado:query?.idEmpleado ==''? undefined : query?.idEmpleado,
+    page:query?.page,
+    estado:query?.status,
+    inicio:query?.startDate=='' ? undefined : query?.startDate,
+    final:query?.endDate =='' ? undefined : query?.endDate,
+    numberOfRecords:15
+  }
+  let params ={}
+
+  for (const [key,value] of Object.entries(props)){
+    if(value==undefined) continue
+    params[key]=value;
+  }
+
+  let url = new URL(API.URL + '/loans/all')
+  url.search = new URLSearchParams(params).toString()
+
     //the URL of the website whose contents are to be fetched is passed as the parameter to the fetch function
-    const response = await fetch(API.URL + '/loans/all').then(response => {
+    const response = await fetch(url).then(response => {
       return response.json()
     });
     //console.log(response)
@@ -113,6 +146,7 @@ export class LoansService {
       return {
         loans: response['data']['value'],
         users: response['data']['users'],
+        maxPages:response['data']['pages']
       };
   }
 

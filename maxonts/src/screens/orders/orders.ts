@@ -30,6 +30,10 @@ export class Inventory {
   private rawItems = []
   private filter: Function
   private query: {}
+
+  private page :number = 0
+  private maxPage=null
+
   constructor(inventory: InventoryService, search: SearchService, format: FormatService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.orders'))
       new Redirect('/auth/login').navigate(rt)
@@ -43,12 +47,32 @@ export class Inventory {
     this.setup()
   }
   async setup() {
-    this.rawItems = await this.inventoryService.getOrderInfo();
+    let data  = await this.inventoryService.getOrderInfo();
+    this.rawItems =  data['value']
+    this.maxPage = data['pages']
     this.familias = this.searchService.getUniqueProperties(this.rawItems, (v) => v.Familia.toLowerCase())
     console.log(this.familias)
     this.items = this.rawItems
   }
-
+  async next(){
+    if(this.page<this.maxPage-1){
+      console.log()
+    this.page +=1
+    let data = await  this.inventoryService.getOrderInfo(undefined,undefined,undefined,this.page);
+    this.items= data['value']
+    this.maxPage= data['pages']
+    
+    }
+  }
+  async previous(){
+    if(this.page>0)
+    this.page -=1
+    let data = await  this.inventoryService.getOrderInfo(undefined,undefined,undefined,this.page);
+    
+    this.items= data['value']
+    this.maxPage= data['pages']
+   
+  }
   async update(item):Promise<void>{
     console.log(item)
     item.estado ==1? item.estado=0:item.estado=1

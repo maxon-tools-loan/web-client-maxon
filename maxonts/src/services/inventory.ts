@@ -1,3 +1,4 @@
+import { url } from "inspector";
 import { API } from "../../../config";
 import { sleep } from "../utils";
 const fetch = require('node-fetch');
@@ -23,13 +24,33 @@ export class InventoryService {
     return response
   }
 
-  async getMaintenanceItems(){
-    const response = await fetch(API.URL + '/items/recordMaintenance').then( response => {return response.json()})
+  async getMaintenanceItems(pageTools?,pageConsumibles?){
+    let props = {pageTools:pageTools, pageConsumibles:pageConsumibles, numberOfRecords:10}
+    let url = new URL(API.URL + '/items/recordMaintenance')
+    let params = {}
+    for (const [key,value] of Object.entries(props)){
+      if (value==undefined) continue
+      params[key]=value
+    }
+    url.search = new URLSearchParams(params).toString()
+    const response = await fetch(url).then( response => {return response.json()})
     if (response['code'] == "api.success") return response['data'];
   }
 
-  async getInItems(){
-    const response = await fetch(API.URL + '/items/recordIns').then( response => {return response.json()})
+  async getInItems(pageActualC=undefined,pageActualT=undefined,items=10){
+    let paramss = {pageTools: pageActualT,
+      pageConsumibles: pageActualC,
+      numberOfRecords: items}
+      let params ={}
+      for(const [key,value] of Object.entries(paramss)){
+        if(value==undefined){
+          continue
+        }
+        params[key]=value
+      }
+      let url = new URL(API.URL+'/items/recordIns')
+      url.search = new URLSearchParams(params).toString();
+    const response = await fetch(url).then( response => {return response.json()})
     console.log(response)
     if (response['code'] == "api.success") return response['data'];
   }
@@ -50,7 +71,7 @@ export class InventoryService {
 
   }
 
-  async getOutItems(pageActualC=undefined,pageActualT=undefined,items=undefined){
+  async getOutItems(pageActualC=undefined,pageActualT=undefined,items=10){
     let paramss = {pageTools: pageActualT,
       pageConsumibles: pageActualC,
       numberOfRecords: items}
@@ -115,12 +136,26 @@ export class InventoryService {
   }
 
 
-  async getOrderInfo(): Promise<[]> {
-    const response = await fetch(API.URL +'/items/orders').then(response => {
+  async getOrderInfo(item?,Familia?,pedido?,page?): Promise<[]> {
+    let props ={
+      idParte:item,
+      familia:Familia,
+      pedido:pedido,
+      numberOfRecords:15,
+      page:page
+    }
+    let params = {}
+    for (const [key,value] of Object.entries(props) ){
+        if(value == undefined) continue
+        params[key]=value
+    }
+    let url = new URL(API.URL +'/items/orders')
+    url.search = new URLSearchParams(params).toString()
+    const response = await fetch(url).then(response => {
       return response.json()
     });
     console.log(response)
-    if (response['code'] == "api.success") return response['data']['value'];
+    if (response['code'] == "api.success") return response['data'];
   }
 
 
@@ -136,13 +171,29 @@ export class InventoryService {
     return items
   }
 
-  async getInventoryItems(param = ""): Promise<[]> {
-    const response = await fetch(API.URL + '/items/all').then(response => {
+  async getInventoryItems(param = "",page=0,query?): Promise<[]> {
+    const paramss = {
+      idParte : query?.idParte,
+      tipo:query?.Tipo,
+      familia:query?.Familia,
+      disponible:query?.order,
+      page:page,
+      numberOfRecords:15
+    }
+    
+    let url = new URL(API.URL + '/items/all')
+    let params ={}
+    for(const [key,value] of Object.entries(paramss)){
+      if(value==undefined) continue
+      params[key]=value
+    }
+    url.search = new URLSearchParams(params).toString()
+    const response = await fetch(url).then(response => {
       return response.json()
     });
     console.log("Inventory Items: ", response)
-    console.log(response)
-    if (response['code'] == "api.success") return response['data']['value'];
+    
+    if (response['code'] == "api.success") return response['data'];
   }
 
   async getItemInfo(idParte): Promise<[]> {

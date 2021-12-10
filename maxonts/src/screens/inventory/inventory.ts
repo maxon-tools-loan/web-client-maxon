@@ -17,9 +17,12 @@ export class Inventory {
   private items = []
   private rawItems = []
   private query = {}
+  private currentQuery ={}
   private sorts = {}
   private families = []
   private types = []
+  private page :number = 0
+  private maxPage=null
 
   private getSHA = function (input) {
     const algorithm = "aes-256-cbc";
@@ -46,30 +49,61 @@ export class Inventory {
     this.inventoryService = inventory;
     this.setup()
   }
+  async next(){
+    if(this.page<this.maxPage-1){
+      console.log()
+    this.page +=1
+    let data = await  this.inventoryService.getInventoryItems('',this.page,this.currentQuery);
+    data['value'].forEach(element => {
+      element["hash"] = this.getSHA(element['idParte'])
+    });
+    this.items= data['value']
+    this.maxPage= data['pages']
+    
+    }
+  }
+  async previous(){
+    if(this.page>0)
+    this.page -=1
+    let data = await  this.inventoryService.getInventoryItems('',this.page,this.currentQuery);
+    data['value'].forEach(element => {
+      element["hash"] = this.getSHA(element['idParte'])
+    });
+    this.items= data['value']
+    this.maxPage= data['pages']
+    
+  }
 
   async setup() {
-    this.rawItems = await this.inventoryService.getInventoryItems("");
+    let data = await this.inventoryService.getInventoryItems();
+    data['value'].forEach(element => {
+      element["hash"] = this.getSHA(element['idParte'])
+    });
+    this.items= data['value']
+    this.maxPage= data['pages']
     this.families = Array.from(new Set(this.rawItems.map(v => v.Familia.toLowerCase())))
-    this.types = Array.from(new Set(this.rawItems.map(v => v.Tipo.toLowerCase())))
-    this.search()
+    this.types = ["Herramienta","Consumible"];  
+    
+    
   }
 
   async search(): Promise<void> {
-    this.items = await this.inventoryService.searchInventoryItems(this.query, this.rawItems);
-    this.items.forEach(element => {
+    this.currentQuery =this.query
+
+    let data = await this.inventoryService.getInventoryItems('',this.page,this.currentQuery);
+    data['value'].forEach(element => {
       element["hash"] = this.getSHA(element['idParte'])
     });
-    this.update()
+    this.items =data['value']
+    console.log(this.items)
+    this.maxPage = data['pages']
+    
+ 
   }
 
-  async sort() {
-    for (const [key, value] of Object.entries(this.sorts)) {
-      this.items.sort(sorters[value as string](key))
-    }
-  }
+  
 
-  async update() {
-  }
+  
 
   private capitalize(v) {
     return v[0].toUpperCase() + v.slice(1).toLowerCase()

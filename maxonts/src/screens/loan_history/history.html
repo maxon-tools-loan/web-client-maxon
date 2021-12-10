@@ -14,7 +14,7 @@
       <div>
         <label for="Status">Estado</label>
         <select value.bind="query.status" name="status" id="stats" class="form-control">
-          <option value="" selected>Seleccionar</option>
+          <option model.bind="null" selected>Seleccionar</option>
           <option value=0>No Entregado</option>
           <option value=1>Entrega Parcial</option>
           <option value=2>Entregado</option>
@@ -36,7 +36,10 @@
     <!-- END SEARCH FILTERS -->
   </div>
   <h2> Resultados </h2>
-  <!-- TODO: tabla -->
+  <div class="pagination">
+    <a click.trigger="previous()">❮</a>
+    <a  click.trigger="next()">❯</a>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>

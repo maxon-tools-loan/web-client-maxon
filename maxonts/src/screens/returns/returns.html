@@ -11,8 +11,8 @@
     <div>
       <label for="Status">Area</label>
       <select value.bind="query.area" name="status" id="stats" class="form-control" >
-        <option disabled selected>Seleccionar</option>
-        <option repeat.for="item of areas" model.bind="item">${item }</option>
+        <option selected model.bind="null">Seleccionar</option>
+        <option repeat.for="item of areas" model.bind="item">${item}</option>
       </select>
     </div>
     <div>
@@ -42,7 +42,10 @@
 
 
   <h2> Resultados </h2>
-  <!-- TODO: tabla -->
+  <div class="pagination">
+    <a click.trigger="previous()">❮</a>
+    <a  click.trigger="next()">❯</a>
+  </div>
   <table class="table table-hover">
     <thead>
       <tr>

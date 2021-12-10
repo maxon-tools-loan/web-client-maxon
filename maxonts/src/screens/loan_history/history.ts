@@ -8,10 +8,13 @@ export class History {
 
   private read = 0;
   private param: string;
-  private query: {}
-  private loans: IReturns[] = [];
+  private query= {}
+  private currentQuery={}
+  private loans = [];
   private rawLoans: []
   private rawUsers: []
+  private page :number = 0
+  private maxPage=null
 
   private loanService: LoansService;
 
@@ -20,17 +23,50 @@ export class History {
     this.setup()
   }
   async setup() {
-    const {loans, users} = await this.loanService.getAllLoans(this.param);
+    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param);
     console.log("Active Loans: ", loans)
-    this.rawLoans = loans
     this.rawUsers = users
-    this.loans = this.rawLoans
+    this.loans = loans
+    
+    this.maxPage = maxPages
   }
 
   async search(): Promise<void> {
-    this.loans = await this.loanService.searchReturns(this.query, this.rawLoans)
+    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,0,this.query);
+    this.currentQuery=this.query
+    console.log("Active Loans: ", loans)
+    this.rawUsers = users
+    this.loans = loans
+    
+    this.maxPage = maxPages
   }
 
+  async next(){
+    console.log("NEXT")
+    console.log(this.page,this.maxPage)
+    if(this.page<this.maxPage-1){
+      
+    this.page +=1
+    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.currentQuery);
+  
+    this.loans = loans
+    
+    this.maxPage = maxPages
+    
+    }
+  }
+  async previous(){
+    console.log("PREV")
+    console.log(this.page,this.maxPage)
+    if(this.page>0)
+    this.page -=1
+    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.currentQuery);
+  
+
+    this.loans = loans
+    
+    this.maxPage = maxPages
+  }
   private idToUser(id: string) {
     // @ts-ignore
     return this.rawUsers.filter(v => v.idUsuario == id)[0].nombre ?? "No Encontrado"
