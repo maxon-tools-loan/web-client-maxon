@@ -3,7 +3,7 @@ import {inject} from "aurelia-framework"
 import { EmployeeService } from "services/employee"
 import Swal from "sweetalert2"
 import { SWAL_SUCCESS } from "swals/question"
-import { SWAL_ERROR } from "swals/error"
+import { SWAL_ERROR, SWAL_INCORRECT_INPUT } from "swals/error"
 import {Router,Redirect} from 'aurelia-router'
 
 @inject(SessionService,EmployeeService,Router)
@@ -24,12 +24,14 @@ export class Register {
   CONSULTAS=false;
   PRESTAMOS=true;
   REGISTROS=false;
+  router;
   
   constructor( sessionService: SessionService,EmployeeService :EmployeeService ,rt:Router) {
     if(!sessionService.hasPermission('dashboard.write.users')) 
         new Redirect('auth/login').navigate(rt)
     this.sessionService =  sessionService;
     this.EmployeeService = EmployeeService;
+    this.router = rt
     this.setup()
   }
   async setup(){
@@ -41,6 +43,10 @@ export class Register {
     if (this.password !== this.confirmPassword) {
       console.log('passwords don\'t match')
       return;
+    }
+    if(this.Empleado==null){
+      Swal.fire(SWAL_INCORRECT_INPUT)
+      return
     }
 
     const response = await this. sessionService.createUser({
@@ -57,6 +63,7 @@ export class Register {
         }
         this.setup()
     }
+    new Redirect('auth/login').navigate(this.router)
 
   }
 

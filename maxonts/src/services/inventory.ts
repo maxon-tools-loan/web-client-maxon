@@ -232,6 +232,21 @@ export class InventoryService {
 
   }
 
+  async updateImage(data): Promise<{}> {
+    let props = {
+      "imagen": data.imagen,
+      "idParte": data.idParte
+    };
+    const response = await fetch(API.URL + '/items/updateItemImage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    }).then(r=>r.json())
+    console.log(response)
+    if (response['data'] == "api.success") return response;
+
+  }
+
   async disableItems(item):Promise<{}>{
     let props ={
         "item":item

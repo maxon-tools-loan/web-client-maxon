@@ -22,13 +22,13 @@
   <input value.bind="username">
   </label>
   <label> Contraseña
-    <input value.bind="newPass">
+    <input type="password" value.bind="newPass">
     </label>
     <label> ConfirmarContraseña
-      <input value.bind="newPassConfirm">
+      <input type='password' value.bind="newPassConfirm">
       </label>
   <label>
-    <button class='btn btn-primary'>Guardar Cambio</button>
+    <button click.delegate="changePassword()" class='btn btn-primary'>Guardar Cambio</button>
   </label>
 </div>
 </template>

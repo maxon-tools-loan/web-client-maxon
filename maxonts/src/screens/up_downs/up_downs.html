@@ -34,7 +34,7 @@
             files.bind="ups[i].Images">
 
           <li repeat.for="file of ups[i].Images | fileListToArray">
-            <img width="200" height="200" src.bind="file | blobToUrl"><img>
+            <img maxwidth="200" maxheight="200" src.bind="file | blobToUrl"><img>
           </li>
         </label>
         <div class="mb-3 filters">

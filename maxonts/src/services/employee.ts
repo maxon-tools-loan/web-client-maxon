@@ -6,17 +6,32 @@ const fetch = require('node-fetch');
 export class EmployeeService {
 
 
+  async changePass(username,pass){
+    let props = {'user':{username:username},'newPassword':pass};
+    console.log(props)
+    const response = await fetch(API.SESSION+ '/api/admin/change_password',{
+      method:'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(props)
+    }
+   ).then(r=>r.json());
+    console.log(response)
+   if (response['code']=="api.success") return response;
+
+  }
+
   async registerUser(idEmpleado,user){
     let props = {'user':{'username':user,'idEmpleado':idEmpleado}};
-    console.log(props)
+    
     const response = await fetch(API.URL + '/employees/registerUser',{
       method:'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
     }
    ).then(r=>r.json());
-  
-   if (response['data']=="api.success") return response;
+
+    console.log(response)
+   if (response['data']=='api.success') return response;
   }
 
 

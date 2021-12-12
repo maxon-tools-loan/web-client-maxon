@@ -2,7 +2,14 @@
 
     <h2>Info Items</h2>
     <div>
+      <div class="search">
       <img  src.bind="data[0].imagen" if.bind="data[0].imagen!=null" width='200' height="200">
+      <label>
+        <input class="form-control" type="file" change.delegate="log(data[0])" accept="image/*"
+          files.bind="Images">
+      </label>
+      <button click.delegate="changeImage()" class="btn btn-primary">Cambiar Imagen</button>
+    </div>
       <div>
         <div class="mb-3">
           <label for="employeeid" class="form-label"># Parte</label>

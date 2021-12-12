@@ -3,7 +3,7 @@ import { BlobToUrlValueConverter } from "screens/up_downs/up_downs";
 import {inject} from "aurelia-framework"
 import { EmployeeService } from "services/employee";
 import Swal from "sweetalert2";
-import { SWAL_INS_CONFIRM, SWAL_SUCCESS } from "swals/question";
+import { SWAL_INS_CONFIRM, SWAL_PWD_CONFIRM, SWAL_SUCCESS } from "swals/question";
 import { SWAL_ERROR, SWAL_INCORRECT_INPUT } from "swals/error";
 import { SessionService } from "services/session";
 import {Router,Redirect} from "aurelia-Router"
@@ -23,13 +23,23 @@ export class EmployeLoader{
  }
 
  async changePassword(){
+   let r = await Swal.fire(SWAL_PWD_CONFIRM)
+   if (!r.isConfirmed) return
    if(this.newPass ==undefined || this.newPass=='' || this.newPass!==this.newPassConfirm){
      Swal.fire(SWAL_INCORRECT_INPUT)
    }
    else{
-     
+     let data =this.service.changePass(this.username,this.newPass)
+     if (data['code']=='api.error'){
+       Swal.fire(SWAL_SUCCESS)
+     }
+     else{
+       Swal.fire(SWAL_ERROR)
+     }
    }
-
+   this.username=''
+   this.newPass=''
+   this.newPassConfirm=''
  }
  
 
