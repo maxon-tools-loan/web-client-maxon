@@ -5,14 +5,31 @@ import { EmployeeService } from "services/employee";
 import Swal from "sweetalert2";
 import { SWAL_INS_CONFIRM, SWAL_SUCCESS } from "swals/question";
 import { SWAL_ERROR, SWAL_INCORRECT_INPUT } from "swals/error";
+import { SessionService } from "services/session";
+import {Router,Redirect} from "aurelia-Router"
 
-@inject(EmployeeService)
+@inject(EmployeeService,SessionService,Router)
 export class EmployeLoader{
  data:File = null;
  service:EmployeeService
+ username:string
+ newPass:string
+ newPassConfirm:string
 
- constructor(serv:EmployeeService){
+ constructor(serv:EmployeeService,session:SessionService,rt:Router){
+   if(!session.hasPermission('dashboard.write.users'))
+        new Redirect('/inventory').navigate(rt)
    this.service = serv
+ }
+
+ async changePassword(){
+   if(this.newPass ==undefined || this.newPass=='' || this.newPass!==this.newPassConfirm){
+     Swal.fire(SWAL_INCORRECT_INPUT)
+   }
+   else{
+     
+   }
+
  }
  
 

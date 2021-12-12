@@ -70,7 +70,14 @@ export class SessionService {
   private watchList: Array<any>
 
   getFullSession(): LoginData {
-    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION) ?? "{}") as unknown as LoginData
+    try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION) ?? "{}") as unknown as LoginData}
+    catch(err){
+      localStorage.setItem(STORAGE_KEYS.USER_SESSION, '')
+      return null
+    }finally{
+     
+    }
   }
 
   watch(fun) {

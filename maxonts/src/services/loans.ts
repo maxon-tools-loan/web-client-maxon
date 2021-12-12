@@ -118,7 +118,7 @@ export class LoansService {
       };
   }
 
-  async getAllLoans(search?: string,page?:number,query?): Promise<{ loans: [], users: [],maxPages:number }> {
+  async getAllLoans(search?: string,page?:number,query?): Promise<{ loans: [], users: [],maxPages:number, areas:[] }> {
   let props = {
     empleado:query?.idEmpleado ==''? undefined : query?.idEmpleado,
     page:query?.page,
@@ -147,7 +147,8 @@ export class LoansService {
       return {
         loans: response['data']['value'],
         users: response['data']['users'],
-        maxPages:response['data']['pages']
+        maxPages:response['data']['pages'],
+        areas:response['data']['areas']
       };
   }
 

@@ -2,25 +2,46 @@ import {inject} from "aurelia-framework"
 import { InventoryService } from "services/inventory"
 import {Router, Redirect} from "aurelia-router"
 import * as moment from "moment";
+import { ReportService } from "services/reportService";
+const xslx = require('xlsx')
 
-@inject(InventoryService, Router)
+@inject(InventoryService, Router,ReportService)
 export class outs_register{
     private moment =moment
     private actualPagetools:number=0
     private actualPageConsumibles:number=0
     private maxPagetools:number
     private maxPageConsumibles:number
-    titulo = "Registro de Salidas"
+    query:{}
+    typer= 0
+    currentQuery:{}
+    types ={
+        0:'Salidas',
+        1:'Entradas'
+    }
+    
+    titulo = `Registro de ${this.types[this.typer]}`
     rawTools =[]
     rawConsumibles =[]
     tools =[]
     consumibles =[]
     service:InventoryService
     router:Router
-    constructor(service:InventoryService, rt:Router){
+    report:ReportService
+    constructor(service:InventoryService, rt:Router,rp:ReportService){
         this.service = service
         this.router = rt
+        this.report = rp
         this.setUp()
+    }
+
+    async search(){
+        this.currentQuery = this.query
+        let data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10,this.currentQuery)
+        this.tools = data['tools']
+        this.maxPageConsumibles=data['pageTools']
+        this.consumibles = data['consumibles']
+        this.maxPageConsumibles=data['pageConsumibles']
     }
     
     async updatePage(type){
@@ -29,8 +50,8 @@ export class outs_register{
             console.log("EXECUTED")
             console.log(this.actualPageConsumibles)
             
-            if(this.titulo=='Registro de Salidas'){
-                data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10);
+            if(this.typer==0){
+                data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10,this.currentQuery);
             }
             else{
                 data =await this.service.getInItems(this.actualPageConsumibles,undefined,10);
@@ -78,11 +99,15 @@ export class outs_register{
         }
         
     }
+    not(i){
+        if(i==1) return 0
+        return 1
+    }
 
     async changeData(){
-        if (this.titulo=='Registro de Salidas'){
-            this.titulo ='Registro de Entradas'
-           
+        if (this.typer==0){
+            this.titulo =`Registro de ${this.types[this.typer]}`
+            this.typer=1
             
             let data =await this.service.getInItems();
             console.log("registroENTRADA")
@@ -94,7 +119,9 @@ export class outs_register{
 
         }
         else{
-            this.titulo='Registro de Salidas'
+            
+            this.titulo =`Registro de ${this.types[this.typer]}`
+            this.typer = 0
             let data =await this.service.getOutItems();
             console.log("registroSALIDA")
             console.log(data)
@@ -118,6 +145,10 @@ export class outs_register{
         this.maxPageConsumibles=data['pageConsumibles']
         console.log(this.maxPageConsumibles,this.maxPagetools)
         
+    }
+    async downloadReport(){
+        let data = await this.report.getReportDowns(this.currentQuery)
+        await xslx.writeFile(data, `${new Date().toDateString()} Reporte Salidas.xlsx`)
     }
 
     redirect(){

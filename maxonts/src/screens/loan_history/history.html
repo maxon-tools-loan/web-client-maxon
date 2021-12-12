@@ -9,7 +9,10 @@
       </div>
       <div>
         <label for="loan_info_employee" class="form-label label"> Área </label>
-        <input value.bind="query.idEmpleado" type="text" class="form-control" id="loan_info_employee">
+        <select value.bind="query.area" type="text" class="form-control" id="loan_info_employee">
+          <option model.bind="null">Seleccionar</option>
+          <option repeat.for="item of area">${item.area}</option>
+        </select>
       </div>
       <div>
         <label for="loan_info_idParte" class="form-label label"> # Parte </label>
@@ -35,6 +38,10 @@
       <div>
         <label class="transparent">.</label>
         <button class="btn btn-primary" click.trigger="search()">Buscar</button>
+      </div>
+      <div>
+        <label class="transparent">.</label>
+        <button class="btn btn-primary" click.trigger="downloadReport()">Generar Reporte</button>
       </div>
     </div>
     <!-- END SEARCH FILTERS -->

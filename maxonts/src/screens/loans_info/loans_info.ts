@@ -5,9 +5,10 @@ import {Router, Redirect} from "aurelia-router"
 import Swal from "sweetalert2"
 import { SWAL_LOANUPDATE_CONFIRM, SWAL_SUCCESS } from "swals/question"
 import { SWAL_ERROR } from "swals/error"
+import { SessionService } from "services/session"
 
 
-@inject(LoansInfoService,Router)
+@inject(LoansInfoService,Router,SessionService)
 export class LoanInfo {
     private options =[{"name":"Devuelto","value":1},{"name":"No Devuelto", "value":0}]
     private posibles = [{"name":"Buen Estado","value":0},{"name":"Dañado", "value":1}, {"name":"Irreparable/Extraviado", "value":2}]
@@ -18,7 +19,8 @@ export class LoanInfo {
     private loan: LoansInfoService
     private meta = {}
     router:Router
-    constructor(loans: LoansInfoService,rt:Router) {
+    constructor(loans: LoansInfoService,rt:Router,session:SessionService) {
+        this.meta['user']=session.getFullSession().user.username
         this.loan = loans
         this.router = rt
     }

@@ -4,8 +4,9 @@ import { EmployeeService } from "services/employee"
 import Swal from "sweetalert2"
 import { SWAL_SUCCESS } from "swals/question"
 import { SWAL_ERROR } from "swals/error"
+import {Router,Redirect} from 'aurelia-router'
 
-@inject(SessionService,EmployeeService)
+@inject(SessionService,EmployeeService,Router)
 export class Register {
   
   private title = "Register Screen"
@@ -24,7 +25,9 @@ export class Register {
   PRESTAMOS=true;
   REGISTROS=false;
   
-  constructor( sessionService: SessionService,EmployeeService :EmployeeService ) {
+  constructor( sessionService: SessionService,EmployeeService :EmployeeService ,rt:Router) {
+    if(!sessionService.hasPermission('dashboard.write.users')) 
+        new Redirect('auth/login').navigate(rt)
     this.sessionService =  sessionService;
     this.EmployeeService = EmployeeService;
     this.setup()

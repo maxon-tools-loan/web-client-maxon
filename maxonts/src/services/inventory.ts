@@ -71,10 +71,13 @@ export class InventoryService {
 
   }
 
-  async getOutItems(pageActualC=undefined,pageActualT=undefined,items=10){
+  async getOutItems(pageActualC=undefined,pageActualT=undefined,items=10,query?){
     let paramss = {pageTools: pageActualT,
       pageConsumibles: pageActualC,
-      numberOfRecords: items}
+      numberOfRecords: items,
+      inicio : query?.startDate,
+      final : query?.endDate
+    }
       let params ={}
       for(const [key,value] of Object.entries(paramss)){
         if(value==undefined){
