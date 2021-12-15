@@ -2,7 +2,7 @@
   <h2>Préstamos</h2>
   <div>
     <div>
-      <div class="mb-3 filters">
+      <div class="mb-3 filters search ">
         <label for="employeeid" class="form-label">No. Empleado
           <input type="text" input.delegate="matchEmployee()" value.bind="meta.empleado" class="form-control"></label>
 
@@ -12,9 +12,9 @@
         <label for="machine" class="form-label">Maquina
           <input type="text" value.bind="meta.maquina" class="form-control"></label>
       </div>
-      <div class="mb-3 filters">
+      <div class="mb-3 filters search">
         <label for="employeeid" class="form-label">Nombre
-          <input type="text" disabled  value.bind="match.nombre" class="form-control"></label>
+          <input type="text" disabled  value.bind="match.nombre" class="form-control adjust"></label>
 
         <label for="job" class="form-label">Area
           <input type="text" value.bind="match.area" disabled class="form-control"></label>
@@ -49,7 +49,7 @@
             </select>
           </label>
 
-          <label> idConsumible
+          <label> No. Consumible
             <select class="form-control" value.bind="IDConsumibleSelected">
               <option model.bind="null">Selecciona</option>
               <option repeat.for="item of matchesIdConsumibles" , model.bind='item'>${item}</option>
@@ -63,10 +63,10 @@
       <div repeat.for="i of consumibles.length" class="container">
 
         <div class="filters search mb-3">
-          <label for="partno" class="form-label"> # Consumible <input type="text" min=0 input.delegate="updateData(i,1)"
+          <label for="partno" class="form-label"> No. Consumible <input type="text" min=0 input.delegate="updateData(i,1)"
               value.bind="consumibles[i]['idConsumible']" class="form-control">
           </label>
-          <label for="partno" class="form-label"> # Parte <input type="text" disabled value.bind="consumibles[i]['idParte']"
+          <label for="partno" class="form-label"> No. Parte <input type="text" disabled value.bind="consumibles[i]['idParte']"
               class="form-control">
           </label>
           <label for="quantity" class="form-label"> Cantidad <input type="number" value.bind="consumibles[i]['cantidad']"
@@ -120,14 +120,14 @@
               </select>
             </label>
 
-            <label> No Parte
+            <label> No. Parte
               <select class="form-control" value.bind="HerramientaSelected" change.trigger="matchId(0,HerramientaSelected)">
                 <option model.bind="null">Seleccionar</option>
                 <option repeat.for="item of matchesHerramientas" model.bind="item">${item}</option>
               </select>
             </label>
 
-            <label> idConsumible
+            <label> No.Herramienta
               <select class="form-control" value.bind="IDHerramientaSelected">
                 <option model.bind="null">Seleccionar</option>
                 <option repeat.for="item of matchesIdHerramientas" , model.bind='item'>${item}</option>
@@ -142,7 +142,7 @@
         <h3><button click.delegate="add(0)" class="btn btn-dark">+</button> Herramientas</h3>
         <div repeat.for="i of herramientas.length" class="container">
           <div>
-            <div class="mb-3 filters">
+            <div class="mb-3 filters search">
               <label class="form-label"># Herramienta <input type="text" value.bind="herramientas[i]['idHerramienta']" input.delegate="updateData(i,0)"
                   class="form-control"></label>
               <label  class="form-label"># Parte <input disabled type="text" value.bind="herramientas[i]['idParte']" class="form-control"></label>

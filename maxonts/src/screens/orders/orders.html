@@ -1,7 +1,7 @@
 <template>
   <h2> Pedidos </h2>
 
-  <div submit.delegate="filter()">
+  <div >
     <div class="mb-3 search">
       <div>
         <label>No. Item</label>
@@ -10,19 +10,19 @@
       <div>
         <label>Familia</label>
         <select value.bind="query.Familia" class="form-control">
-          <option value=${UNDEFINED}>Seleccionar</option>
-          <option repeat.for="item of familias" value=${item}>${formatService.capitalize(item)}</option>
+          <option model.bind="null">Seleccionar</option>
+          <option repeat.for="item of familias" model.bind="item">${formatService.capitalize(item)}</option>
         </select>
       </div>
       <div>
         <label>Pedido</label>
         <select value.bind="query.estado" class="form-control">
-          <option value="" selected>Seleccionar</option>
-          <option value=1>Sí</option>
-          <option value=0>No</option>
+          <option model.bind="undefined" selected>Seleccionar</option>
+          <option model.bind=1>Sí</option>
+          <option model.bind=0>No</option>
         </select>
       </div>
-      <button class="btn btn-primary" type="submit">Buscar</button>
+      <button click.delegate="search()" class="btn btn-primary" type="submit">Buscar</button>
     </div>
   </div>
 

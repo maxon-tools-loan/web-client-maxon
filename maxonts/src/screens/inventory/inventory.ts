@@ -51,7 +51,7 @@ export class Inventory {
   }
   async next(){
     if(this.page<this.maxPage-1){
-      console.log()
+      //console.log()
     this.page +=1
     let data = await  this.inventoryService.getInventoryItems('',this.page,this.currentQuery);
     data['value'].forEach(element => {
@@ -81,7 +81,9 @@ export class Inventory {
     });
     this.items= data['value']
     this.maxPage= data['pages']
-    this.families = Array.from(new Set(this.rawItems.map(v => v.Familia.toLowerCase())))
+
+    console.log(data)
+    this.families = data['familias']
     this.types = ["Herramienta","Consumible"];  
     
     
@@ -89,13 +91,13 @@ export class Inventory {
 
   async search(): Promise<void> {
     this.currentQuery =this.query
-
+    this.page=0
     let data = await this.inventoryService.getInventoryItems('',this.page,this.currentQuery);
     data['value'].forEach(element => {
       element["hash"] = this.getSHA(element['idParte'])
     });
     this.items =data['value']
-    console.log(this.items)
+    //console.log(this.items)
     this.maxPage = data['pages']
     
  

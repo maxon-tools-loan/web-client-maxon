@@ -1,7 +1,7 @@
 <template>
   <h2> Inventario </h2>
 
-  <div submit.delegate="search()">
+  <div >
     <b>Buscar</b>
     <div class="mb-3 search">
       <div>
@@ -18,13 +18,13 @@
       <div>
         <label>Familia</label>
         <select value.bind="query.Familia" class="form-control">
-          <option selected value=${undefined}>Seleccionar</option>
-          <option repeat.for="family of families" value=${family}>${capitalize(family)}</option>
+          <option selected model.bind='undefined'>Seleccionar</option>
+          <option repeat.for="family of families" model.bind='family'>${capitalize(family)}</option>
         </select>
       </div>
       <div>
         <label class="transparent">.</label>
-        <button class="btn btn-primary" type="submit">Buscar</button>
+        <button click.delegate="search()" class="btn btn-primary" type="submit">Buscar</button>
       </div>
     </div>
   </div>

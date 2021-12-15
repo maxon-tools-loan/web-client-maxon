@@ -102,7 +102,7 @@ export class Maintenance {
     }
   }
   matchId(i,name){
-    console.log(i,name)
+    //console.log(i,name)
     if(i==1){
       this.matchesIdConsumibles=[]
       for (const [key, value] of Object.entries(this.dictConsumibles)) {
@@ -124,7 +124,7 @@ export class Maintenance {
   private async verifyData() {
     let valid = true
     this.consumibles.forEach(element => {
-      console.log(element)
+      //console.log(element)
       if (element.idConsumible === "")
         valid = valid && false
       if (!this.validConsumibles.includes(element['idConsumible'])) {
@@ -147,7 +147,7 @@ export class Maintenance {
     }
 
     this.tools.forEach(element => {
-      console.log("tool", element)
+      //console.log("tool", element)
       if (element.idHerramienta === "")
         valid = valid && false
       if (!this.validHerramientas.includes(element['idHerramienta'])) {
@@ -185,11 +185,11 @@ export class Maintenance {
       this.validConsumibles.push(element['idConsumible'])
       this.dictConsumibles[element['idConsumible']] = element['idParte']
     });
-    console.log(this.dictConsumibles)
+    //console.log(this.dictConsumibles)
   }
 
   private updateData(i, type) {
-    console.log(i, type)
+    //console.log(i, type)
     if (type == 0) {
       this.tools[i]['idParte'] = this.dictHerramientas[this.tools[i]['idHerramienta']]
     }
@@ -216,7 +216,7 @@ export class Maintenance {
 
     if (await this.verifyData()) {
       const response = await this.service.registerManteinance(this.tools, this.consumibles, this.meta)
-      console.log(response)
+      //console.log(response)
       if (response.data == "api.success")
         Swal.fire(SWAL_SUCCESS)
       else 
@@ -236,13 +236,13 @@ export class Maintenance {
     this.tools.push(tool(this.tools.length))
   }
   private removeTool(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
   private removeConsu(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
@@ -250,11 +250,11 @@ export class Maintenance {
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
-      console.log(this.consumibles)
+      //console.log(this.consumibles)
     }
     else {
       this.addTool();
-      console.log(this.tools);
+      //console.log(this.tools);
     }
   }
 }

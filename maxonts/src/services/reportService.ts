@@ -29,7 +29,7 @@ export class ReportService {
           const response = await fetch(url).then(response => {
             return response.json()
           });
-          console.log(response)
+          //console.log(response)
           if (response['code'] == "api.success")
             return response['data']['value'];
         }
@@ -54,7 +54,7 @@ export class ReportService {
             const response = await fetch(url).then(response => {
               return response.json()
             });
-            console.log(response)
+            //console.log(response)
             if (response['code'] == "api.success")
               return response['data']['value'];
           }

@@ -15,7 +15,7 @@ export class Sidebar {
     this.sessionService = sessionService;
     this.hasPermission = this.sessionService.hasPermission;
     if (this.sessionService.getFullSession()!=null){
-    this.user = this.sessionService.getFullSession().user.username}
+    this.user = this.sessionService.getFullSession().user?.username ?? ''}
     this.router = router;
     this.sessionService.watch(() => this.updatePermissions())
     this.sessionService.refreshSession()
@@ -23,7 +23,7 @@ export class Sidebar {
   }
 
   public refresh(){
-    this.user = this.sessionService.getFullSession().user?.username
+    this.user = this.sessionService.getFullSession().user?.username ?? ''
   }
 
   updatePermissions() {
@@ -38,20 +38,17 @@ export class Sidebar {
         maintenance: this.hasPermission("dashboard.read.maintenance"),
         up_down: this.hasPermission("dashboard.read.up_down"),
         in_out: this.hasPermission("dashboard.read.in_out"),
-        users: this.hasPermission("dashboard.read.users"),
+        users: this.hasPermission("dashboard.write.users"),
       }
     }
   }
 
   async logout () {
-    console.log('logout...')
+    //console.log('logout...')
     const bool = await this.sessionService.logout();
     new Redirect('/auth/login').navigate(this.router)
     this.user = ''
     return bool;
     
   }
-
-// NO LE MUEVAS 8)
-// YA ME ROBE ESTE CODIGUITO
 }

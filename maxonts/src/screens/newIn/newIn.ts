@@ -56,7 +56,7 @@ export class NewIns {
   router:Router
   async setUp() {
     let data =await this.inventory.getItemsNotRegistered()
-    console.log(data)
+    //console.log(data)
     
     for (const element of data.items){
         this.dictAvailable[element.Descripcion] = element.idParte
@@ -110,13 +110,13 @@ export class NewIns {
     this.tools.push(tool(this.tools.length))
   }
   private removeTool(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
   private removeConsu(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
@@ -124,11 +124,11 @@ export class NewIns {
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
-      console.log(this.consumibles)
+      //console.log(this.consumibles)
     }
     else {
       this.addTool();
-      console.log(this.tools);
+      //console.log(this.tools);
     }
   }
 

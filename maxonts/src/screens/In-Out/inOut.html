@@ -36,7 +36,7 @@
               </select>
             </label>
   
-            <label> idConsumible
+            <label> No. Consumible
               <select class='form-control' value.bind="IDConsumibleSelected">
                 <option model.bind="null">Selecciona</option>
                 <option repeat.for="item of matchesIdConsumibles" , model.bind='item'>${item}</option>
@@ -79,8 +79,8 @@
           <div>
             <h3> Consumible</h3>
             <li repeat.for="item of consumibles.length">
-              <div class="filters">
-                <label for="exampleFormControlInput1" class="form-label"># de Consumible
+              <div class="filters search">
+                <label for="exampleFormControlInput1" class="form-label">No. de Consumible
 
                   <input type="text" input.delegate="updateData(item,1)" class="form-control" id="exampleFormControlInput1" value.bind="$parent.consumibles[item]['idConsumible']">
                 </label>
@@ -103,8 +103,8 @@
           <div>
             <h3> Herramientas</h3>
             <li repeat.for="item of tools.length">
-              <div class="filters">
-                <label for="exampleFormControlInput1"  class="form-label"># de Herramienta
+              <div class="filters search">
+                <label for="exampleFormControlInput1"  class="form-label">No. de Herramienta
                   <input type="text" if.bind="type" input.delegate="updateData(item,0)"  class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
                   <input type="text"  if.bind="!type" class="form-control" id="exampleFormControlInput1" value.bind="$parent.tools[item]['idHerramienta']">
                 </label>

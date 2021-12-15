@@ -41,7 +41,7 @@ export class Register {
 
   async submit(): Promise<void> {
     if (this.password !== this.confirmPassword) {
-      console.log('passwords don\'t match')
+      //console.log('passwords don\'t match')
       return;
     }
     if(this.Empleado==null){
@@ -52,10 +52,10 @@ export class Register {
     const response = await this. sessionService.createUser({
       name: this.name, email: this.email, username: this.username, password: this.password 
     },{"ADMIN":this.ADMIN,"CONSULTAS":this.CONSULTAS,"PRESTAMOS":this.PRESTAMOS,"REGISTROS":this.REGISTROS})
-    console.log(this.Empleado)
+    //console.log(this.Empleado)
     if (response['code'] =='api.user.create.success'){
         let x =await this.EmployeeService.registerUser(this.Empleado,response['data']['username'])
-        console.log(x)
+        //console.log(x)
         if(x['data']=='api.success'){
           Swal.fire(SWAL_SUCCESS)
         }else{

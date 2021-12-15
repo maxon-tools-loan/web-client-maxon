@@ -26,9 +26,10 @@ export class Inventory {
   private searchService: SearchService;
   private formatService: FormatService
   private familias: []
+  currentQuery ={}
   private items = []
   private rawItems = []
-  private filter: Function
+  
   private query: {}
 
   private page :number = 0
@@ -42,7 +43,7 @@ export class Inventory {
     this.formatService = format
 
     const rawFilter = this.searchService.createFilter(searchTemplate)
-    this.filter = () => this.items = rawFilter(this.query, this.rawItems as [])
+   
 
     this.setup()
   }
@@ -51,14 +52,14 @@ export class Inventory {
     this.rawItems =  data['value']
     this.maxPage = data['pages']
     this.familias = this.searchService.getUniqueProperties(this.rawItems, (v) => v.Familia.toLowerCase())
-    console.log(this.familias)
+    //console.log(this.familias)
     this.items = this.rawItems
   }
   async next(){
     if(this.page<this.maxPage-1){
-      console.log()
+      //console.log()
     this.page +=1
-    let data = await  this.inventoryService.getOrderInfo(undefined,undefined,undefined,this.page);
+    let data = await  this.inventoryService.getOrderInfo(this.currentQuery,this.page);
     this.items= data['value']
     this.maxPage= data['pages']
     
@@ -67,16 +68,25 @@ export class Inventory {
   async previous(){
     if(this.page>0)
     this.page -=1
-    let data = await  this.inventoryService.getOrderInfo(undefined,undefined,undefined,this.page);
+    let data = await  this.inventoryService.getOrderInfo(this.currentQuery,this.page);
     
     this.items= data['value']
     this.maxPage= data['pages']
    
   }
   async update(item):Promise<void>{
-    console.log(item)
+    //console.log(item)
     item.estado ==1? item.estado=0:item.estado=1
     await this.inventoryService.updateStatus(item);
+  }
+
+  async search(){
+    this.page =0
+    this.currentQuery = this.query
+    let data = await  this.inventoryService.getOrderInfo(this.currentQuery,this.page);
+    
+    this.items= data['value']
+    this.maxPage= data['pages']
   }
 
 }

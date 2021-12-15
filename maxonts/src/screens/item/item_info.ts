@@ -18,17 +18,17 @@ export class itemInfo {
     Images
     log(data){
         let reader = new FileReader();
-        console.log(this.Images)
+        //console.log(this.Images)
         reader.onload = () =>{
             this.data[0].imagen = reader.result
-            console.log(data.Image)
+            //console.log(data.Image)
         }
         reader.readAsDataURL(this.Images[0])
         
     }
     private activate(params) {
         this.Empleado = params.partNo
-        console.log(params.partNo)
+        //console.log(params.partNo)
         this.get(params.partNo);
     }
     
@@ -38,7 +38,7 @@ export class itemInfo {
         if(con.isConfirmed){
         res = await this.inventoryService.updateImage({'imagen':this.data[0].imagen, idParte:this.data[0].idParte})
         }
-        console.log(res)
+        //console.log(res)
         if (res.data =='api.success'){
             Swal.fire(SWAL_SUCCESS)
         }else{
@@ -50,10 +50,10 @@ export class itemInfo {
 
     async get(param): Promise<void> {
         let data  = await this.inventoryService.getItemInfo(param);
-        console.log(data)
+        //console.log(data)
         this.data = data['value']
         this.items = data['items']
-        console.log(this.items)
+        //console.log(this.items)
     }
     
 

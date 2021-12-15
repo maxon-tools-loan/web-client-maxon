@@ -52,7 +52,7 @@ export class EmployeLoader{
         
             ds = rd.result;
             ds = csvToArray(ds,'|',['idEmpleado','nombre','area','supervisor'])
-            console.log(ds)
+            //console.log(ds)
             this.commit(ds)
             
         

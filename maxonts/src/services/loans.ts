@@ -48,7 +48,7 @@ export class LoansService {
       body: JSON.stringify(data)}).then(response => {
       return response.json()
     });
-    console.log(response)
+    //console.log(response)
     if(response.data =="api.success") return response
   }
 
@@ -64,9 +64,9 @@ export class LoansService {
   }
 
   async searchReturns(query, raw_loans = undefined) {
-    console.log("AAAAAAAAAAAAA")
+    //console.log("AAAAAAAAAAAAA")
     let loans = raw_loans ?? await this.getLoans(undefined,undefined,undefined)
-    //console.log(query)
+    ////console.log(query)
     if (query?.idEmpleado)
       loans = loans.filter((v: any) => v.idEmpleado === parseInt(query.idEmpleado)) as []
     if(query?.area)
@@ -108,7 +108,7 @@ export class LoansService {
     const response = await fetch(url).then(response => {
       return response.json()
     });
-    //console.log(response)
+    ////console.log(response)
     if (response['code'] == "api.success")
       return {
         loans: response['data']['value'],
@@ -160,7 +160,7 @@ export class LoansService {
       "consumibles": consumibles,
       "datos": datos
     };
-    console.log(JSON.stringify(data))
+    //console.log(JSON.stringify(data))
     const response = await fetch(API.URL + '/loans/postloan', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

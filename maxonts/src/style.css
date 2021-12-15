@@ -211,3 +211,6 @@ button.grayish-button:hover {
   border-color: #2f2f2f;
   background-color: #fff;
 }
+.adjust{
+  width: 300px;
+}

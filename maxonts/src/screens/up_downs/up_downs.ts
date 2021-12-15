@@ -37,7 +37,7 @@ export class Up_Downs {
 
     async loadIdParte(){
         let data =await this.inventory.getAllItemsInfo()
-        console.log(data)
+        //console.log(data)
         this.data = data
         data.forEach(element => {
             this.ids.push(element['idParte'])
@@ -45,7 +45,7 @@ export class Up_Downs {
         });
     }
     matchData(i){
-        console.log("EXECUTED")
+        //console.log("EXECUTED")
         if(this.ids.includes(this.down[i]['idParte'])){
         this.down[i]['Familia'] = this.downData[this.down[i]['idParte']]['Familia'];
         this.down[i]['Descripcion'] = this.downData[this.down[i]['idParte']]['Descripcion'];
@@ -76,7 +76,7 @@ export class Up_Downs {
         let reader = new FileReader();
         reader.onload = () =>{
             data.Image = reader.result
-            console.log(data.Image)
+            //console.log(data.Image)
         }
         reader.readAsDataURL(data.Images[0])
         
@@ -86,11 +86,11 @@ export class Up_Downs {
             await Swal.fire(getErrorSwal(" No existen elementos"))
             return false;
         }
-        console.log(this.ids)
+        //console.log(this.ids)
         for (let index = 0; index < this.ups.length ; index++){
             let element = this.ups[index]
             if(this.ids.includes(element['idParte'])) {
-                console.log("AAAAAAAAAAAAAAAAA")
+                //console.log("AAAAAAAAAAAAAAAAA")
                 await Swal.fire(getErrorSwal(`${element.idParte} Ya existe Prueba con otro ID`))
                 return false;
             };
@@ -98,7 +98,7 @@ export class Up_Downs {
                 let vals = ['Image','Images']
                 if(!vals.includes(key)){
                 if(value=="" || value ==null){
-                    console.log("AAAAAAAAAAA")
+                    //console.log("AAAAAAAAAAA")
                     await Swal.fire(getErrorSwal(`Existe un campo vacío en el elemento numero ${index}`))
                     return false;
                 } 
@@ -126,10 +126,10 @@ export class Up_Downs {
         
         if(await this.verifyData()){
             let results = await (await Swal.fire(SWAL_UPS_CONFIRM)).isConfirmed
-            console.log(results)
+            //console.log(results)
             if(results){ 
             let reponse =await this.inventory.registerItems(this.ups);
-            console.log(reponse)
+            //console.log(reponse)
                 if(reponse['code']=='api.error'){
                     await Swal.fire(SWAL_ERROR)
                 }
@@ -145,7 +145,7 @@ export class Up_Downs {
         
     }
     verifyDown(){
-        console.log("EXECUTED")
+        //console.log("EXECUTED")
         this.down.forEach(element=>{
             if(!this.ids.includes(element['idParte'])) {
                 alert(`${element.idParte} No existe en la DB`)
@@ -157,7 +157,7 @@ export class Up_Downs {
     async commitDown(){
 
         "ALERT COnfirmacion"
-        console.log("EXECUTED")
+        //console.log("EXECUTED")
         if(this.verifyDown()){
            await  this.inventory.disableItems(this.down);
            "ALERT DE DECIR SISI YA SE HIZO COMMIT"

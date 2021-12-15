@@ -51,7 +51,7 @@ export class InventoryService {
       let url = new URL(API.URL+'/items/recordIns')
       url.search = new URLSearchParams(params).toString();
     const response = await fetch(url).then( response => {return response.json()})
-    console.log(response)
+    //console.log(response)
     if (response['code'] == "api.success") return response['data'];
   }
 
@@ -88,7 +88,7 @@ export class InventoryService {
       let url = new URL(API.URL+'/items/recordOuts')
       url.search = new URLSearchParams(params).toString();
     const response = await fetch(url).then( res => {return res.json()})
-    console.log(response)
+    //console.log(response)
     if (response['code'] == "api.success") return response['data'];
   
   }
@@ -139,11 +139,11 @@ export class InventoryService {
   }
 
 
-  async getOrderInfo(item?,Familia?,pedido?,page?): Promise<[]> {
+  async getOrderInfo(query?,page?): Promise<[]> {
     let props ={
-      idParte:item,
-      familia:Familia,
-      pedido:pedido,
+      idParte:query?.idParte == '' ? undefined :query?.idParte,
+      familia:query?.Familia,
+      pedido:query?.estado,
       numberOfRecords:15,
       page:page
     }
@@ -157,13 +157,13 @@ export class InventoryService {
     const response = await fetch(url).then(response => {
       return response.json()
     });
-    console.log(response)
+    //console.log(response)
     if (response['code'] == "api.success") return response['data'];
   }
 
 
   async searchInventoryItems(query, rawItems = undefined) {
-    console.log(query)
+    //console.log(query)
     let items = rawItems ?? await this.getInventoryItems()
     if (query?.idParte)
       items = items.filter(item => item.idParte.includes(query.idParte))
@@ -183,7 +183,7 @@ export class InventoryService {
       page:page,
       numberOfRecords:15
     }
-    
+    //console.log("oarams", paramss)
     let url = new URL(API.URL + '/items/all')
     let params ={}
     for(const [key,value] of Object.entries(paramss)){
@@ -194,7 +194,7 @@ export class InventoryService {
     const response = await fetch(url).then(response => {
       return response.json()
     });
-    console.log("Inventory Items: ", response)
+    //console.log("Inventory Items: ", response)
     
     if (response['code'] == "api.success") return response['data'];
   }
@@ -242,7 +242,7 @@ export class InventoryService {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
     }).then(r=>r.json())
-    console.log(response)
+    //console.log(response)
     if (response['data'] == "api.success") return response;
 
   }

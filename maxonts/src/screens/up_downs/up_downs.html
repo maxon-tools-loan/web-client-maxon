@@ -11,53 +11,47 @@
     <div>
       <Button class=" btn btn-dark" click.delegate="addUp()">Añadir +</Button>
       <div repeat.for="i of ups.length">
-        <div class="mb-3 filters">
+        <div class="mb-3 filters search">
           <label class="form-label"># Parte
-            <input type="text" value.bind="ups[i]['idParte']"
-              class="form-control">
+            <input type="text" value.bind="ups[i]['idParte']" class="form-control">
           </label>
 
           <label class="form-label">Familia
-            <input type="text" value.bind="ups[i]['Familia']"
-              class="form-control">
+            <input type="text" value.bind="ups[i]['Familia']" class="form-control">
           </label>
 
 
           <label class="form-label">Nombre/Descripcion
-            <input type="text" value.bind="ups[i]['Descripcion']"
-              class="form-control">
+            <input type="text" value.bind="ups[i]['Descripcion']" class="form-control">
           </label>
 
         </div>
-        <label>
-          <input class="form-control" type="file" change.delegate="log(ups[i])" accept="image/*"
-            files.bind="ups[i].Images">
-
-          <li repeat.for="file of ups[i].Images | fileListToArray">
-            <img maxwidth="200" maxheight="200" src.bind="file | blobToUrl"><img>
-          </li>
-        </label>
-        <div class="mb-3 filters">
+        <div class="col-s6">
+          <label>
+            <input class="form-control" type="file" change.delegate="log(ups[i])" accept="image/*"
+              files.bind="ups[i].Images">
+            <li repeat.for="file of ups[i].Images | fileListToArray">
+              <img maxwidth="200" maxheight="200" src.bind="file | blobToUrl"><img>
+            </li>
+          </label>
+        </div>
+        <div class="mb-3 filters search">
           <label class="form-label">Seccion/Locker
-            <input type="text" value.bind="ups[i]['Seccion']"
-              class="form-control">
+            <input type="text" value.bind="ups[i]['Seccion']" class="form-control">
           </label>
 
 
 
           <label class="form-label">Stock Minimo
-            <input type="number" min=0 value.bind="ups[i]['Minimo']"
-              class="form-control">
+            <input type="number" min=0 value.bind="ups[i]['Minimo']" class="form-control">
           </label>
 
 
           <label class="form-label">Stock Maximo
-            <input type="number" min=0 value.bind="ups[i]['Maximo']"
-              class="form-control">
+            <input type="number" min=0 value.bind="ups[i]['Maximo']" class="form-control">
           </label>
           <label>Eliminar
-            <input class="form-check-input" change.delegate="removeUp(i)"
-              type="checkbox">
+            <input class="form-check-input" change.delegate="removeUp(i)" type="checkbox">
           </label>
         </div>
       </div>
@@ -68,18 +62,16 @@
 
   <div if.bind="!up">
     <div>
-      <Button class="btn btn-dark"  click.delegate="addDown()">Añadir +</Button>
+      <Button class="btn btn-dark" click.delegate="addDown()">Añadir +</Button>
       <div repeat.for="i of down.length">
 
-        <div class="mb-3 filters">
+        <div class="mb-3 filters search">
           <label class="form-label"># Parte
-            <input input.trigger="matchData(i)" type="text"
-              value.bind="down[i]['idParte']" class="form-control">
+            <input input.trigger="matchData(i)" type="text" value.bind="down[i]['idParte']" class="form-control">
           </label>
           <label>Nombre
-            
-            <select class="form-control" change.delegate="matchData(i)"
-              value.bind="down[i]['idParte']">
+
+            <select class="form-control" change.delegate="matchData(i)" value.bind="down[i]['idParte']">
               <option>Selecciona</option>
               <option repeat.for="option of data" model.bind="option.idParte">
                 ${option.Descripcion}</option>
@@ -87,26 +79,23 @@
           </label>
         </div>
 
-        <div class="mb-3 filters">
+        <div class="mb-3 filters search">
           <label class="form-label">Familia
-            <input type="text" disabled value.bind="down[i]['Familia']"
-              class="form-control">
+            <input type="text" disabled value.bind="down[i]['Familia']" class="form-control">
           </label>
 
 
           <label class="form-label">Nombre/Descripcion
-            <input type="text" disabled value.bind="down[i]['Descripcion']"
-              class="form-control">
+            <input type="text" disabled value.bind="down[i]['Descripcion']" class="form-control">
           </label>
           <label>Eliminar
-            <input class="form-check-input" change.delegate="removeDown(i)"
-              type="checkbox" id="inlineCheckbox2">
+            <input class="form-check-input" change.delegate="removeDown(i)" type="checkbox" id="inlineCheckbox2">
           </label>
         </div>
 
-        <button class= 'btn btn-primary'click.trigger="commitDown()">Guardar Cambios</button>
+
       </div>
-     
+      <button class='btn btn-primary' click.trigger="commitDown()">Guardar Cambios</button>
     </div>
 
   </div>

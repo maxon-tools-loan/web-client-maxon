@@ -97,7 +97,7 @@ export class InOut {
       )
     }
     else {
-      console.log(this.HerramientaSelected, this.IDHerramientaSelected)
+      //console.log(this.HerramientaSelected, this.IDHerramientaSelected)
       this.tools.push({
         "idHerramienta": this.IDHerramientaSelected,
         "idParte": this.HerramientaSelected
@@ -106,7 +106,7 @@ export class InOut {
     }
   }
   private updateData(i, type) {
-    console.log(i, type)
+    //console.log(i, type)
     if (type == 0) {
       this.tools[i]['idParte'] = this.dictHerramientas[this.tools[i]['idHerramienta']]
     }
@@ -138,7 +138,7 @@ export class InOut {
     }
   }
   matchId(i, name) {
-    console.log(i, name)
+    //console.log(i, name)
     if (i == 1) {
       this.matchesIdConsumibles = []
       for (const [key, value] of Object.entries(this.dictConsumibles)) {
@@ -167,13 +167,13 @@ export class InOut {
     this.tools.push(tool(this.tools.length))
   }
   private removeTool(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
   private removeConsu(index) {
-    console.log(index)
+    //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
@@ -181,11 +181,11 @@ export class InOut {
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
-      console.log(this.consumibles)
+      //console.log(this.consumibles)
     }
     else {
       this.addTool();
-      console.log(this.tools);
+      //console.log(this.tools);
     }
   }
 
@@ -196,9 +196,9 @@ export class InOut {
         return false;
       }
 
-      console.log(!Object.values(this.dictHerramientas).includes(element.idParte))
+      //console.log(!Object.values(this.dictHerramientas).includes(element.idParte))
       if (!Object.values(this.dictHerramientas).includes(element.idParte)) {
-        console.log("AAAAAAAAAAA")
+        //console.log("AAAAAAAAAAA")
         return false;
       }
 
@@ -213,7 +213,7 @@ export class InOut {
       if (element['idParte'] == null || element['idParte'] == '') {
         return false
       }
-      console.log(element.idParte)
+      //console.log(element.idParte)
       if (!Object.values(this.dictConsumibles).includes(element.idParte)) {
         return false
       }
@@ -246,7 +246,7 @@ export class InOut {
         let res = await Swal.fire(SWAL_OUTS_CONFIRM)
         if (res.isConfirmed) {
           let response = await this.service.commitDown(this.tools, this.consumibles, this.meta)
-          console.log(response)
+          //console.log(response)
           if (response.data == 'api.success') {
             await Swal.fire(SWAL_SUCCESS)
             this.consumibles = []
@@ -264,14 +264,14 @@ export class InOut {
 
       }
       else {
-        console.log("ERROR ON VETIFY")
+        //console.log("ERROR ON VETIFY")
         Swal.fire(SWAL_ERROR)
       }
 
 
     }
     else {
-      console.log("Entrada")
+      //console.log("Entrada")
       if (await this.verifyData() == true) {
         let res = await Swal.fire(SWAL_INS_CONFIRM)
         if (res.isConfirmed) {

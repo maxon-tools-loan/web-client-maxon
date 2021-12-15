@@ -31,7 +31,7 @@ export class History {
   async setup() {
     const {loans, users,maxPages,areas} = await this.loanService.getAllLoans(this.param);
     this.area =areas
-    console.log("Active Loans: ", loans)
+    //console.log("Active Loans: ", loans)
     this.rawUsers = users
     this.loans = loans
     
@@ -39,9 +39,10 @@ export class History {
   }
 
   async search(): Promise<void> {
-    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,0,this.query);
+    this.page=0
+    const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.query);
     this.currentQuery=this.query
-    console.log("Active Loans: ", loans)
+    //console.log("Active Loans: ", loans)
     this.rawUsers = users
     this.loans = loans
     
@@ -49,8 +50,8 @@ export class History {
   }
 
   async next(){
-    console.log("NEXT")
-    console.log(this.page,this.maxPage)
+    //console.log("NEXT")
+    //console.log(this.page,this.maxPage)
     if(this.page<this.maxPage-1){
       
     this.page +=1
@@ -63,8 +64,8 @@ export class History {
     }
   }
   async previous(){
-    console.log("PREV")
-    console.log(this.page,this.maxPage)
+    //console.log("PREV")
+    //console.log(this.page,this.maxPage)
     if(this.page>0)
     this.page -=1
     const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.currentQuery);

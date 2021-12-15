@@ -87,7 +87,7 @@ export class MaintenanceRecord {
             }
 
             let res = await this.service.updateMaintenance(item)
-            console.log(res)
+            //console.log(res)
             if (res.data == 'api.success') {
                 Swal.fire(SWAL_SUCCESS)
             }

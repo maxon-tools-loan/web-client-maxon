@@ -14,7 +14,7 @@ export class LoansInfoService {
     const response = await fetch(API.URL+'/loans/loanInfo?'+params).then(response => {
       return response.json()
    });
-   console.log(response);
+   //console.log(response);
    if (response['code']=="api.success") return response['data'];
   }
 
@@ -25,13 +25,13 @@ export class LoansInfoService {
       "consumibles":consumibles,
       "datos":metadata
     };
-    console.log(JSON.stringify(data))
+    //console.log(JSON.stringify(data))
     const response = await fetch(API.URL + '/loans/updateloan',{
       method:'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data)
     })
-    console.log(response['code']);
+    //console.log(response['code']);
     return response;
 
   }

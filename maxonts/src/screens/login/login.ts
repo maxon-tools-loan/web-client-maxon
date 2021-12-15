@@ -24,10 +24,10 @@ export class Login {
   }
 
   async submit(): Promise<void> {
-    console.log(this.username, this.password)
+    //console.log(this.username, this.password)
     
     const bool = await this.sessionService.login(this.username, this.password)
-    console.log(bool)
+    //console.log(bool)
     if(bool==true){
       new Redirect('/inventory').navigate(this.router)
       

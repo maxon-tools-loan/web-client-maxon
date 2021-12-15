@@ -56,14 +56,14 @@ export class Loans {
       new Redirect('/auth/login').navigate(rt)
 
     this.meta.user = session.getFullSession().user.username
-    console.log(this.meta)
+    //console.log(this.meta)
     this.service = service;
     this.router = rt;
     this.getInfo();
   }
 
   matchEmployee(){
-    console.log('AAAA')
+    //console.log('AAAA')
     if(Object.keys(this.empleados).includes(this.meta['empleado'])){
     this.match.area = this.empleados[this.meta['empleado']].area
     this.match.nombre = this.empleados[this.meta['empleado']].nombre
@@ -72,7 +72,7 @@ export class Loans {
       this.match.area = null
       this.match.nombre = null
     }
-    console.log(this.match)
+    //console.log(this.match)
   }
   AddCustom(i){
     if(i){
@@ -87,12 +87,12 @@ export class Loans {
       )
     }
     else{
-      console.log(this.HerramientaSelected,this.IDHerramientaSelected)
+      //console.log(this.HerramientaSelected,this.IDHerramientaSelected)
       this.herramientas.push({
         "idHerramienta": this.IDHerramientaSelected,
         "idParte": this.HerramientaSelected
       })
-      console.log(this.herramientas)
+      //console.log(this.herramientas)
     }
   }
   
@@ -118,7 +118,7 @@ export class Loans {
     }
   }
   matchId(i,name){
-    console.log(i,name)
+    //console.log(i,name)
     if(i==1){
       this.matchesIdConsumibles=[]
       for (const [key, value] of Object.entries(this.dictConsumibles)) {
@@ -142,8 +142,8 @@ export class Loans {
   async getInfo() {
     let data = await this.service.getBasicData();
     let descs = await this.service.getConsumiblesAndTools();
-    console.log(descs)
-    console.log(data)
+    //console.log(descs)
+    //console.log(data)
     descs['tools'].forEach(element => {
       this.NombresDeHerramientas.push(element['Descripcion'])
     });
@@ -177,7 +177,7 @@ export class Loans {
 
   }
   private updateData(i, type) {
-    console.log(i, type)
+    //console.log(i, type)
     if (type == 0) {
       this.herramientas[i]['idParte'] = this.dictHerramientas[this.herramientas[i]['idHerramienta']]
     }
@@ -198,7 +198,7 @@ export class Loans {
 
     if (!this.validUsers.includes(parseInt(this.meta['empleado']))) {
       Swal.fire(SWAL_EMPLOYEE_NOT_EXISTS)
-      console.log("ERROR AQUI")
+      //console.log("ERROR AQUI")
       return false;
     }
 
@@ -263,7 +263,7 @@ export class Loans {
 
   private setcondition(i, val) {
     this.consumibles[i]['condicion'] = parseInt(val);
-    console.log(i + val);
+    //console.log(i + val);
   }
 
   private dummyConsumible() {

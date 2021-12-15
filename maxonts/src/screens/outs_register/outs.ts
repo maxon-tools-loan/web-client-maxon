@@ -37,18 +37,20 @@ export class outs_register{
 
     async search(){
         this.currentQuery = this.query
+        this.actualPageConsumibles =0
         let data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10,this.currentQuery)
         this.tools = data['tools']
         this.maxPageConsumibles=data['pageTools']
         this.consumibles = data['consumibles']
         this.maxPageConsumibles=data['pageConsumibles']
+        
     }
     
     async updatePage(type){
        let data
         if(type==1 ){
-            console.log("EXECUTED")
-            console.log(this.actualPageConsumibles)
+            //console.log("EXECUTED")
+            //console.log(this.actualPageConsumibles)
             
             if(this.typer==0){
                 data =await this.service.getOutItems(this.actualPageConsumibles,undefined,10,this.currentQuery);
@@ -60,7 +62,7 @@ export class outs_register{
             this.maxPageConsumibles=data['pageConsumibles']
         }
         else{
-            console.log("EXECUTED")
+            //console.log("EXECUTED")
         
             if(this.titulo=='Registro de Salidas'){
                 
@@ -110,8 +112,8 @@ export class outs_register{
             this.typer=1
             
             let data =await this.service.getInItems();
-            console.log("registroENTRADA")
-            console.log(data)
+            //console.log("registroENTRADA")
+            //console.log(data)
             this.tools =data['tools']
             this.consumibles = data['consumibles']
             this.maxPagetools= data['pageTools']
@@ -123,8 +125,8 @@ export class outs_register{
             this.titulo =`Registro de ${this.types[this.typer]}`
             this.typer = 0
             let data =await this.service.getOutItems();
-            console.log("registroSALIDA")
-            console.log(data)
+            //console.log("registroSALIDA")
+            //console.log(data)
             this.tools =data['tools']
             this.consumibles = data['consumibles']
             this.maxPagetools= data['pageTools']
@@ -134,7 +136,7 @@ export class outs_register{
     }
     async setUp(){
         let data =await this.service.getOutItems();
-        console.log(data)
+        //console.log(data)
         this.rawTools =data['tools']
         this.rawConsumibles = data['consumibles']
         this.tools = this.rawTools.slice(0,10)
@@ -143,7 +145,7 @@ export class outs_register{
         this.actualPagetools=0
         this.maxPagetools =data['pageTools']
         this.maxPageConsumibles=data['pageConsumibles']
-        console.log(this.maxPageConsumibles,this.maxPagetools)
+        //console.log(this.maxPageConsumibles,this.maxPagetools)
         
     }
     async downloadReport(){

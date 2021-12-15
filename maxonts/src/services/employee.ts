@@ -8,20 +8,20 @@ export class EmployeeService {
 
   async changePass(username,pass){
     let props = {'user':{username:username},'newPassword':pass};
-    console.log(props)
+    //console.log(props)
     const response = await fetch(API.SESSION+ '/api/admin/change_password',{
       method:'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(props)
     }
    ).then(r=>r.json());
-    console.log(response)
+    //console.log(response)
    if (response['code']=="api.success") return response;
 
   }
 
-  async registerUser(idEmpleado,user){
-    let props = {'user':{'username':user,'idEmpleado':idEmpleado}};
+  async registerUser(idEmpleado,user:string){
+    let props = {'user':{'username':user.toLowerCase(),'idEmpleado':idEmpleado}};
     
     const response = await fetch(API.URL + '/employees/registerUser',{
       method:'POST',
@@ -30,7 +30,7 @@ export class EmployeeService {
     }
    ).then(r=>r.json());
 
-    console.log(response)
+    //console.log(response)
    if (response['data']=='api.success') return response;
   }
 
@@ -40,7 +40,7 @@ export class EmployeeService {
     const response = await fetch(API.URL + '/employees/active').then(response => {
       return response.json()
    });
-   console.log(response)
+   //console.log(response)
    if (response['code']=="api.success") return response;
 
   }
@@ -50,7 +50,7 @@ export class EmployeeService {
     const response = await fetch(API.URL + '/employees/info?'+params).then(response => {
       return response.json()
    });
-   console.log(response)
+   //console.log(response)
    if (response['code']=="api.success") return response['data']['value'][0];
   }
 
@@ -60,7 +60,7 @@ export class EmployeeService {
       return response.json()
    });
   
-   console.log(response)
+   //console.log(response)
    if (response['code']=="api.success") return response['data']['value'];
     return
   }

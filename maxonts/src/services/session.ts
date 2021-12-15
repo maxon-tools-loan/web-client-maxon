@@ -99,7 +99,7 @@ export class SessionService {
       })).json()
 
       if(!response.code.includes('success')) {
-        console.log('algo fallo')
+        //console.log('algo fallo')
         return response.code;
       }
 
@@ -109,7 +109,7 @@ export class SessionService {
       this.refresh()
       return  true
     } catch (e) {
-      console.log(e);
+      //console.log(e);
     }
   }
 
@@ -123,7 +123,7 @@ export class SessionService {
       sessionKey: this.userData.session.key
     })
 
-    console.log(await res.json());
+    //console.log(await res.json());
     this.userData = undefined
     this.refresh()
     return true;
@@ -133,7 +133,7 @@ export class SessionService {
     const session = new SessionService().getFullSession()
     if (!session)
       return false
-    console.log(session)
+    //console.log(session)
     const permissions = session.permissionTree
 
     if (!permission || !permissions)
@@ -170,7 +170,7 @@ export class SessionService {
 
   async createUser(registerInput: RegisterInput,roles:any): Promise<{}> {
     const response = await sendToApi('create', registerInput)
-    console.log(roles,'aaaaaaa')
+    //console.log(roles,'aaaaaaa')
     
     let r =await response.json()
     let z  =await this.getFullSession()
@@ -178,15 +178,15 @@ export class SessionService {
     const data = await (await sendToApi('refresh', {
       sessionKey: z.session.key
     })).json()
-    console.log(data)
+    //console.log(data)
     for (const [key,val] of Object.entries(roles)){
       if(val==false) continue
       
       let res = await sendToRoleApi('grant',{user:{username:registerInput.username},role:{name:key}}).then(r=> r.json())
-      console.log(res)
+      //console.log(res)
       
     }
-    console.log(r)
+    //console.log(r)
     this.refresh()
     return r 
   }

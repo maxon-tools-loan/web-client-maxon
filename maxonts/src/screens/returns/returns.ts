@@ -30,13 +30,13 @@ export class Returns {
   }
 
   async next(){
-    console.log("NEXT")
-    console.log(this.page,this.maxPage)
+    //console.log("NEXT")
+    //console.log(this.page,this.maxPage)
     if(this.page<this.maxPage-1){
       
     this.page +=1
     let data = await  this.loanService.getLoans('',this.page,this.currentQuery);
-    console.log(data)
+    //console.log(data)
     
     this.returns= data['loans']
     this.maxPage= data['maxPages']
@@ -44,8 +44,8 @@ export class Returns {
     }
   }
   async previous(){
-    console.log("PREV")
-    console.log(this.page,this.maxPage)
+    //console.log("PREV")
+    //console.log(this.page,this.maxPage)
     if(this.page>0)
     this.page -=1
     let data = await  this.loanService.getLoans('',this.page,this.currentQuery);
@@ -61,7 +61,7 @@ export class Returns {
     this.rawUsers = users   
     this.maxPage = maxPages
     
-    console.log(this.maxPage)
+    //console.log(this.maxPage)
     
     areas.forEach(element  => {
       
