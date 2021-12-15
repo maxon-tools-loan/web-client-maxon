@@ -22,7 +22,8 @@
     "rxjs": "^7.4.0",
     "swal": "^0.1.0",
     "sweetalert2": "^11.1.10",
-    "typeorm": "^0.2.38"
+    "typeorm": "^0.2.38",
+    "xlsx": "^0.17.4"
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",

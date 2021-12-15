@@ -126,6 +126,7 @@ export class LoansService {
     inicio:query?.startDate=='' ? undefined : query?.startDate,
     final:query?.endDate =='' ? undefined : query?.endDate,
     idParte:query?.idParte=='' ? undefined : query?.idParte,
+    area: query?.area == ''?undefined :query?.area,
     numberOfRecords:15
   }
   let params ={}
@@ -142,7 +143,7 @@ export class LoansService {
     const response = await fetch(url).then(response => {
       return response.json()
     });
-    //console.log(response)
+    
     if (response['code'] == "api.success")
       return {
         loans: response['data']['value'],
@@ -183,3 +184,5 @@ export class LoansService {
     if (response['code'] == "api.success") return response['data'];
   }
 }
+
+

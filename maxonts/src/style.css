@@ -32,6 +32,10 @@ main {
   background-color: #efefef;
   height: 100vh;
 }
+body{
+  background-color: #efefef;
+}
+
 
 .container {
   margin: 16px;
@@ -43,7 +47,7 @@ main {
 
 .sidebar {
   min-width: min-content;
-  width: calc(100 / 12 * 3vw);
+  width: calc(100 / 18 * 3vw);
   position: fixed;
   top: 0;
   left: 0;
@@ -67,7 +71,7 @@ a.sidebarlink:hover {
 
 .sidebar-title {
   width: 100%;
-  background-color: #f0e122;
+  background-color: #FEF200 ;
   text-align: center;
   padding: 0.8rem 0.4rem;
   min-width: fit-content;
@@ -80,6 +84,12 @@ a.sidebarlink:hover {
   padding: 0.4rem 0.4rem;
   margin: inherit;
   min-width: fit-content;
+}
+.user{
+  text-align: center;
+  color: #ddd;
+  font-size: 150%;;
+  
 }
 
 .sidebar_loans:hover {
@@ -100,14 +110,14 @@ a.sidebarlink:hover {
 
 .sidebar_consults {
   width: 60%;
-  background-color: #f0e122;
+  background-color: #FEF200;
   text-align: center;
   padding: 0.4rem 0.4rem;
   margin: inherit;
   min-width: fit-content;
 }
 .sidebar_consults:hover {
-  background-color: #ebe161;
+  background-color: #FEF200;
 }
 .sidebar_modifications {
   width: 60%;
@@ -158,21 +168,31 @@ li {
 }
 
 .pagination {
-  display: inline-block;
+  display: flex;
+  align-items: flex-end;
+  min-width: max-content;
+
 }
 
 .pagination a {
+  left: 95%;
   color: black;
-  float: left;
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color 0.3s;
-  border: 1px solid #ddd;
+  border: 1px solid black;
+  background-color: #FEF200;
+}
+
+a.right{
+  position: relative;
+  float:  right;
+  
 }
 
 .pagination a.active {
   background-color: #4caf50;
-  color: white;
+  color: #4caf50;
   border: 1px solid #4caf50;
 }
 

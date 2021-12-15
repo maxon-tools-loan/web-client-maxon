@@ -69,7 +69,8 @@ export class SessionService {
   public userData?: LoginData
   private watchList: Array<any>
 
-  getFullSession(): LoginData {
+  getFullSession(): LoginData | null {
+    let notLog = {session: {}} as LoginData
     try{
     return JSON.parse(localStorage.getItem(STORAGE_KEYS.USER_SESSION) ?? "{}") as unknown as LoginData}
     catch(err){
@@ -106,7 +107,7 @@ export class SessionService {
       // nose ontas ector, voy a tomar malas decisiones
       localStorage.setItem(STORAGE_KEYS.USER_SESSION, JSON.stringify(this.userData))
       this.refresh()
-      return  response.code
+      return  true
     } catch (e) {
       console.log(e);
     }

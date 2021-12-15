@@ -75,8 +75,8 @@ export class InventoryService {
     let paramss = {pageTools: pageActualT,
       pageConsumibles: pageActualC,
       numberOfRecords: items,
-      inicio : query?.startDate,
-      final : query?.endDate
+      inicio : query?.startDate =='' ? undefined : query?.startDate,
+      final : query?.endDate== '' ? undefined : query?.endDate
     }
       let params ={}
       for(const [key,value] of Object.entries(paramss)){

@@ -1,6 +1,7 @@
-<template>
+<template click.trigger="refresh()">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <div class="mock_sidebar">
+    
     <div class="d-flex flex-column sidebar_container">
       <a class="sidebarlink sidebar_loans" route-href="loans"> Prestamos </a>
       <a class="sidebarlink sidebar_returns" route-href="returns"> Devoluciones
@@ -21,10 +22,14 @@
     </div>
   </div>
   <div class="sidebar">
-    <h1 class="sidebar-title"> <img style="width: 20vw;"
-        src="../11283_47706.jpg"> </h1>
+    <a route-href='login'>
+    <h1  class="sidebar-title"> <img style="width: 20vw;"
+        src="../11283_47706.jpg"> </h1></a>
+    <span class="user"> Usuario activo : ${user}</span>
+        
 
     <div class="d-flex flex-column sidebar_container" if.bind="dashboard.read.sidebar">
+      
       <a class="sidebarlink sidebar_loans" route-href="loans" if.bind="dashboard.read.loans"> Prestamos </a>
       <a class="sidebarlink sidebar_returns" route-href="returns" if.bind="dashboard.read.returns"> Devoluciones
       </a>

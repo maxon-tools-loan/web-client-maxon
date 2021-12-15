@@ -9,14 +9,21 @@ export class Sidebar {
   public router: Router
   public hasPermission: any
   dashboard: any;
+  public user:string =''
 
   constructor(sessionService: SessionService, router: Router) {
     this.sessionService = sessionService;
     this.hasPermission = this.sessionService.hasPermission;
+    if (this.sessionService.getFullSession()!=null){
+    this.user = this.sessionService.getFullSession().user.username}
     this.router = router;
     this.sessionService.watch(() => this.updatePermissions())
     this.sessionService.refreshSession()
     this.updatePermissions()
+  }
+
+  public refresh(){
+    this.user = this.sessionService.getFullSession().user?.username
   }
 
   updatePermissions() {
@@ -40,7 +47,9 @@ export class Sidebar {
     console.log('logout...')
     const bool = await this.sessionService.logout();
     new Redirect('/auth/login').navigate(this.router)
+    this.user = ''
     return bool;
+    
   }
 
 // NO LE MUEVAS 8)

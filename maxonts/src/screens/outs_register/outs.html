@@ -43,8 +43,8 @@
   </table>
   <p>Next/Previous buttons:</p>
   <div class="pagination">
-    <a click.delegate="pagination(0,0)">❮</a>
-    <a disbled.bind='maxPageConsumibles==actualPageConsumibles' click.delegate="pagination(0,1)">❯</a>
+    <a class= 'left' click.delegate="pagination(0,0)">❮</a>
+    <a class='right' disbled.bind='maxPageConsumibles==actualPageConsumibles' click.delegate="pagination(0,1)">❯</a>
   </div>
   <h3>Consumibles</h3>
   <table class="table table-hover">
@@ -75,7 +75,7 @@
   </table>
   <p>Next/Previous buttons:</p>
   <div class="pagination">
-    <a click.trigger="pagination(1,0)">❮</a>
-    <a  click.trigger="pagination(1,1)">❯</a>
+    <a class='left' click.trigger="pagination(1,0)">❮</a>
+    <a  class= 'right' click.trigger="pagination(1,1)">❯</a>
   </div>
 </template>

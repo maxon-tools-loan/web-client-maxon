@@ -20,6 +20,8 @@ export class LoanInfo {
     private meta = {}
     router:Router
     constructor(loans: LoansInfoService,rt:Router,session:SessionService) {
+        if (!session.hasPermission('dashboard.read.loans'))
+            new Redirect('/returns').navigate(rt)
         this.meta['user']=session.getFullSession().user.username
         this.loan = loans
         this.router = rt

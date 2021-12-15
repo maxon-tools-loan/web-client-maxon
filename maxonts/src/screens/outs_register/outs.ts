@@ -64,7 +64,7 @@ export class outs_register{
         
             if(this.titulo=='Registro de Salidas'){
                 
-            data =await this.service.getOutItems(undefined,this.actualPagetools,10);
+            data =await this.service.getOutItems(undefined,this.actualPagetools,10,this.currentQuery);
             }
             else{
                 data =await this.service.getInItems(undefined,this.actualPagetools,10);
