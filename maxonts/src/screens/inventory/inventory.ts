@@ -20,7 +20,7 @@ export class Inventory {
   private currentQuery ={}
   private sorts = {}
   private families = []
-  private types = []
+  private types = ["Consumible","Herramienta"]
   private page :number = 0
   private maxPage=null
 
@@ -82,7 +82,7 @@ export class Inventory {
     this.items= data['value']
     this.maxPage= data['pages']
 
-    console.log(data)
+    //console.log(data)
     this.families = data['familias']
     this.types = ["Herramienta","Consumible"];  
     

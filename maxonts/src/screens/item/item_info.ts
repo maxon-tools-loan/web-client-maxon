@@ -1,7 +1,7 @@
 import { InventoryService } from "services/inventory"
 import { inject } from "aurelia-framework"
 import Swal from "sweetalert2";
-import { SWAL_EMP_CONFIRM, SWAL_SUCCESS } from "swals/question";
+import { SWAL_EMP_CONFIRM, SWAL_IMG_CONFIRM, SWAL_SUCCESS } from "swals/question";
 import { SWAL_ERROR } from "swals/error";
 
 
@@ -33,7 +33,7 @@ export class itemInfo {
     }
     
     async changeImage(){
-        let con = await Swal.fire(SWAL_EMP_CONFIRM)
+        let con = await Swal.fire(SWAL_IMG_CONFIRM)
         let res;
         if(con.isConfirmed){
         res = await this.inventoryService.updateImage({'imagen':this.data[0].imagen, idParte:this.data[0].idParte})
@@ -55,6 +55,11 @@ export class itemInfo {
         this.items = data['items']
         //console.log(this.items)
     }
+
+    mapToStatus(val){
+        return val ==1 ? "Activo" : "Inactivo"
+    }
     
 
 }
+

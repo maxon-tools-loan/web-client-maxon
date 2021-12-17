@@ -69,7 +69,7 @@
           <label for="partno" class="form-label"> No. Parte <input type="text" disabled value.bind="consumibles[i]['idParte']"
               class="form-control">
           </label>
-          <label for="quantity" class="form-label"> Cantidad <input type="number" value.bind="consumibles[i]['cantidad']"
+          <label for="quantity" class="form-label"> Cantidad <input type="number" max.bind='limits[consumibles[i].idConsumible]' value.bind="consumibles[i]['cantidad']"
               class="form-control">
           </label>
           <label> Eliminar <input class="form-check-input" change.delegate="remove(i,1)" type="checkbox">
@@ -145,7 +145,7 @@
             <div class="mb-3 filters search">
               <label class="form-label"># Herramienta <input type="text" value.bind="herramientas[i]['idHerramienta']" input.delegate="updateData(i,0)"
                   class="form-control"></label>
-              <label  class="form-label"># Parte <input disabled type="text" value.bind="herramientas[i]['idParte']" class="form-control"></label>
+              <label  class="form-label">No. Parte <input disabled type="text" value.bind="herramientas[i]['idParte']" class="form-control"></label>
               <label>Eliminar <input class="form-check-input"  change.delegate="remove(i,0)" type="checkbox">
               </label>
             </div>

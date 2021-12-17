@@ -5,6 +5,8 @@ import { InventoryService} from "../../services/inventory"
 import {inject} from "aurelia-framework"
 import { SearchService } from "services/search";
 import { FormatService } from "services/format";
+import { ReportService } from 'services/reportService';
+const XLSX = require('xlsx')
 
 const searchTemplate = {
   idParte: {
@@ -18,7 +20,7 @@ const searchTemplate = {
   }
 }
 
-@inject(InventoryService, SearchService, FormatService, SessionService, Router) 
+@inject(InventoryService, SearchService, FormatService, SessionService, Router,ReportService) 
 export class Inventory {
   private UNDEFINED=UNDEFINED
 
@@ -34,13 +36,15 @@ export class Inventory {
 
   private page :number = 0
   private maxPage=null
+  private report:ReportService
 
-  constructor(inventory: InventoryService, search: SearchService, format: FormatService, session: SessionService,rt:Router){
+  constructor(inventory: InventoryService, search: SearchService, format: FormatService, session: SessionService,rt:Router,rs:ReportService){
     if (!session.hasPermission('dashboard.read.orders'))
       new Redirect('/auth/login').navigate(rt)
     this.inventoryService = inventory;
     this.searchService = search;
-    this.formatService = format
+    this.formatService = format;
+    this.report = rs;
 
     const rawFilter = this.searchService.createFilter(searchTemplate)
    
@@ -64,6 +68,15 @@ export class Inventory {
     this.maxPage= data['pages']
     
     }
+  }
+
+  async getReport(){
+    
+    let data = await this.report.getReportInventory(this.currentQuery)
+    //console.log(data)
+     XLSX.writeFileSync(data, `${new Date().toDateString()} Report-Low Inventory.xlsx`)
+
+
   }
   async previous(){
     if(this.page>0)

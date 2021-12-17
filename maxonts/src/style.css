@@ -139,7 +139,7 @@ a {
 .sidebar_container {
   align-items: center;
   position: relative;
-  top: 15%;
+  top: 10vh;
   background-color: #3d3f44;
   margin: 0.3rem;
   min-width: fit-content;
@@ -169,14 +169,15 @@ li {
 
 .pagination {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   min-width: max-content;
 
 }
 
 .pagination a {
-  left: 95%;
+  
   color: black;
+  
   padding: 8px 16px;
   text-decoration: none;
   transition: background-color 0.3s;
@@ -188,6 +189,14 @@ a.right{
   position: relative;
   float:  right;
   
+}
+a.left{
+position: relative;
+margin-right: 32vw;
+}
+
+.pagination >span{
+  margin-right: 32vw;
 }
 
 .pagination a.active {

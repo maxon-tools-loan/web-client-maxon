@@ -23,19 +23,21 @@
         </select>
       </div>
       <button click.delegate="search()" class="btn btn-primary" type="submit">Buscar</button>
+      <button click.delegate="getReport()" class="btn btn-primary" type="submit">Generar Reporte</button>
     </div>
   </div>
 
   <h2> Resultados </h2>
   <div class="pagination">
    <a class="left" click.trigger="previous()">❮</a>
+   <span>Página ${page +1} de ${maxPage}</span>
     <a class="right" click.trigger="next()">❯</a>
   </div>
   <!-- TODO: tabla -->
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col"># Parte</th>
+        <th scope="col">No. Parte</th>
         <th scope="col">Familia</th>
         <th scope="col">Nombre</th>
         <th scope="col">Minimo</th>

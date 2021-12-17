@@ -22,16 +22,17 @@ export class MaintenanceRecord {
     async next(tp){
         if(tp && this.actConsumibles < this.maxConsumibles-1){
             this.actConsumibles+=1
-            let data = await this.service.getMaintenanceItems(this.actConsumibles)
+            let data = await this.service.getMaintenanceItems(undefined,this.actConsumibles)
+
         this.consumibles = data['consumibles']
-        this.maxConsumibles = data['pagesConsumibles']
+        this.maxConsumibles = data['pageConsumibles']
         
         }
         else if(!tp && this.actTools < this.maxTools-1 ){
             this.actTools+=1
-            let data = await this.service.getMaintenanceItems(undefined,this.actTools)
+            let data = await this.service.getMaintenanceItems(this.actTools,undefined)
    
-        this.maxTools = data['pagesTools']
+        this.maxTools = data['pageTools']
         this.tools = data['tools']
         }
     }
@@ -39,16 +40,16 @@ export class MaintenanceRecord {
     async previous(tp){
         if(tp && this.actConsumibles >0 ){
             this.actConsumibles-=1
-            let data = await this.service.getMaintenanceItems(this.actConsumibles)
+            let data = await this.service.getMaintenanceItems(undefined,this.actConsumibles)
             this.consumibles = data['consumibles']
-            this.maxConsumibles = data['pagesConsumibles']
+            this.maxConsumibles = data['pageConsumibles']
    
         }
         else if(!tp && tp && this.actConsumibles >0) {
             this.actConsumibles-=1
-            let data = await this.service.getMaintenanceItems(undefined,this.actTools)
+            let data = await this.service.getMaintenanceItems(this.actTools,undefined)
 
-            this.maxTools = data['pagesTools']
+            this.maxTools = data['pageTools']
             this.tools = data['tools']
         }
     }
@@ -61,8 +62,9 @@ export class MaintenanceRecord {
     async setUp() {
         let data = await this.service.getMaintenanceItems()
         this.consumibles = data['consumibles']
-        this.maxConsumibles = data['pagesConsumibles']
-        this.maxTools = data['pagesTools']
+        this.maxConsumibles = data['pageConsumibles']
+        this.maxTools = data['pageTools']
+       
         this.tools = data['tools']
     }
 

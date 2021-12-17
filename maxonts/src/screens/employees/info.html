@@ -1,28 +1,28 @@
 <template>
 
-    <h2>Préstamos</h2>
+    <h2>Información de Empleado</h2>
     <div>
   
       <div>
         <div class="mb-3">
           <label for="employeeid" class="form-label">Empleado Id</label>
-          <input type="text" class="form-control" value.bind="data['idEmpleado']">
+          <input disabled type="text" class="form-control" value.bind="data['idEmpleado']">
         </div>
   
         <div class="mb-3">
           <label for="job" class="form-label">Nombre</label>
-          <input type="text" value.bind="data['nombre']" class="form-control">
+          <input disabled type="text" value.bind="data['nombre']" class="form-control">
         </div>
   
         <div class="mb-3">
           <label for="machine" class="form-label">Estatus</label>
-          <input type="text" value.bind="data['status']" class="form-control">
+          <input disabled type="text" value.bind="data['status']" class="form-control">
         </div>
       </div>
   
       <div class="mb-3">
         <label for="employeeid" class="form-label">Area</label>
-        <input type="text" value.bind="data['area']" class="form-control">
+        <input disabled type="text" value.bind="data['area']" class="form-control">
       </div>
     
 </template>

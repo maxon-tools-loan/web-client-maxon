@@ -1,5 +1,9 @@
 <template>
   <h2>Info de Préstamo</h2>
+  <div>
+    <br>
+  </div>
+  <div>
   <div class="mb-3 filters search">
     <label for="exampleFormControlInput1" class="form-label">No. De Empleado <input disabled type="text"
         value.bind="meta['idEmpleado']" class="form-control" id="exampleFormControlInput1">
@@ -14,12 +18,18 @@
         value.bind="meta['idPrestamo']" class="form-control" id="exampleFormControlInput4">
     </label>
   </div>
-
+  <br>
   <!-- TODO: Consumibles? -->
+  <div if.bind="consumible.length>0">
+    <h4>Consumibles</h4>
+  </div>
   <div repeat.for="item of consumible">
     <div class="mb-3 filters search">
       <label class="form-label">No. consumible <input disabled type="text"
-          value.bind="item['idConsumible']" class="form-control" >
+        value.bind="item['idConsumible']" class="form-control" >
+    </label>
+      <label class="form-label">No. Parte <input disabled type="text"
+          value.bind="item['idParte']" class="form-control" >
       </label>
       <label  class="form-label">Nombre <input disabled type="text"
           value.bind="item['Descripcion']" class="form-control" >
@@ -27,6 +37,8 @@
       <label for="exampleFormControlInput3" class="form-label">Cantidad <input disabled type="text" value.bind="item['cantidad']"
           class="form-control" >
       </label>
+    </div>
+    <div class="mb-3 filters search">
       <label>Estado <select disabled.bind="readonly || item.enabled" click.trigger="integrityCheck(0,item)" name="status"value.bind="item['devuelto']" id="stats" class="form-control">
           <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
         </select>
@@ -42,6 +54,9 @@
 
 
   <!-- TODO: No consumible -->
+  <div if.bind="herramienta.length>0">
+    <h4>Herramientas</h4>
+  </div>
   <div repeat.for="item of herramienta">
     <div class="mb-3 filters search">
       <label class="form-label">No. Parte <input disabled type="text" value.bind="item['idParte']" class="form-control">
@@ -50,6 +65,8 @@
       </label>
       <label class="form-label">Nombre <input disabled type="text" value.bind="item['Descripcion']" class="form-control">
       </label>
+      </div>
+      <div class="mb-3 filters search">
       <label>Estado <select disabled.bind="readonly || item.enabled " click.trigger="integrityCheck(0,item)" name="status"
           value.bind="item['devuelto']" id="stats" class="form-control">
           <option repeat.for="option of options" model.bind="option.value">${option.name}</option>
@@ -68,5 +85,6 @@
   </div>
   <div if.bind="!readonly">
     <button class="btn btn-primary" click.delegate="commitChanges()" type="submit">Guardar Cambios</button>
+  </div>
   </div>
 </template>

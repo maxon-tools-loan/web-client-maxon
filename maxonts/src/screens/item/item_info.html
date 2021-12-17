@@ -5,39 +5,39 @@
       <div class="search">
       <img  src.bind="data[0].imagen" if.bind="data[0].imagen!=null" width='200' height="200">
       <label>
-        <input class="form-control" type="file" change.delegate="log(data[0])" accept="image/*"
+        <input  class="form-control" type="file" change.delegate="log(data[0])" accept="image/*"
           files.bind="Images">
       </label>
       <button click.delegate="changeImage()" class="btn btn-primary">Cambiar Imagen</button>
     </div>
       <div>
         <div class="mb-3">
-          <label for="employeeid" class="form-label"># Parte</label>
-          <input type="text" class="form-control" value.bind="data[0]['idParte']">
+          <label for="employeeid" class="form-label">No. Parte</label>
+          <input disabled type="text" class="form-control" value.bind="data[0]['idParte']">
         </div>
   
         <div class="mb-3">
           <label for="job" class="form-label">Familia</label>
-          <input type="text" value.bind="data[0]['Familia']" class="form-control">
+          <input disabled type="text" value.bind="data[0]['Familia']" class="form-control">
         </div>
   
         <div class="mb-3">
-          <label for="machine" class="form-label">Nombre/Descripcion</label>
-          <input type="text" value.bind="data[0]['Descripcion']" class="form-control">
+          <label for="machine" class="form-label">Nombre/Descripción</label>
+          <input disabled type="text" value.bind="data[0]['Descripcion']" class="form-control">
         </div>
       </div>
   
       <div class="mb-3">
         <label for="employeeid" class="form-label">Stock Minimo</label>
-        <input type="text" value.bind="data[0]['Minimo']" class="form-control">
+        <input disabled type="text" value.bind="data[0]['Minimo']" class="form-control">
       </div>
       <div class="mb-3">
         <label for="employeeid" class="form-label">Stock Maximo</label>
-        <input type="text" value.bind="data[0]['Maximo']" class="form-control">
+        <input disabled type="text" value.bind="data[0]['Maximo']" class="form-control">
       </div>
       <div class="mb-3">
-        <label for="employeeid" class="form-label">Estado</label>
-        <input type="text" value.bind="data[0]['activo']" class="form-control">
+        <label  for="employeeid" class="form-label">Estado</label>
+        <input disabled type="text" value.bind="mapToStatus(data[0]['activo'])" class="form-control">
       </div>
 
       <div>
@@ -49,7 +49,7 @@
                 <th if.bind="items[0].idHerramienta != undefined"scope="col">No Herramienta</th>
                 <th if.bind="items[0].idHerramienta == undefined"scope="col">Cantidad</th>
                 <th scope="col">Marca</th>
-                <th >Pestado</th>
+                <th >Prestado</th>
                 <th >Mantenimiento</th>
                 <th if.bind="items[0].idHerramienta != undefined"scope="col">Condicion</th>
               </tr>

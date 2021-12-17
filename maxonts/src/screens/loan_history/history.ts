@@ -56,7 +56,7 @@ export class History {
       
     this.page +=1
     const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.currentQuery);
-  
+    //console.log(loans)
     this.loans = loans
     
     this.maxPage = maxPages
@@ -66,14 +66,15 @@ export class History {
   async previous(){
     //console.log("PREV")
     //console.log(this.page,this.maxPage)
-    if(this.page>0)
+    if(this.page>0){
     this.page -=1
     const {loans, users,maxPages} = await this.loanService.getAllLoans(this.param,this.page,this.currentQuery);
-  
+    console.log(loans)
 
     this.loans = loans
     
     this.maxPage = maxPages
+    }
   }
   private idToUser(id: string) {
     // @ts-ignore

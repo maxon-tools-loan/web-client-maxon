@@ -1,8 +1,11 @@
 <template>
+  <br>
+  <h3>Registro de Alta de Personal</h3>
   <div class="mb-3 search">
   <input class='form-control' type="file" accept=".csv" files.bind="data" />
   <button click.delegate="load()" class="btn btn-primary"> Registrar Empleados</button>
 </div>
+<span>Subir un archivo csv, con el elemento '|' como separador. El archivo debe tener todos los empleados activos</span>
 <div>
   <br>
   <br>
@@ -16,7 +19,7 @@
   <br>
   <br>
 </div>
-<h4> User Password Change</h4>
+<h4> Cambio de Constraseña para el usuario</h4>
 <div class="search">
   <label> Usuario
   <input value.bind="username">
@@ -24,7 +27,7 @@
   <label> Contraseña
     <input type="password" value.bind="newPass">
     </label>
-    <label> ConfirmarContraseña
+    <label> Confirmar Contraseña
       <input type='password' value.bind="newPassConfirm">
       </label>
   <label>

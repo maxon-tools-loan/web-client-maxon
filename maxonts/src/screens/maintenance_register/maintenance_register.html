@@ -5,12 +5,13 @@
   <h3> Consumibles</h3>
   <div class="pagination">
     <a class='left' click.trigger="previous(1)">❮</a>
+    <span>Página ${actConsumibles +1} de ${maxConsumibles}</span>
     <a class='right' click.trigger="next(1)">❯</a>
   </div>
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col"># Mantenimiento</th>
+        <th scope="col">No. Mantenimiento</th>
         <th scope="col">No. Parte</th>
         <th scope="col">No. Consumible</th>
         <th scope="col">Nombre</th>
@@ -41,12 +42,13 @@
   <h3> Herramientas</h3>
   <div class="pagination">
     <a class='left' click.trigger="previous(0)">❮</a>
+    <span>Página ${actTools +1} de ${maxTools}</span>
     <a  class='right' click.trigger="next(0)">❯</a>
   </div>
   <table class="table table-hover">
     <thead>
       <tr>
-        <th scope="col"># Mantenimiento</th>
+        <th scope="col">No. Mantenimiento</th>
         <th scope="col">No. Parte</th>
         <th scope="col">No. Herramienta</th>
         <th scope="col">Nombre</th>

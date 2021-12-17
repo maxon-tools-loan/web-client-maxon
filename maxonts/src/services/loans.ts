@@ -121,7 +121,7 @@ export class LoansService {
   async getAllLoans(search?: string,page?:number,query?): Promise<{ loans: [], users: [],maxPages:number, areas:[] }> {
   let props = {
     empleado:query?.idEmpleado ==''? undefined : query?.idEmpleado,
-    page:query?.page,
+    page:page,
     estado:query?.status,
     inicio:query?.startDate=='' ? undefined : query?.startDate,
     final:query?.endDate =='' ? undefined : query?.endDate,

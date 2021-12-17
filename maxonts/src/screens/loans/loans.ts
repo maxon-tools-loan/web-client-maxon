@@ -39,6 +39,8 @@ export class Loans {
   HerramientaSelected=null
   IDHerramientaSelected=null
 
+  limits ={}
+
   deudores = []
   router:Router
   empleados ={}
@@ -142,16 +144,16 @@ export class Loans {
   async getInfo() {
     let data = await this.service.getBasicData();
     let descs = await this.service.getConsumiblesAndTools();
-    //console.log(descs)
-    //console.log(data)
     descs['tools'].forEach(element => {
       this.NombresDeHerramientas.push(element['Descripcion'])
     });
     descs['consumibles'].forEach(element => {
+     
       this.NombresDeConsumibles.push(element['Descripcion'])
     });
     this.fullDataConsumibles = descs['consumibles']
     this.fullDataHerramientas = descs['tools']
+    
 
 
 
@@ -169,6 +171,7 @@ export class Loans {
       data['consumibles'].forEach(element => {
         this.validConsumibles.push(element['idConsumible'])
         this.dictConsumibles[element['idConsumible']] = element['idParte']
+        this.limits[element.idConsumible]=element['Disponible']
     });
     let datas = await this.service.getLoans('',0,'',);
     datas['loans'].forEach(element => {

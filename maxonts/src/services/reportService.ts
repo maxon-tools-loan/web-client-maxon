@@ -59,5 +59,28 @@ export class ReportService {
               return response['data']['value'];
           }
 
+          async getReportInventory(query?):Promise<{}>{
+            let props ={
+              idParte:query?.idParte == '' ? undefined :query?.idParte,
+              familia:query?.Familia,
+              pedido:query?.estado,
+            }
+            let params = {}
+            for (const [key,value] of Object.entries(props) ){
+                if(value == undefined) continue
+                params[key]=value
+            }
+            let url = new URL(API.URL +'/reports/orders')
+            url.search = new URLSearchParams(params).toString()
+            const response = await fetch(url).then(response => {
+              return response.json()
+            });
+            console.log(response)
+            //console.log(response)
+            if (response['code'] == "api.success") return response['data']['value'];
+
+  
+          }
+
   
 }
