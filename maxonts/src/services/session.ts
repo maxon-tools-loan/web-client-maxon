@@ -64,6 +64,9 @@ const sendToRoleApi = async (endpointName: string, data: unknown) => {
 }
 
 
+
+//// Clase dedciada a el manejo y registro de usuarios, este sericio es el encargado de manejar los request de 
+//// permisos para lo usuario y obtener las sessiones activas de los mismos
 export class SessionService {
 
   public userData?: LoginData
@@ -169,8 +172,7 @@ export class SessionService {
   }
 
   async createUser(registerInput: RegisterInput,roles:any): Promise<{}> {
-    const response = await sendToApi('create', registerInput)
-    //console.log(roles,'aaaaaaa')
+    const response = await sendToApi('create', registerInput)    //console.log(roles,'aaaaaaa')
     
     let r =await response.json()
     let z  =await this.getFullSession()

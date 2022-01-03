@@ -12,6 +12,7 @@ import { sleep } from "utils";
 
 export class itemInfo {
     private inventoryService: InventoryService
+    ///Constructor de la clase y obt5ener los serviciso necesarios para su funcionamiento
     constructor(inventory: InventoryService) {
         this.inventoryService = inventory;
     }
@@ -19,6 +20,7 @@ export class itemInfo {
     private data = {}
     items = []
     Images
+    ///Cargar la imagen y colocarla en es su <img correspondiente>
     log(data){
         let reader = new FileReader();
         //console.log(this.Images)
@@ -29,12 +31,13 @@ export class itemInfo {
         reader.readAsDataURL(this.Images[0])
         
     }
+    //Obtener Parametros Obtenidos de la Url
     private activate(params) {
         this.Empleado = params.partNo
         //console.log(params.partNo)
         this.get(params.partNo);
     }
-    
+    // Actualizar la imagen de el item
     async changeImage(){
         let con = await Swal.fire(SWAL_IMG_CONFIRM)
         let res;
@@ -50,7 +53,7 @@ export class itemInfo {
 
     
     }
-
+    /// Obtener la informacion correpsondiente y tratarla correctamente.
     async get(param): Promise<void> {
         let data  = await this.inventoryService.getItemInfo(param);
         //console.log(data)
@@ -60,6 +63,7 @@ export class itemInfo {
         //console.log(this.items)
     }
 
+    /// Cargar el codigo de barras correspondiente a un numero de pieza
     loadItems(item){
         item['generated']=0
         const element = item
@@ -70,7 +74,7 @@ export class itemInfo {
 
         
     }
-
+    ///Conversion de Tipo de dato.
     mapToStatus(val){
         return val ==1 ? "Activo" : "Inactivo"
     }

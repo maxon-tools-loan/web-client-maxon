@@ -3,7 +3,8 @@ import { API } from "../../../config";
 import { sleep } from "../utils";
 const fetch = require('node-fetch');
 
-
+///Esta clase se encarga de m anejar registros y peticioners de informacion relacionados con el inventarios
+/// Registro de mantenimientos, de entreadass, salidas, cantidad de items disponibles y modificaciones de informacion.
 export class InventoryService {
 
   async getItemsNotRegistered(){

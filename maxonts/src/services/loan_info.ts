@@ -3,6 +3,9 @@ import { API } from "../../../config";
 
 const fetch = require('node-fetch');
 
+
+////Esta clase se dedica a  obtener informacion realacionada con los pretamos
+//// y guardar la informacion relacionadas con los mismos
 export class LoansInfoService {
   async getLoanInfo(id:string): Promise<{}> {
 

@@ -2,7 +2,8 @@ import { sleep } from "../utils";
 import { API } from "../../../config";
 const fetch = require('node-fetch');
 
-
+///En este servicio se hacne peticiones a  la base de datos relacionadas con el cmabio de usuarios y registro de los mismos
+/// Las funciones presentes aqui sierven para registrar usuarios del sistema asi como obtener informacion relevante de los mismis
 export class EmployeeService {
 
 

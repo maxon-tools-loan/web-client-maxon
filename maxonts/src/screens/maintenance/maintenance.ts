@@ -43,7 +43,7 @@ export class Maintenance {
   private service: InventoryService
   private loan: LoansService
   private opt = 1
-
+///Verificacion de permisos y cargar los servicos necesarios
   constructor(service: InventoryService, loan: LoansService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.maintenance'))
       new Redirect('/auth/login').navigate(rt)
@@ -55,7 +55,7 @@ export class Maintenance {
   }
 
 
-
+/// Agregar elementos para su mantenimiento
   AddCustom(i) {
     if (i) {
       this.consumibles.push(
@@ -80,6 +80,7 @@ export class Maintenance {
     }
   }
 
+  //Hacer match entre la descripcion y el numero de parte del objeto
   matchParte(i,name){
    
     if(i==1){
@@ -101,6 +102,7 @@ export class Maintenance {
       });
     }
   }
+  // hacer un amtch entre el numero del objeto y su numero de ID  de herramienta o consumible
   matchId(i,name){
     //console.log(i,name)
     if(i==1){
@@ -121,6 +123,7 @@ export class Maintenance {
     }
   }
 
+  //Verificar la integridad de los datos a la hora de registrar mantenimiento
   private async verifyData() {
     let valid = true
     this.consumibles.forEach(element => {
@@ -157,6 +160,8 @@ export class Maintenance {
     return valid
   }
 
+
+  //Obtener informacion basica acerca de los elementos para el autocompletado de datos
   async getInfo() {
     let data = await this.loan.getBasicData();
 
@@ -188,6 +193,7 @@ export class Maintenance {
     //console.log(this.dictConsumibles)
   }
 
+  //Atualizar los datos en funcion del numero de herramienta o consumible introducido
   private updateData(i, type) {
     //console.log(i, type)
     if (type == 0) {
@@ -199,16 +205,15 @@ export class Maintenance {
 
   }
 
-  private async commit() { // hice esta cosa async, nose que partes vaya a romper 8)
-
-    //No se rommpe jala chido 8)
+  ///// Guardar y registrar los prestamos 
+  private async commit() {
     
     const result = await Swal.fire(SWAL_MAINTENANCE_CONFIRM)
     if (!result){
       Swal.fire(SWAL_CANCELLED)
       return
     }
-    "TODO SWAL CONFIRMACION DE REGISTRO Y OZTRO PARA VERIFICACION"
+  
 
     
     if (this.tools.length === 0 && this.consumibles.length === 0)
@@ -229,24 +234,29 @@ export class Maintenance {
     }
 
   }
+  //Agregar consumible a la lista de consumibles
   private addConsumible() {
     this.consumibles.push(consu(this.consumibles.length))
   }
+  //Agregar herramienta a la lista de herrramientas
   private addTool() {
     this.tools.push(tool(this.tools.length))
   }
+  //Eliminar herramienta de la lista
   private removeTool(index) {
     //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
+  //Eliminar Consumible de la lista
   private removeConsu(index) {
     //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
   }
+  //Agregar elemento en blkanco a la lista
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();

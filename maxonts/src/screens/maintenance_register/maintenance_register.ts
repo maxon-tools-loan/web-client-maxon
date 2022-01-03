@@ -19,6 +19,7 @@ export class MaintenanceRecord {
     actTools=0
     actConsumibles=0
 
+    ////Aplicar filtros y hacer la bsuqueda para la siguiente pagina de elementos en mantenimiento
     async next(tp){
         if(tp && this.actConsumibles < this.maxConsumibles-1){
             this.actConsumibles+=1
@@ -36,7 +37,7 @@ export class MaintenanceRecord {
         this.tools = data['tools']
         }
     }
-
+////Aplicar filtros y hacer la bsuqueda para la  pagina previa de elementos en mantenimiento
     async previous(tp){
         if(tp && this.actConsumibles >0 ){
             this.actConsumibles-=1
@@ -53,12 +54,14 @@ export class MaintenanceRecord {
             this.tools = data['tools']
         }
     }
-
+    /// Constructor de las clase
     constructor(serv: InventoryService, rt: Router) {
         this.service = serv
         this.router = rt
         this.setUp()
     }
+
+    ///Set up de los datos basicos de la aplciacion
     async setUp() {
         let data = await this.service.getMaintenanceItems()
         this.consumibles = data['consumibles']
@@ -67,7 +70,7 @@ export class MaintenanceRecord {
        
         this.tools = data['tools']
     }
-
+    /// Parsear de status a proceso
     private mapStatus(statusId) {
         const existing = {
             0: "En Proceso",
@@ -76,9 +79,9 @@ export class MaintenanceRecord {
         return existing[statusId] ?? statusId
     }
 
-
     async triggerSave(item) {
-        "TODO : SWAL QUE PREGUNTE PARA CAMBAIR EL ESTADO"
+        //// Confirmacion y registrar mantenimiento como completado
+      
         let result = await Swal.fire(confirmChangeMaintenance(item.idMantenimiento, this.mapStatus(item.completo), this.mapStatus(item.completo == 1 ? 0 : 1)))
         if (result.isConfirmed) {
             if (item['completo'] == 1) {
@@ -87,9 +90,7 @@ export class MaintenanceRecord {
             else {
                 item['completo'] = 1
             }
-
             let res = await this.service.updateMaintenance(item)
-            //console.log(res)
             if (res.data == 'api.success') {
                 Swal.fire(SWAL_SUCCESS)
             }

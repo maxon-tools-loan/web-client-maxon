@@ -13,30 +13,9 @@ export interface Returns {
   date: number;
 }
 const fetch = require('node-fetch');
-const returns: Returns[] = [
-  {
-    loanNo: 1231,
-    employeeNo: 123912,
-    status: 1290312,
-    lentBy: 1902397,
-    date: 2193012312,
-  },
-  {
-    loanNo: 1231,
-    employeeNo: 123912,
-    status: 1290312,
-    lentBy: 1902397,
-    date: 2193012312,
-  },
-  {
-    loanNo: 1231,
-    employeeNo: 123912,
-    status: 1290312,
-    lentBy: 1902397,
-    date: 2193012312,
-  }
-];
 
+///El servicio de prestmoas, este servicios esta orientado a obtener informacion de los prestamos, hacer altas y bajas de datos
+/// Obtener informacion basados en parametros ademas de filtrar la informacion segun sea requerido
 export class LoansService {
 
   async commitDown(tools,consumibles,meta){

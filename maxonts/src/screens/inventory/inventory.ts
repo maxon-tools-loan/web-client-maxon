@@ -41,6 +41,7 @@ export class Inventory {
     encryptedData += cipher.final("hex");
     return encryptedData;
   }
+  ///Constructor de la clase y verificacion de permisos
   constructor(inventory: InventoryService, sessionService: SessionService,rt:Router){
     if (!sessionService.hasPermission('dashboard.read.inventory'))
       new Redirect('/auth/login').navigate(rt)
@@ -49,6 +50,8 @@ export class Inventory {
     this.inventoryService = inventory;
     this.setup()
   }
+
+  //Actualizar los datos y buscar la siguiente pagina
   async next(){
     if(this.page<this.maxPage-1){
       //console.log()
@@ -62,6 +65,7 @@ export class Inventory {
     
     }
   }
+  //Actualizar los datos y buscar la  pagina anterior
   async previous(){
     if(this.page>0)
     this.page -=1
@@ -73,7 +77,7 @@ export class Inventory {
     this.maxPage= data['pages']
     
   }
-
+ //Obtener todos los datos necesarios o de la pagiuna inicial y cargarlas a memoria
   async setup() {
     let data = await this.inventoryService.getInventoryItems();
     data['value'].forEach(element => {
@@ -89,6 +93,7 @@ export class Inventory {
     
   }
 
+  ///Aplicar filtros sobre la busqueda
   async search(): Promise<void> {
     this.currentQuery =this.query
     this.page=0

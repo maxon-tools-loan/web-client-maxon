@@ -3,7 +3,8 @@ import { API } from "../../../config";
 import { sleep } from "../utils";
 const fetch = require('node-fetch');
 
-
+/// Clase dedicada a las peticiones de prestamos, hace peticiones a los endpoints del backend server para recibir 
+/// un formato xsls que luyego el front end descargara para el usuario
 export class ReportService {
 
 

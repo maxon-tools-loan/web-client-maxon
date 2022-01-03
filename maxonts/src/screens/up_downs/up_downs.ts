@@ -24,6 +24,7 @@ export class Up_Downs {
     private inventory:InventoryService
     private router:Router
     private session: SessionService
+    ///Constructor de la clase y verificacion de permisos
     constructor(loan:LoansService,Inventory:InventoryService, session: SessionService,rt:Router){
         if (!session.hasPermission('dashboard.read.up_down'))
           new Redirect('/auth/login').navigate(rt)
@@ -35,6 +36,7 @@ export class Up_Downs {
         this.loadIdParte();
     }
 
+    // Cargar id de parte activos 
     async loadIdParte(){
         let data =await this.inventory.getAllItemsInfo()
         //console.log(data)
@@ -44,6 +46,7 @@ export class Up_Downs {
             this.downData[element['idParte']] = element;
         });
     }
+    /// convietir el idParte a el nombre y decripcion del articulo
     matchData(i){
         //console.log("EXECUTED")
         if(this.ids.includes(this.down[i]['idParte'])){
@@ -71,7 +74,7 @@ export class Up_Downs {
             this.down.splice(i, 1);
           }
     }
-    
+    /// Cargar imagen el scope actual
     log(data){
         let reader = new FileReader();
         reader.onload = () =>{
@@ -81,6 +84,8 @@ export class Up_Downs {
         reader.readAsDataURL(data.Images[0])
         
     }
+
+    /// Verificacion de  intregridad de las partes registradas
     private async  verifyData(){
         if(this.ups.length==0){
             await Swal.fire(getErrorSwal(" No existen elementos"))
@@ -123,6 +128,8 @@ export class Up_Downs {
 
         return true;
     }
+
+    ///Regitrar entrada partes
     async commit(){
         
         if(await this.verifyData()){
@@ -145,6 +152,7 @@ export class Up_Downs {
 
         
     }
+    /// Verificar baja de elementos
     verifyDown(){
         //console.log("EXECUTED")
         this.down.forEach(element=>{
@@ -155,6 +163,7 @@ export class Up_Downs {
         })
         return true;
     }
+    /// Regitsrar la baja de un numero de parte
     async commitDown(){
 
         "ALERT COnfirmacion"

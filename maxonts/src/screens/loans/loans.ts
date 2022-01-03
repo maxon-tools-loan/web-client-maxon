@@ -53,6 +53,7 @@ export class Loans {
     user:''
   
   }
+  ///Verificacion de permisos y obtenecion de servicios  e informacion basica
   constructor(service: LoansService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.loans'))
       new Redirect('/auth/login').navigate(rt)
@@ -64,8 +65,8 @@ export class Loans {
     this.getInfo();
   }
 
+   /// Seleccionar el area y el empleado a la que pertenece un empleado
   matchEmployee(){
-    //console.log('AAAA')
     if(Object.keys(this.empleados).includes(this.meta['empleado'])){
     this.match.area = this.empleados[this.meta['empleado']].area
     this.match.nombre = this.empleados[this.meta['empleado']].nombre
@@ -76,6 +77,8 @@ export class Loans {
     }
     //console.log(this.match)
   }
+
+  ///// Añadur consumibles y herramientas a memoria
   AddCustom(i){
     if(i){
       this.consumibles.push(
@@ -89,15 +92,16 @@ export class Loans {
       )
     }
     else{
-      //console.log(this.HerramientaSelected,this.IDHerramientaSelected)
+
       this.herramientas.push({
         "idHerramienta": this.IDHerramientaSelected,
         "idParte": this.HerramientaSelected
       })
-      //console.log(this.herramientas)
+
     }
   }
   
+  /// Hacer un march del nombre con el numero de parte
   matchParte(i,name){
    
     if(i==1){
@@ -119,6 +123,8 @@ export class Loans {
       });
     }
   }
+
+  ///Hacer un match entre elm nombre y el idParte
   matchId(i,name){
     //console.log(i,name)
     if(i==1){
@@ -138,6 +144,8 @@ export class Loans {
       }
     }
   }
+
+  //Registrar el prestamo
   postLoan() {
     this.service.postLoan(this.consumibles, this.herramientas, {});
   }
@@ -179,6 +187,7 @@ export class Loans {
     });
 
   }
+  //Hacer un match entre el numero de parte basadois en el idHerramienta o consumible
   private updateData(i, type) {
     //console.log(i, type)
     if (type == 0) {
@@ -191,21 +200,27 @@ export class Loans {
   }
 
 
+  ///Verificacion de los datos precio al commit de datos
   private async verifyData() {
+
+      //Verificacion de que el empleado exista
+      if (!this.validUsers.includes(parseInt(this.meta['empleado']))) {
+        Swal.fire(SWAL_EMPLOYEE_NOT_EXISTS)
+        //console.log("ERROR AQUI")
+        return false;
+      }
+
+    ///Verificacion que el empleado al que se le presta material no deba tenga algun adeudo
     if (this.deudores.includes(parseInt(this.meta['empleado']))) {
       let result =await Swal.fire(SWAL_EMPLOYEE_DEBT)
       if(!result){
       return false;
       }
     }
-
-    if (!this.validUsers.includes(parseInt(this.meta['empleado']))) {
-      Swal.fire(SWAL_EMPLOYEE_NOT_EXISTS)
-      //console.log("ERROR AQUI")
-      return false;
-    }
+  
 
     let valid = true
+    ///Verifciacion de que las herramientas prestadas ecistan
     this.herramientas.forEach(element => {
       if (element == null || element == '') {
         valid =  false;
@@ -217,6 +232,7 @@ export class Loans {
         valid =  false;
       }
     });
+    //Verificar que los consumibles prestados existan
     this.consumibles.forEach(element => {
       if (element == null || element == '') {
         valid =  false;
@@ -232,6 +248,7 @@ export class Loans {
       Swal.fire(SWAL_INCORRECT_INPUT)}
     return valid
   }
+  //Añadir elementos a los consumibles
   private add(value) {
     if (value == 1) {
       this.consumibles.push(this.dummyConsumible())
@@ -240,6 +257,7 @@ export class Loans {
       this.herramientas.push(this.dummyHerramienta())
     }
   }
+  //Registrar el prestamo de elementos y rediceccionar a la pagina de devoluciones
   private async commit() {
     if (this.herramientas.length < 1 && this.consumibles.length < 1) {
       return Swal.fire(SWAL_LOAN_NO_ELEMENTS)
@@ -251,6 +269,7 @@ export class Loans {
       new Redirect('/returns').navigate(this.router)
     }
   }
+  //Eliminar elementos de la lista prestada
   private remove(i, value) {
     if (value == 1) {
       if (i > -1) {
@@ -264,11 +283,13 @@ export class Loans {
     }
   }
 
+  //Actualizar la condicion en la que se presta un elemento
   private setcondition(i, val) {
     this.consumibles[i]['condicion'] = parseInt(val);
     //console.log(i + val);
   }
 
+  
   private dummyConsumible() {
     return {
       "idParte": "",

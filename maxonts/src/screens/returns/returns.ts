@@ -21,14 +21,14 @@ export class Returns {
   private maxPage=null
 
   private loanService: LoansService;
-
+///Constructor de la clase y verificacion de permisos
   constructor(loans: LoansService, session: SessionService,rt:Router){
     if (!session.hasPermission('dashboard.read.returns'))
       new Redirect('/auth/login').navigate(rt)
     this.loanService = loans
     this.setupReturns()
   }
-
+  ///Siguiente pagina de los elementos regresados
   async next(){
     //console.log("NEXT")
     //console.log(this.page,this.maxPage)
@@ -43,6 +43,7 @@ export class Returns {
     
     }
   }
+  //Pagina anterior de los elementos 
   async previous(){
     //console.log("PREV")
     //console.log(this.page,this.maxPage)
@@ -54,7 +55,7 @@ export class Returns {
     this.maxPage= data['maxPages']
     
   }
-
+  /// Obtener la paghina 1 de los datos necesarios para la aplicacion
   async setupReturns() {
     const {loans, users,maxPages,areas} = await this.loanService.getLoans('');
     this.returns = loans
@@ -69,7 +70,7 @@ export class Returns {
       
     });
   }
-
+  /// APlicar filtros de busqueda a los prestamos
   async search(): Promise<void> {
     this.currentQuery = this.query
     this.page=0
@@ -78,10 +79,11 @@ export class Returns {
     this.maxPage = maxPages
   }
 
+  //Convertir la id de usuario a el nombre de usuario
   private idToUser(id) {
     return this.rawUsers.filter(v=>v.idUsuario == id)[0].nombre ?? "No Encontrado"
   }
-
+  ///Convertir el codigo de estatus a su nombre
   private mapStatus(statusId) {
     const existing = {
       0: "No Entregado",

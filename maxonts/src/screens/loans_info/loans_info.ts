@@ -21,6 +21,7 @@ export class LoanInfo {
     private loan: LoansInfoService
     private meta = {}
     router:Router
+    ///Verificacion de permisos y cargar los servicos necesarios
     constructor(loans: LoansInfoService,rt:Router,session:SessionService) {
         if (!session.hasPermission('dashboard.read.loans'))
             new Redirect('/returns').navigate(rt)
@@ -28,7 +29,8 @@ export class LoanInfo {
         this.loan = loans
         this.router = rt
     }
-
+    
+    //Obtener los valores que se pasan como parametro en la url y relizar la carga de datos correspondiente
      async activate(params) {
         this.prestamoid = params.id
         this.readonly = params.readOnly
@@ -39,9 +41,9 @@ export class LoanInfo {
             this.readonly = false
         }
         await this.update(params.id);
-    
-
     }
+
+    ///Valores defectos de los items a la hora de marcarlos como devueltos
     integrityCheck(type,item){
         if(item['devuelto']==0){
             if(type==1){
@@ -52,6 +54,8 @@ export class LoanInfo {
             }
         }
     }
+
+    // Obntener la informacion del prestamo correspondiente    
     async update(id): Promise<void> {
         let info = await this.loan.getLoanInfo(id)
     
@@ -67,7 +71,7 @@ export class LoanInfo {
         //console.log(this.consumible,this.herramienta)
         
       }
-    
+    ///Guardar los cambios hechos si se regitra alguna devolucion de material
      async commitChanges() {
         let result  = await Swal.fire(SWAL_LOANUPDATE_CONFIRM)
         if (result){

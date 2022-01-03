@@ -38,6 +38,7 @@ export class Inventory {
   private maxPage=null
   private report:ReportService
 
+  //Verificacion de permisos y carga de los servicios necesarios para el duncionamiento
   constructor(inventory: InventoryService, search: SearchService, format: FormatService, session: SessionService,rt:Router,rs:ReportService){
     if (!session.hasPermission('dashboard.read.orders'))
       new Redirect('/auth/login').navigate(rt)
@@ -45,12 +46,11 @@ export class Inventory {
     this.searchService = search;
     this.formatService = format;
     this.report = rs;
-
     const rawFilter = this.searchService.createFilter(searchTemplate)
-   
-
     this.setup()
   }
+
+  ////Cargar los datos iniciales obteniendo la pagina incial de los datos
   async setup() {
     let data  = await this.inventoryService.getOrderInfo();
     this.rawItems =  data['value']
@@ -59,6 +59,7 @@ export class Inventory {
     //console.log(this.familias)
     this.items = this.rawItems
   }
+  ///Cambiar a la siguiente pagina 
   async next(){
     if(this.page<this.maxPage-1){
       //console.log()
@@ -69,7 +70,7 @@ export class Inventory {
     
     }
   }
-
+ //// Descargar un reporte con los filtros actuels de busqueda
   async getReport(){
     
     let data = await this.report.getReportInventory(this.currentQuery)
@@ -78,6 +79,7 @@ export class Inventory {
 
 
   }
+  ///Cambiar a la  pagina anterior
   async previous(){
     if(this.page>0)
     this.page -=1
@@ -87,12 +89,13 @@ export class Inventory {
     this.maxPage= data['pages']
    
   }
+  ///Cambiar el estado de pedido de una cierto numero de herramientas
   async update(item):Promise<void>{
     //console.log(item)
     item.estado ==1? item.estado=0:item.estado=1
     await this.inventoryService.updateStatus(item);
   }
-
+//// APlicar lso filtros a la busqueda de elementos bajos de inventario
   async search(){
     this.page =0
     this.currentQuery = this.query

@@ -16,12 +16,15 @@ export class EmployeLoader{
  newPass:string
  newPassConfirm:string
 
+ //Verificacion de permisos y obtenecion de los servicios necesarios
  constructor(serv:EmployeeService,session:SessionService,rt:Router){
    if(!session.hasPermission('dashboard.write.users'))
         new Redirect('/inventory').navigate(rt)
    this.service = serv
  }
 
+
+ //Verificacion y cambio de password para un cuenta
  async changePassword(){
    let r = await Swal.fire(SWAL_PWD_CONFIRM)
    if (!r.isConfirmed) return
@@ -42,26 +45,24 @@ export class EmployeLoader{
    this.newPassConfirm=''
  }
  
-
+  /// Cargar el CSV de los empleados y actualizar los mismos.
  async load(){
   
      let rd =  new FileReader()
      let ds
      
      rd.onload= ()=>{
-        
             ds = rd.result;
             ds = csvToArray(ds,'|',['idEmpleado','nombre','area','supervisor'])
             //console.log(ds)
             this.commit(ds)
-            
-        
      }
       rd.readAsText(this.data[0])
      
      
  }
 
+ ///Guardar los cambios de al hacer commit de los datos del CSV
  async commit(ds){
 
   if (ds ==null){
@@ -85,6 +86,7 @@ export class EmployeLoader{
  
 }
 
+///Leer un CSV y convertirlo a diccionario
 export function csvToArray(str, delimiter = ",", headers = undefined) {
     // slice from start of text to the first \n index
     // use split to create an array from string by delimiter

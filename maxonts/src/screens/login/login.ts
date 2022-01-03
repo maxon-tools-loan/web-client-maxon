@@ -23,6 +23,7 @@ export class Login {
     this.sidebar = sd
   }
 
+  ////Verificar que existra un usuario y cargarlo a memoria
   async submit(): Promise<void> {
     //console.log(this.username, this.password)
     

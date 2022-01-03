@@ -25,7 +25,8 @@ export class Register {
   PRESTAMOS=true;
   REGISTROS=false;
   router;
-  
+
+  ///Constructor de la clase y verificacion de permisos
   constructor( sessionService: SessionService,EmployeeService :EmployeeService ,rt:Router) {
     if(!sessionService.hasPermission('dashboard.write.users')) 
         new Redirect('auth/login').navigate(rt)
@@ -34,11 +35,13 @@ export class Register {
     this.router = rt
     this.setup()
   }
+  //Obtener los datos escenciales para el funcionamiento de la app (id de empleados)
   async setup(){
     let data = await this.EmployeeService.getactiveEmployees();
     this.empleados = data['data']['value']
   }
 
+  /// Hacer commit de los cambios y registrar empleado
   async submit(): Promise<void> {
     if (this.password !== this.confirmPassword) {
       //console.log('passwords don\'t match')

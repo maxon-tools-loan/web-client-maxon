@@ -61,10 +61,13 @@ export class InOut {
   fullDataConsumibles = []
   fullDataHerramientas = []
 
+  // Redireccionar a la pantalla de registros para material no registrado
   async redirect(){
     new Redirect('/newIn').navigate(this.router)
   }
   router:Router
+
+  //Se obtienen las variables locales y se guardan en memoria
   async setUp() {
     let data = await this.service.getConsumiblesAndTools()
     data['tools'].forEach(element => {
@@ -85,6 +88,7 @@ export class InOut {
     })
   }
 
+  //Agregar un elemento a la lista de entradas y salidas
   AddCustom(i) {
     if (i) {
       this.consumibles.push(
@@ -105,6 +109,8 @@ export class InOut {
 
     }
   }
+
+  ///Hacer un match entre el numero de herramienta y el numero de parte relacionado con un elemento
   private updateData(i, type) {
     //console.log(i, type)
     if (type == 0) {
@@ -116,8 +122,9 @@ export class InOut {
 
 
   }
-  matchParte(i, name) {
 
+  //Hacer un match del nombre y y los numeros de parte asociuados a esos nombres 
+  matchParte(i, name) {
     if (i == 1) {
       this.matchesConsumibles = []
       this.fullDataConsumibles.forEach(element => {
@@ -137,6 +144,7 @@ export class InOut {
       });
     }
   }
+  /// Se hace un match entre el nombre y el idParte
   matchId(i, name) {
     //console.log(i, name)
     if (i == 1) {
@@ -156,28 +164,36 @@ export class InOut {
       }
     }
   }
-
+ 
+  // Se obtiene el nombre de la pantalla
   private getName() {
     this.name = this.options[this.type].name
   }
+
+  //Agregar un consumible a la lista de consumibles
   private addConsumible() {
     this.consumibles.push(consu(this.consumibles.length))
   }
+  //Agregar una herramienta a la lista de herrramientas
   private addTool() {
     this.tools.push(tool(this.tools.length))
   }
+
+  //Eliminar una herramienta de la lista
   private removeTool(index) {
     //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
+  //Remover un consumible de la lista
   private removeConsu(index) {
     //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
   }
+  //Agrear un consumible o un numero de herramienta
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
@@ -188,32 +204,34 @@ export class InOut {
       //console.log(this.tools);
     }
   }
-
+   
+  //Comprobar que los datos sean correctos
   private verifyData() {
-
+     ///Verificar que el idParte no sea nulo
     for (const element of this.tools) {
       if (element['idParte'] == null || element['idParte'] == '') {
         return false;
       }
 
-      //console.log(!Object.values(this.dictHerramientas).includes(element.idParte))
+      ///Verificar que el elemento exista en ;as herramientas registradas
       if (!Object.values(this.dictHerramientas).includes(element.idParte)) {
         //console.log("AAAAAAAAAAA")
         return false;
       }
-
+      
+      //Verificar que el numero de herramienta exista 
       if(Object.keys(this.dictHerramientas).includes(element.idHerramienta) ||Object.keys(this.dictConsumibles).includes(element.idHerramienta)){
         return false
       }
 
     };
 
-
+    ///Verificar que el idParte no sea nulo
     for (const element of this.consumibles) {
       if (element['idParte'] == null || element['idParte'] == '') {
         return false
       }
-      //console.log(element.idParte)
+      ///Verificar que el elemento exista en los consumibles registrados
       if (!Object.values(this.dictConsumibles).includes(element.idParte)) {
         return false
       }
@@ -221,14 +239,15 @@ export class InOut {
     return true
   }
 
+  ///Veirficacion de los datos para cuando se realiza un baja
   async verifyDownData(): Promise<Boolean> {
-
+    //Verificar que el idParte exista
     for (const element of this.tools) {
       if (!Object.values(this.dictHerramientas).includes(element.idParte)) {
         return false
       }
     }
-
+      //Verificar que el idParte exista
     for (const element of this.consumibles) {
       if (!Object.values(this.dictConsumibles).includes(element.idParte)) {
         return false
@@ -238,6 +257,8 @@ export class InOut {
 
     return true
   }
+
+  ///Guardar los cambios y enviarlos a el servidor
   private async commit() {
     const type = (this.type) ? "Entrada" : "Salida"
 

@@ -54,6 +54,8 @@ export class NewIns {
   ids =[]
 
   router:Router
+
+  //Obtener datos iniciales para su muestra en pantalla
   async setUp() {
     let data =await this.inventory.getItemsNotRegistered()
     //console.log(data)
@@ -69,7 +71,7 @@ export class NewIns {
 
 
   }
-
+  ///Aadir elemento a listra de registrados
   AddCustom() {
     if (this.opt) {
       this.consumibles.push(
@@ -94,33 +96,39 @@ export class NewIns {
     this.ElementSelected =null
   }
   
+  /// Actualizar los matches dependiento del nombre de los elemetnos disponibles
   matchParte(name) {
       this.matches.push(this.dictAvailable[name])
 
   }
  
-
+  //Obtener el nombre de la pagina
   private getName() {
     this.name = this.options[this.type].name
   }
+  //Añadir consumible
   private addConsumible() {
     this.consumibles.push(consu(this.consumibles.length))
   }
+  //Añadir herramienta
   private addTool() {
     this.tools.push(tool(this.tools.length))
   }
+  //El;iminar herramienta de la lista de registrar
   private removeTool(index) {
     //console.log(index)
     if (index > -1) {
       this.tools.splice(index, 1);
     }
   }
+  //Eliminar consumible de la lista de registrar
   private removeConsu(index) {
     //console.log(index)
     if (index > -1) {
       this.consumibles.splice(index, 1);
     }
   }
+  //Añadir elemento a la lista de elemetos a registrar
   private addElement() {
     if (this.opt == 1) {
       this.addConsumible();
@@ -131,7 +139,7 @@ export class NewIns {
       //console.log(this.tools);
     }
   }
-
+  /// Verificacion de datos correctos a la hroa de regiustrar un nuevo elementos
   private verifyData() {
 
     for (const value of this.tools){
@@ -159,7 +167,7 @@ export class NewIns {
     return true
   }
 
-  
+  ///Gaurdar y registrar lois nuevos elementos en la base de datos
   private async commit() {
     
       if (await this.verifyData() == true) {

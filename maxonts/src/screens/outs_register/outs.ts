@@ -28,6 +28,7 @@ export class outs_register{
     service:InventoryService
     router:Router
     report:ReportService
+    ///Obtener los servicios necesarios par ala pagina
     constructor(service:InventoryService, rt:Router,rp:ReportService){
         this.service = service
         this.router = rt
@@ -35,6 +36,7 @@ export class outs_register{
         this.setUp()
     }
 
+    //Realizar una busqueda 
     async search(){
         this.currentQuery = this.query
         this.actualPageConsumibles =0
@@ -46,6 +48,7 @@ export class outs_register{
         
     }
     
+    ///Cambiar de pagina y actuaslizar los datos de la misma
     async updatePage(type){
        let data
         if(type==1 ){
@@ -76,6 +79,7 @@ export class outs_register{
         }
     }
 
+    ///Hacer busqueda de elemtos en la pgina
     async pagination(type:number,movement:number){
         
         if(type==1){
@@ -101,11 +105,13 @@ export class outs_register{
         }
         
     }
+    //Funcion auxiliar para el front end
     not(i){
         if(i==1) return 0
         return 1
     }
 
+    ///Cambiar el tipo de datos que se reciben/ entreadas salida asi como el nombre correspondiente de la pagina
     async changeData(){
         if (this.typer==0){
             this.titulo =`Registro de ${this.types[this.typer]}`
@@ -134,6 +140,7 @@ export class outs_register{
         }
        
     }
+    ///Obtener la pagina inicila y datos esecniales para el funcionamiento de la pgiuna
     async setUp(){
         let data =await this.service.getOutItems();
         //console.log(data)
@@ -148,11 +155,13 @@ export class outs_register{
         //console.log(this.maxPageConsumibles,this.maxPagetools)
         
     }
+    ///Descargar reporte
     async downloadReport(){
         let data = await this.report.getReportDowns(this.currentQuery)
         await xslx.writeFile(data, `${new Date().toDateString()} Reporte Salidas.xlsx`)
     }
-
+    
+    ///Redirigir a otro ruta
     redirect(){
         new Redirect('/registerInOuts').navigate(this.router)
     }
