@@ -3,6 +3,9 @@ import { inject } from "aurelia-framework"
 import Swal from "sweetalert2";
 import { SWAL_EMP_CONFIRM, SWAL_IMG_CONFIRM, SWAL_SUCCESS } from "swals/question";
 import { SWAL_ERROR } from "swals/error";
+import * as JsBarcode from "jsbarcode";
+import { sleep } from "utils";
+ 
 
 
 @inject(InventoryService)
@@ -53,7 +56,19 @@ export class itemInfo {
         //console.log(data)
         this.data = data['value']
         this.items = data['items']
+        JsBarcode("#barcode",this.data[0]['idParte'])
         //console.log(this.items)
+    }
+
+    loadItems(item){
+        item['generated']=0
+        const element = item
+            if(element.idHerramienta!=undefined)
+            JsBarcode("#a"+element.idHerramienta,element.idHerramienta)
+            else
+            JsBarcode("#a"+element.idConsumible,element.idConsumible)
+
+        
     }
 
     mapToStatus(val){

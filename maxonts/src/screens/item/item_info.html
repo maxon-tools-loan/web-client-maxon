@@ -1,6 +1,6 @@
 <template>
 
-    <h2>Info Items</h2>
+    <h2>Información de Items</h2>
     <div>
       <div class="search">
       <img  src.bind="data[0].imagen" if.bind="data[0].imagen!=null" width='200' height="200">
@@ -9,6 +9,10 @@
           files.bind="Images">
       </label>
       <button click.delegate="changeImage()" class="btn btn-primary">Cambiar Imagen</button>
+    </div>
+    <div>
+      Barcode <br>
+      <svg id="barcode"></svg>
     </div>
       <div>
         <div class="mb-3">
@@ -52,6 +56,7 @@
                 <th >Prestado</th>
                 <th >Mantenimiento</th>
                 <th if.bind="items[0].idHerramienta != undefined"scope="col">Condicion</th>
+                <th> Codigo de Barras </th>
               </tr>
             </thead>
             <tbody>
@@ -63,6 +68,11 @@
                 <td >${record.Prestado}</td>
                 <td >${record.Maintenance}</td>
                 <td if.bind="record.idHerramienta != undefined" >${record.condicion}</td>
+                <td>
+                  <button if.bind="record.generated==undefined" click.delegate="loadItems(record)">Barcode</button>
+                  <img if.bind="record.idHerramienta == undefined" id=a${record.idConsumible}></img>
+                  <img if.bind="record.idHerramienta != undefined" id=a${record.idHerramienta}></img>
+                </td>
               </tr>
             </tbody>
           </table>

@@ -89,6 +89,7 @@ export class Up_Downs {
         //console.log(this.ids)
         for (let index = 0; index < this.ups.length ; index++){
             let element = this.ups[index]
+            this.ups[index]['Familia']=this.ups[index]['Familia'].toUpperCase()
             if(this.ids.includes(element['idParte'])) {
                 //console.log("AAAAAAAAAAAAAAAAA")
                 await Swal.fire(getErrorSwal(`${element.idParte} Ya existe Prueba con otro ID`))

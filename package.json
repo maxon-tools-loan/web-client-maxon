@@ -2,6 +2,7 @@
   "dependencies": {
     "csv-reader": "^1.0.8",
     "fs": "0.0.1-security",
+    "jsbarcode": "^3.11.5",
     "moment": "^2.29.1",
     "xlsx": "^0.17.4"
   }
